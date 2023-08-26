@@ -9,7 +9,10 @@ import SwiftUI
 
 struct ToDoListView: View {
     var body: some View {
-        Text("TodoListView")
+        NavigationStack {
+            Text("To do List")
+            .navigationTitle("To Do's")
+        }
     }
 }
 

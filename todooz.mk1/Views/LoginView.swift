@@ -9,6 +9,8 @@ import SwiftUI
 
 struct LoginView: View {
     
+    @ObservedObject var viewModel = LoginViewModel()
+    
     @State private var email: String = ""
     @State private var password: String = ""
     
@@ -54,6 +56,9 @@ struct LoginView: View {
                 
                 Button {
                     print("tapped login")
+                    viewModel.email = self.email
+                    viewModel.password = self.password
+                    viewModel.login()
                 } label: {
                     Text("Login")
                         .frame(width: 330)
@@ -65,7 +70,6 @@ struct LoginView: View {
                 .cornerRadius(8)
                 .padding(.top, 10)
                 .disabled(self.email.isEmpty || self.password.isEmpty)
-                
                 
                 
                 HStack {

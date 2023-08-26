@@ -12,7 +12,7 @@ struct FinalRegistrationView: View {
     var InputEmail: String
     var InputPW: String
     
-    @ObservedObject var viewModel = RegistrationValidationViewModel()
+    @ObservedObject var viewModel = RegistrationViewModel()
     
     //Password Data and Validation
     @State private var PasswordEntry: String = ""
@@ -57,7 +57,12 @@ struct FinalRegistrationView: View {
             
             
             Button {
-                print("tapped Sign Up")
+                
+                viewModel.email = self.InputEmail
+                viewModel.password = self.InputPW
+                viewModel.register()
+                
+                
             } label: {
                 Text("Sign Up")
                     .frame(width: 330)

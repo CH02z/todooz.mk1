@@ -8,17 +8,7 @@
 import SwiftUI
 
 struct TabsView: View {
-    var body: some View {
-        
-        
-        
-        Text("Test")
-        /*
-         .onAppear() {
-         UITabBar.appearance().backgroundColor = .gray
-         }
-         */
-        
+    var body: some View {       
         
         TabView {
             ToDoListView()

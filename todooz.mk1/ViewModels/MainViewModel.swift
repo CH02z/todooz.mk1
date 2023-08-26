@@ -6,15 +6,28 @@
 //
 
 import SwiftUI
+import FirebaseAuth
 
-struct MainViewModel: View {
-    var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+class MainViewModel: ObservableObject{
+    
+    @Published var currentUserID: String = ""
+    
+    private var handler: AuthStateDidChangeListenerHandle?
+    
+    init() {
+        self.handler = Auth.auth().addStateDidChangeListener { [weak self] _, user in
+            DispatchQueue.main.async {
+                self?.currentUserID = user?.uid ?? ""
+            }
+            
+        }
     }
-}
-
-struct MainViewModel_Previews: PreviewProvider {
-    static var previews: some View {
-        MainViewModel()
+    
+    public var IsSignedIn: Bool {
+        return Auth.auth().currentUser != nil
     }
+    
+    
+    
+    
 }

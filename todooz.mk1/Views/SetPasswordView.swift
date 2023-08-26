@@ -11,7 +11,7 @@ struct SetPasswordView: View {
     
     var InputEmail: String
     
-    @ObservedObject var viewModel = RegistrationValidationViewModel()
+    @ObservedObject var viewModel = RegistrationViewModel()
     
     //Password Data and Validation
     @State private var PasswordEntry: String = ""

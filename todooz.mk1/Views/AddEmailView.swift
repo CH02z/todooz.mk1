@@ -9,7 +9,7 @@ import SwiftUI
 
 struct AddEmailView: View {
     
-    @ObservedObject var viewModel = RegistrationValidationViewModel()
+    @ObservedObject var viewModel = RegistrationViewModel()
     
     @State private var email: String = ""
     
