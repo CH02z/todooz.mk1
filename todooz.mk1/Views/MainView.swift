@@ -14,12 +14,11 @@ struct MainView: View {
     
     var body: some View {
         
-        if viewModel.IsSignedIn && !viewModel.currentUserID.isEmpty {
-            TabsView()
-        } else {
+        if viewModel.userSession == nil {
             LoginView()
-        }
-        
+        } else if let currentUser = viewModel.currentUser {
+            TabsView(currentUser: currentUser)
+        }        
         
     }
 }

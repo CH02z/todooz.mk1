@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import FirebaseAuth
 
 class LoginViewModel: ObservableObject{
     
@@ -24,24 +23,13 @@ class LoginViewModel: ObservableObject{
         return emailPred.evaluate(with: email)
     }
     
-    func login() {
-        
-        guard self.validateForm() else {
-            return
-        }
-        
+    func login() async throws {
         //Try firebase auth login
-        
-        Auth.auth().signIn(withEmail: email, password: password) { (result, error) in
-            if error != nil {
-                self.errorMessage = error?.localizedDescription ?? ""
-            } else {
-                print("successfully logged in")
-            }
-        }
-        
+        try await AuthService.shared.login(email: self.email, password: self.password)
+        print("login viewmodel function called")
     }
     
+
     func validateForm() -> Bool {
         self.errorMessage = ""
         guard !email.trimmingCharacters(in: .whitespaces).isEmpty, !password.trimmingCharacters(in: .whitespaces).isEmpty else {

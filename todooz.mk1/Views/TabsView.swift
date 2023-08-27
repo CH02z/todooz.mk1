@@ -8,6 +8,9 @@
 import SwiftUI
 
 struct TabsView: View {
+    
+    let currentUser: User?
+    
     var body: some View {       
         
         TabView {
@@ -15,7 +18,7 @@ struct TabsView: View {
                 .tabItem {
                     Label("Todo", systemImage: "list.bullet")
                 }
-            ProfileView()
+            ProfileView(currentUser: currentUser)
                 .tabItem {
                     Label("Profile", systemImage: "person.fill")
                 }
@@ -28,6 +31,6 @@ struct TabsView: View {
     
 struct TabsView_Previews: PreviewProvider {
     static var previews: some View {
-        TabsView()
+        TabsView(currentUser: User(id: "234j3i4j34kl3j43l", firstName: "Chris", lastName: "Zimmermann", email: "chris.zimmermann@hotmail.ch", joined: Date().timeIntervalSince1970))
     }
 }

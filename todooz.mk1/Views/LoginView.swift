@@ -55,10 +55,9 @@ struct LoginView: View {
                 
                 
                 Button {
-                    print("tapped login")
                     viewModel.email = self.email
                     viewModel.password = self.password
-                    viewModel.login()
+                    Task { try await viewModel.login() }
                 } label: {
                     Text("Login")
                         .frame(width: 330)
