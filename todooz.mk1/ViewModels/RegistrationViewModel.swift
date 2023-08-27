@@ -11,27 +11,9 @@ class RegistrationViewModel: ObservableObject{
     
     
     
-    func register() {
-        
-        Auth.auth().createUser(withEmail: email, password: password) { (result, error) in
-            if error != nil {
-                self.errorMessage = error?.localizedDescription ?? ""
-            } else {
-                print("successfully created User")
-                guard let userID = result?.user.uid else {
-                    return
-                }
-                self.insertUserRecord(id: userID)
-            }
-        }
-        
-    }
-    
-    func insertUserRecord(id: String) {
-        let newUser = User(id: id, firstName: "Chris", lastName: "Zimmermann", email: self.email, joined: Date().timeIntervalSince1970)
-        let db = Firestore.firestore()
-        db.collection("users").document(id).setData(newUser.asDictionary())
-        print("user inserted to firestore")
+    func register() async throws {
+        try await AuthService.shared.register(email: self.email, password: self.password)
+        print("register viewmodel function called")
     }
     
     

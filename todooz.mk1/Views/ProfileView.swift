@@ -11,12 +11,14 @@ struct ProfileView: View {
     
     @ObservedObject var viewModel = ProfileViewViewModel()
     
+    let currentUser: User?
+    
     
     var body: some View {
         
         NavigationStack {
             VStack {
-                if let user = viewModel.user {
+                if let user = currentUser {
                     VStack(spacing: 20) {
                         Text(user.firstName)
                         Text(user.lastName)
@@ -25,7 +27,7 @@ struct ProfileView: View {
                         
                         Button {
                             print("tapped logout")
-                            viewModel.logout()
+                            Task { try await viewModel.logout() }
                         } label: {
                             Text("Logout")
                                 .frame(width: 330)
@@ -43,27 +45,18 @@ struct ProfileView: View {
                 } else {
                     LoadingView()
                 }
-                
-                
-                
+ 
                 
             }
             
-            
-            
-                .navigationTitle("User Profil")
+            .navigationTitle("User Profil")
         }
-        .onAppear {
-            viewModel.getUser()
-        }
-        
-        
         
     }
 }
 
 struct ProfileView_Previews: PreviewProvider {
     static var previews: some View {
-        ProfileView()
+        ProfileView(currentUser: User(id: "234j3i4j34kl3j43l", firstName: "Chris", lastName: "Zimmermann", email: "chris.zimmermann@hotmail.ch", joined: Date().timeIntervalSince1970))
     }
 }

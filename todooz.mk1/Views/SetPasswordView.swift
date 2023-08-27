@@ -36,14 +36,6 @@ struct SetPasswordView: View {
                 .multilineTextAlignment(.center)
                 .padding(.horizontal, 24)
             
-            /*
-             
-             
-             
-             
-             }
-             */
-            
             
             
             HStack {

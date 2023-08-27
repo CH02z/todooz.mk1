@@ -57,10 +57,9 @@ struct FinalRegistrationView: View {
             
             
             Button {
-                
                 viewModel.email = self.InputEmail
                 viewModel.password = self.InputPW
-                viewModel.register()
+                Task { try await viewModel.register() }
                 
                 
             } label: {

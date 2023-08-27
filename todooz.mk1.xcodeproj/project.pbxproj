@@ -32,6 +32,7 @@
 		83D60C442A9A6FA700723215 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83D60C432A9A6FA700723215 /* Extensions.swift */; };
 		83D60C462A9A7D5B00723215 /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83D60C452A9A7D5B00723215 /* ProfileViewModel.swift */; };
 		83D60C482A9A839D00723215 /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83D60C472A9A839D00723215 /* LoadingView.swift */; };
+		83D60C4B2A9B45EF00723215 /* AuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83D60C4A2A9B45EF00723215 /* AuthService.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -58,6 +59,7 @@
 		83D60C432A9A6FA700723215 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		83D60C452A9A7D5B00723215 /* ProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModel.swift; sourceTree = "<group>"; };
 		83D60C472A9A839D00723215 /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
+		83D60C4A2A9B45EF00723215 /* AuthService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthService.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -93,6 +95,7 @@
 		83D60C0A2A9A4C2D00723215 /* todooz.mk1 */ = {
 			isa = PBXGroup;
 			children = (
+				83D60C492A9B45CA00723215 /* Services */,
 				83D60C422A9A6F9600723215 /* other */,
 				83D60C262A9A52FE00723215 /* GoogleService-Info.plist */,
 				83D60C1E2A9A4CBA00723215 /* Components */,
@@ -165,6 +168,14 @@
 				83D60C432A9A6FA700723215 /* Extensions.swift */,
 			);
 			path = other;
+			sourceTree = "<group>";
+		};
+		83D60C492A9B45CA00723215 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				83D60C4A2A9B45EF00723215 /* AuthService.swift */,
+			);
+			path = Services;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -253,6 +264,7 @@
 				83D60C412A9A659A00723215 /* LoginViewModel.swift in Sources */,
 				83D60C392A9A596300723215 /* ProfileView.swift in Sources */,
 				83D60C3B2A9A5E2600723215 /* MainViewModel.swift in Sources */,
+				83D60C4B2A9B45EF00723215 /* AuthService.swift in Sources */,
 				83D60C3D2A9A5E3500723215 /* User.swift in Sources */,
 				83D60C1A2A9A4C7F00723215 /* TabsView.swift in Sources */,
 				83D60C3F2A9A5E5A00723215 /* ToDoListItem.swift in Sources */,
