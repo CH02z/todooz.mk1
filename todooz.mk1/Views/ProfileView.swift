@@ -44,6 +44,20 @@ struct ProfileView: View {
                     
                 } else {
                     LoadingView()
+                    Text("Something Went Wrong")
+                    Button {
+                        print("tapped logout")
+                        Task { try await viewModel.logout() }
+                    } label: {
+                        Text("Emergency Logout")
+                            .frame(width: 330)
+                            .padding(.vertical, 2.5)
+                        
+                    }
+                    .buttonStyle(.borderedProminent)
+                    .accentColor(Color.red)
+                    .cornerRadius(8)
+                    .padding(.top, 10)
                 }
  
                 

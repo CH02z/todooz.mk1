@@ -9,16 +9,15 @@ import SwiftUI
 
 struct MainView: View {
     
-    @ObservedObject var viewModel = MainViewModel()
-    
+    @ObservedObject var viewModel = MainViewModel()    
     
     var body: some View {
         
         if viewModel.userSession == nil {
             LoginView()
-        } else if let currentUser = viewModel.currentUser {
-            TabsView(currentUser: currentUser)
-        }        
+        } else {
+            TabsView(currentUser: viewModel.currentUser)
+        }
         
     }
 }

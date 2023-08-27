@@ -48,12 +48,12 @@ class MainViewModel: ObservableObject{
     func SetupSubscribers() {
         authService.$userSession.sink { [weak self] userSession in
             self?.userSession = userSession
-            print("MainViewModel Usersession set")
+            print("MainViewModel Usersession set: \(userSession)")
         }.store(in: &cancellables)
         
         authService.$currentUser.sink { [weak self] currentUser in
             self?.currentUser = currentUser
-            print("MainViewModel currentUser set")
+            print("MainViewModel currentUser set: \(currentUser?.id)")
         }.store(in: &cancellables)
         
         

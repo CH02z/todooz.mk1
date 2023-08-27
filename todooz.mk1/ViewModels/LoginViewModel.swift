@@ -29,6 +29,11 @@ class LoginViewModel: ObservableObject{
         print("login viewmodel function called")
     }
     
+    func signInWithGoogle() async {
+        await AuthService.shared.signInWithGoogle()
+        print ("LoginViewModel: signINwithGoogle triggered")
+    }
+    
 
     func validateForm() -> Bool {
         self.errorMessage = ""
