@@ -13,7 +13,6 @@ struct ProfileView: View {
     @ObservedObject var viewModel = ProfileViewViewModel()
     
     @State private var avatarItem: PhotosPickerItem?
-    @State private var avatarImage: UIImage?
     
     
     @State private var selectedImage: UIImage?
@@ -36,40 +35,33 @@ struct ProfileView: View {
                                     .edgesIgnoringSafeArea(.top)
                                     .frame(height: 150)
                                 
-                                PhotosPicker(selection: $avatarItem, matching: .images) {
-                                    Image(systemName: "pencil")
-                                        .foregroundColor(.black)
-                                        .font(.system(size: 30))
-                                }
                                 
                                 
-                                if let image = avatarImage {
-                                    Image(uiImage: image)
-                                        .resizable()
-                                        .scaledToFit()
-                                        .aspectRatio(contentMode: .fill)
-                                        .frame(width: 200, height: 200)
-                                        .clipShape(Circle())
-                                        .overlay(Circle().stroke(Color.white, lineWidth: 4))
-                                        .shadow(radius: 10)
-                                        .padding(.top, 50)
+                                ZStack {
+                                    if let image = viewModel.avatarImage {
+                                        Image(uiImage: image)
+                                            .resizable()
+                                            .scaledToFit()
+                                            .aspectRatio(contentMode: .fill)
+                                            .frame(width: 200, height: 200)
+                                            .clipShape(Circle())
+                                            .overlay(Circle().stroke(Color.white, lineWidth: 4))
+                                            .shadow(radius: 10)
+                                            .padding(.top, 50)
+                                        
+                                    } else {
+                                        Image("memoji_white")
+                                            .resizable()
+                                            .scaledToFit()
+                                            .aspectRatio(contentMode: .fill)
+                                            .frame(width: 200, height: 200)
+                                            .clipShape(Circle())
+                                            .overlay(Circle().stroke(Color.white, lineWidth: 4))
+                                            .shadow(radius: 10)
+                                            .padding(.top, 50)
+                                    }
                                     
-                                } else {
-                                    Image("memoji_white")
-                                        .resizable()
-                                        .scaledToFit()
-                                        .aspectRatio(contentMode: .fill)
-                                        .frame(width: 200, height: 200)
-                                        .clipShape(Circle())
-                                        .overlay(Circle().stroke(Color.white, lineWidth: 4))
-                                        .shadow(radius: 10)
-                                        .padding(.top, 50)
                                 }
-                                
-                                
-                                
-                                
-                                
                                 
                             }
                             
@@ -80,27 +72,35 @@ struct ProfileView: View {
                         
                         
                         .onChange(of: avatarItem) { _ in
-                                    Task {
-                                        if let data = try? await avatarItem?.loadTransferable(type: Data.self) {
-                                            if let uiImage = UIImage(data: data) {
-                                                avatarImage = uiImage
-                                                try await viewModel.uploadPhoto(image: uiImage)
-                                                return
-                                            }
-                                        }
-
-                                        print("Failed")
+                            Task {
+                                if let data = try? await avatarItem?.loadTransferable(type: Data.self) {
+                                    if let uiImage = UIImage(data: data) {
+                                        viewModel.avatarImage = uiImage
+                                        try await viewModel.uploadPhoto(image: uiImage)
+                                        return
                                     }
                                 }
+                                
+                                print("Failed")
+                            }
+                        }
+                        
+                        .onAppear { Task { try await viewModel.loadUserProfileImage() } }
                         
                         Spacer()
                         
-                   
-                        
-                        
-                        
-                        
-                        
+                        Button {
+                            print("tapped load image")
+                            Task { try await viewModel.loadUserProfileImage() }
+                        } label: {
+                            Text("load image")
+                                .padding(.vertical, 2.5)
+                            
+                        }
+                        .buttonStyle(.borderedProminent)
+                        .accentColor(Color.blue)
+                        .cornerRadius(8)
+                        .padding(.top, 10)
                         
                         Button {
                             print("tapped logout")
@@ -115,6 +115,18 @@ struct ProfileView: View {
                         .cornerRadius(8)
                         .padding(.top, 10)
                         
+                    }
+                    .toolbar {
+                        ToolbarItem(placement: .navigationBarTrailing) {
+                            
+                            PhotosPicker(selection: $avatarItem, matching: .images) {
+                                Image(systemName: "pencil")
+                                    .foregroundColor(.black)
+                                    .font(.system(size: 30))
+                            }
+                            
+                            
+                        }
                     }
                     
                     
@@ -135,19 +147,12 @@ struct ProfileView: View {
                     .cornerRadius(8)
                     .padding(.top, 10)
                 }
- 
+                
                 
             }
             
         }
         
-    }
-}
-
-
-struct Header: View {
-    var body: some View {
-       Text("test")
     }
 }
 
@@ -177,24 +182,28 @@ struct ProfileText: View {
 }
 
 
-struct circleButtonStyle: ButtonStyle {
-func makeBody(configuration: Self.Configuration) -> some View {
-    configuration.label
-        .foregroundColor(Color.white)
-        .font(.system(size: 13, weight: .bold))
-        .background(
-            Circle()
-                .strokeBorder(Color.white, lineWidth: 2)
-                .background(
-                    Circle()
-                    .fill(Color.blue)
+struct PlusButtonStyle: ButtonStyle {
+    func makeBody(configuration: Configuration) -> some View {
+        ZStack {
+            RoundedRectangle(cornerRadius: 10)
+                .fill(Color.blue)
+                .frame(width: 50, height: 50)
+                .overlay(
+                    RoundedRectangle(cornerRadius: 10)
+                        .stroke(Color.white, lineWidth: 2)
                 )
-                .frame(width: 30, height: 30)
-                .shadow(color: .black, radius: 8)
-        )
-        .scaleEffect(configuration.isPressed ? 1.1 : 1.0)
+            
+            Image(systemName: "plus")
+                .foregroundColor(.white)
+                .font(.system(size: 24, weight: .bold))
+        }
+        .opacity(configuration.isPressed ? 0.7 : 1.0)
+        .onTapGesture {
+            //
+        }
+    }
 }
-}
+
 
 
 struct ProfileView_Previews: PreviewProvider {
