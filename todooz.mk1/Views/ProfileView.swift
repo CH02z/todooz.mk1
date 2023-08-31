@@ -14,9 +14,6 @@ struct ProfileView: View {
     
     @State private var avatarItem: PhotosPickerItem?
     
-    
-    @State private var selectedImage: UIImage?
-    
     let currentUser: User?
     
     
