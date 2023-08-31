@@ -9,17 +9,17 @@ import SwiftUI
 
 struct MainView: View {
     
-    @ObservedObject var viewModel = MainViewModel()    
+    @ObservedObject var viewModel = MainViewModel()
     
     var body: some View {
-        
-        if viewModel.userSession == nil {
-            LoginView()
-        } else {
-            TabsView(currentUser: viewModel.currentUser)
+            
+            if viewModel.userSession == nil {
+                LoginView()
+            } else {
+                TabsView(currentUser: viewModel.currentUser)
+            }
+            
         }
-        
-    }
 }
 
 struct MainView_Previews: PreviewProvider {

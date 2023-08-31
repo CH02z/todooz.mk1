@@ -14,9 +14,9 @@ struct TabsView: View {
     var body: some View {       
         
         TabView {
-            ToDoListView()
+            CategoryView()
                 .tabItem {
-                    Label("Todo", systemImage: "list.bullet")
+                    Label("Kategorie", systemImage: "list.bullet")
                 }
             ProfileView(currentUser: currentUser)
                 .tabItem {

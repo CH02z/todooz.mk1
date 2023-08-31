@@ -13,7 +13,7 @@ struct ProfileView: View {
     @ObservedObject var viewModel = ProfileViewViewModel()
 
     // Try move this to View Model
-    @State private var avatarItem: PhotosPickerItem?
+    @State private var selectedPickerItem: PhotosPickerItem?
     
     let currentUser: User?
     
@@ -23,55 +23,77 @@ struct ProfileView: View {
         NavigationStack {
             VStack {
                 if let user = currentUser {
-                    VStack(spacing: 20) {
-                        
-                        VStack {
-                            
-                            ZStack(alignment: .top) {
-                                Rectangle()
-                                    .foregroundColor(.blue)
-                                    .edgesIgnoringSafeArea(.top)
-                                    .frame(height: 150)
-                                
-                                
-                                
+                    VStack() {
+  
                                 ZStack {
+                                    
                                     if let image = viewModel.avatarImage {
                                         Image(uiImage: image)
                                             .resizable()
                                             .scaledToFit()
                                             .aspectRatio(contentMode: .fill)
-                                            .frame(width: 200, height: 200)
+                                            .frame(width: 150, height: 150)
                                             .clipShape(Circle())
                                             .overlay(Circle().stroke(Color.white, lineWidth: 4))
                                             .shadow(radius: 10)
-                                            .padding(.top, 50)
-                                        
+                                            .padding(.top, 30)
                                     } else {
                                         Image("memoji_white")
                                             .resizable()
                                             .scaledToFit()
                                             .aspectRatio(contentMode: .fill)
-                                            .frame(width: 200, height: 200)
+                                            .frame(width: 150, height: 150)
                                             .clipShape(Circle())
                                             .overlay(Circle().stroke(Color.white, lineWidth: 4))
                                             .shadow(radius: 10)
-                                            .padding(.top, 50)
+                                            .padding(.top, 30)
                                     }
                                     
+                                    PhotosPicker(selection: $selectedPickerItem, matching: .images) {
+                                        Circle()
+                                            .opacity(0.0)
+                                            .frame(width: 150, height: 150)
+                                            .padding(.top, 30)
+                                            
+                                    }
+                                    
+                                    
+                                    Image(systemName: "plus")
+                                        .foregroundColor(.white)
+                                        .frame(width: 35, height: 35)
+                                        .background(.blue)
+                                        .clipShape(Circle())
+                                        .font(.system(size: 25))
+                                        .fontWeight(.bold)
+                                        .overlay(Circle().stroke(Color.white, lineWidth: 3))
+                                        .padding(.leading, 130)
+                                        .padding(.top, 145)
+                                    
                                 }
+                        
                                 
-                            }
+                                 
+                                 
+                                
+                                    
+                 
+                            VStack(spacing: 5) {
+                                Text("\(user.firstName) \(user.lastName)")
+                                    .bold()
+                                    .font(.title)
+                                Text("\(user.email)")
+                                    .font(.body)
+                                    .foregroundColor(.secondary)
+                            }.padding()
+                        
+                        SettingsView()
                             
-                            
-                            
-                            ProfileText(firstName: user.firstName, lastName: user.lastName, email: user.email)
-                        }
                         
                         
-                        .onChange(of: avatarItem) { _ in
+                        
+                        .onChange(of: selectedPickerItem) { _ in
                             Task {
-                                if let data = try? await avatarItem?.loadTransferable(type: Data.self) {
+                                if let data = try? await selectedPickerItem?.loadTransferable(type: Data.self) {
                                     if let uiImage = UIImage(data: data) {
                                         viewModel.avatarImage = uiImage
                                         try await viewModel.uploadPhoto(image: uiImage)
@@ -85,46 +107,12 @@ struct ProfileView: View {
                         
                         .onAppear { Task { try await viewModel.loadUserProfileImage() } }
                         
+                        
+                        
                         Spacer()
                         
-                        Button {
-                            print("tapped load image")
-                            Task { try await viewModel.loadUserProfileImage() }
-                        } label: {
-                            Text("load image")
-                                .padding(.vertical, 2.5)
-                            
-                        }
-                        .buttonStyle(.borderedProminent)
-                        .accentColor(Color.blue)
-                        .cornerRadius(8)
-                        .padding(.top, 10)
                         
-                        Button {
-                            print("tapped logout")
-                            Task { try await viewModel.logout() }
-                        } label: {
-                            Text("Logout")
-                                .padding(.vertical, 2.5)
-                            
-                        }
-                        .buttonStyle(.borderedProminent)
-                        .accentColor(Color.blue)
-                        .cornerRadius(8)
-                        .padding(.top, 10)
                         
-                    }
-                    .toolbar {
-                        ToolbarItem(placement: .navigationBarTrailing) {
-                            
-                            PhotosPicker(selection: $avatarItem, matching: .images) {
-                                Image(systemName: "pencil")
-                                    .foregroundColor(.black)
-                                    .font(.system(size: 30))
-                            }
-                            
-                            
-                        }
                     }
                     
                     
@@ -155,29 +143,8 @@ struct ProfileView: View {
 }
 
 
-struct ProfileText: View {
-    
-    var firstName: String
-    var lastName: String
-    var email: String
-    
-    var body: some View {
-        VStack(spacing: 15) {
-            VStack(spacing: 5) {
-                Text("\(firstName) \(lastName)")
-                    .bold()
-                    .font(.title)
-                Text("\(email)")
-                    .font(.body)
-                    .foregroundColor(.secondary)
-            }.padding()
-            Text("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.")
-                .multilineTextAlignment(.center)
-                .padding()
-            Spacer()
-        }
-    }
-}
+
+
 
 
 struct PlusButtonStyle: ButtonStyle {

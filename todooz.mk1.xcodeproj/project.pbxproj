@@ -30,7 +30,7 @@
 		83D60C312A9A563600723215 /* RoundTextFieldStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83D60C302A9A563600723215 /* RoundTextFieldStyle.swift */; };
 		83D60C332A9A568F00723215 /* BorderExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83D60C322A9A568F00723215 /* BorderExtension.swift */; };
 		83D60C352A9A57CF00723215 /* RegistrationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83D60C342A9A57CF00723215 /* RegistrationViewModel.swift */; };
-		83D60C372A9A593000723215 /* ToDoListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83D60C362A9A593000723215 /* ToDoListView.swift */; };
+		83D60C372A9A593000723215 /* CategoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83D60C362A9A593000723215 /* CategoryView.swift */; };
 		83D60C392A9A596300723215 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83D60C382A9A596300723215 /* ProfileView.swift */; };
 		83D60C3B2A9A5E2600723215 /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83D60C3A2A9A5E2600723215 /* MainViewModel.swift */; };
 		83D60C3D2A9A5E3500723215 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83D60C3C2A9A5E3500723215 /* User.swift */; };
@@ -40,6 +40,10 @@
 		83D60C462A9A7D5B00723215 /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83D60C452A9A7D5B00723215 /* ProfileViewModel.swift */; };
 		83D60C482A9A839D00723215 /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83D60C472A9A839D00723215 /* LoadingView.swift */; };
 		83D60C4B2A9B45EF00723215 /* AuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83D60C4A2A9B45EF00723215 /* AuthService.swift */; };
+		83E2540C2AA10CB600D400A3 /* Categorie.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83E2540B2AA10CB600D400A3 /* Categorie.swift */; };
+		83E2540E2AA1186700D400A3 /* ToDoListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83E2540D2AA1186700D400A3 /* ToDoListView.swift */; };
+		83E254102AA1188600D400A3 /* CategoryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83E2540F2AA1188600D400A3 /* CategoryViewModel.swift */; };
+		83E254122AA11B6A00D400A3 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83E254112AA11B6A00D400A3 /* SettingsView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -59,7 +63,7 @@
 		83D60C302A9A563600723215 /* RoundTextFieldStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundTextFieldStyle.swift; sourceTree = "<group>"; };
 		83D60C322A9A568F00723215 /* BorderExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BorderExtension.swift; sourceTree = "<group>"; };
 		83D60C342A9A57CF00723215 /* RegistrationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationViewModel.swift; sourceTree = "<group>"; };
-		83D60C362A9A593000723215 /* ToDoListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoListView.swift; sourceTree = "<group>"; };
+		83D60C362A9A593000723215 /* CategoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryView.swift; sourceTree = "<group>"; };
 		83D60C382A9A596300723215 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		83D60C3A2A9A5E2600723215 /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
 		83D60C3C2A9A5E3500723215 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
@@ -69,6 +73,10 @@
 		83D60C452A9A7D5B00723215 /* ProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModel.swift; sourceTree = "<group>"; };
 		83D60C472A9A839D00723215 /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
 		83D60C4A2A9B45EF00723215 /* AuthService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthService.swift; sourceTree = "<group>"; };
+		83E2540B2AA10CB600D400A3 /* Categorie.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Categorie.swift; sourceTree = "<group>"; };
+		83E2540D2AA1186700D400A3 /* ToDoListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoListView.swift; sourceTree = "<group>"; };
+		83E2540F2AA1188600D400A3 /* CategoryViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CategoryViewModel.swift; sourceTree = "<group>"; };
+		83E254112AA11B6A00D400A3 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -142,8 +150,10 @@
 				83D60C2A2A9A55D600723215 /* AddEmailView.swift */,
 				83D60C2C2A9A55E900723215 /* SetPasswordView.swift */,
 				83D60C2E2A9A560D00723215 /* FinalRegistrationView.swift */,
-				83D60C362A9A593000723215 /* ToDoListView.swift */,
+				83D60C362A9A593000723215 /* CategoryView.swift */,
 				83D60C382A9A596300723215 /* ProfileView.swift */,
+				83E2540D2AA1186700D400A3 /* ToDoListView.swift */,
+				83E254112AA11B6A00D400A3 /* SettingsView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -152,6 +162,7 @@
 			isa = PBXGroup;
 			children = (
 				83D60C342A9A57CF00723215 /* RegistrationViewModel.swift */,
+				83E2540F2AA1188600D400A3 /* CategoryViewModel.swift */,
 				83D60C3A2A9A5E2600723215 /* MainViewModel.swift */,
 				83D60C402A9A659A00723215 /* LoginViewModel.swift */,
 				83D60C452A9A7D5B00723215 /* ProfileViewModel.swift */,
@@ -163,6 +174,7 @@
 			isa = PBXGroup;
 			children = (
 				83D60C3C2A9A5E3500723215 /* User.swift */,
+				83E2540B2AA10CB600D400A3 /* Categorie.swift */,
 				83D60C3E2A9A5E5A00723215 /* ToDoListItem.swift */,
 			);
 			path = Models;
@@ -285,6 +297,7 @@
 				83D60C2B2A9A55D600723215 /* AddEmailView.swift in Sources */,
 				83D60C0E2A9A4C2D00723215 /* MainView.swift in Sources */,
 				83D60C2F2A9A560D00723215 /* FinalRegistrationView.swift in Sources */,
+				83E254102AA1188600D400A3 /* CategoryViewModel.swift in Sources */,
 				83D60C412A9A659A00723215 /* LoginViewModel.swift in Sources */,
 				83D60C392A9A596300723215 /* ProfileView.swift in Sources */,
 				83D60C3B2A9A5E2600723215 /* MainViewModel.swift in Sources */,
@@ -294,8 +307,11 @@
 				83D60C3F2A9A5E5A00723215 /* ToDoListItem.swift in Sources */,
 				83D60C352A9A57CF00723215 /* RegistrationViewModel.swift in Sources */,
 				83D60C292A9A559600723215 /* LoginView.swift in Sources */,
+				83E2540E2AA1186700D400A3 /* ToDoListView.swift in Sources */,
+				83E254122AA11B6A00D400A3 /* SettingsView.swift in Sources */,
+				83E2540C2AA10CB600D400A3 /* Categorie.swift in Sources */,
 				83D60C462A9A7D5B00723215 /* ProfileViewModel.swift in Sources */,
-				83D60C372A9A593000723215 /* ToDoListView.swift in Sources */,
+				83D60C372A9A593000723215 /* CategoryView.swift in Sources */,
 				83D60C2D2A9A55E900723215 /* SetPasswordView.swift in Sources */,
 				83D60C442A9A6FA700723215 /* Extensions.swift in Sources */,
 				83D60C312A9A563600723215 /* RoundTextFieldStyle.swift in Sources */,
