@@ -11,7 +11,8 @@ import PhotosUI
 struct ProfileView: View {
     
     @ObservedObject var viewModel = ProfileViewViewModel()
-    
+
+    // Try move this to View Model
     @State private var avatarItem: PhotosPickerItem?
     
     let currentUser: User?
