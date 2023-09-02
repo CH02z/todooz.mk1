@@ -14,24 +14,17 @@ class ProfileViewViewModel: ObservableObject {
     @Published var avatarImage: UIImage?
     
     
-    init() {
-        
-        Task {
-            try await loadUserProfileImage()
-        }
-        
-    }
+    init() {}
     
     func loadUserProfileImage() async throws {
         let imageRef = try await getProfilePictureRef()
-        print("image ref \(imageRef)")
         if !imageRef.isEmpty {
-            self.avatarImage = try await DownloadPhoto(imageRef: imageRef)
+            self.avatarImage = await DownloadPhoto(imageRef: imageRef)
             print("avatar image set...")
         }
     }
     
-    func uploadPhoto(image: UIImage?) async throws {
+    func uploadPhoto(image: UIImage?) async {
         guard image != nil else { return }
         await ProfileService.shared.uploadPhoto(image: image)
     }
@@ -41,13 +34,9 @@ class ProfileViewViewModel: ObservableObject {
         return !profilePicRef.isEmpty ? profilePicRef : ""
     }
     
-    func DownloadPhoto(imageRef: String) async throws -> UIImage? {
+    func DownloadPhoto(imageRef: String) async -> UIImage? {
         let ProfilePhoto = await ProfileService.shared.DownloadPhoto(imageRef: imageRef)
         return ProfilePhoto
-    }
-    
-    func logout() async throws {
-       await AuthService.shared.signOut()
     }
     
     

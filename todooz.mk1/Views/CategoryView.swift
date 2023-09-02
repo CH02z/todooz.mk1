@@ -9,6 +9,8 @@ import SwiftUI
 
 struct CategoryView: View {
     
+    let currentUser: User?
+    
     var categories: [Category] = TestData.categories
     
     
@@ -24,9 +26,47 @@ struct CategoryView: View {
                     }
                 }
                 
+                .refreshable {
+                    //reload in Task { get categories }
+                }
+                
             }
             
             .navigationTitle("Kategorien")
+            .toolbar {
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    NavigationLink(destination: ProfileView(currentUser: currentUser)) {
+                        Image(systemName: "person.circle")
+                            //.foregroundColor(.gray)
+                            .font(.system(size: 25))
+                          
+                      
+                    }
+
+                }
+            }
+            
+            .safeAreaInset(edge: .bottom, alignment: .center) {
+                            Button{
+                                
+                                //Haptic Feedback on Tap
+                                let impactHeavy = UIImpactFeedbackGenerator(style: .heavy)
+                                impactHeavy.impactOccurred()
+                                
+                                //self.showAddItemSheet = true
+                            } label: {
+                                Label("hinzufügen", systemImage: "plus")
+                                    .bold()
+                                    .font(.title2)
+                                    .padding(8)
+                                    .background(.gray.opacity(0.1),
+                                                in: Capsule())
+                                    .padding(.leading)
+                                    .symbolVariant(.circle.fill)
+                            }
+                        }
+            .padding(.bottom, 10)
+            
         }
     }
 }
@@ -66,6 +106,6 @@ struct CategoryPreviewView: View {
 
 struct CategoryView_Previews: PreviewProvider {
     static var previews: some View {
-        CategoryView()
+        CategoryView(currentUser: User(id: "234j3i4j34kl3j43l", firstName: "Chris", lastName: "Zimmermann", email: "chris.zimmermann@hotmail.ch", joined: Date().timeIntervalSince1970))
     }
 }

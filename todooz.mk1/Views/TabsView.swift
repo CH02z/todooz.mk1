@@ -13,18 +13,24 @@ struct TabsView: View {
     
     var body: some View {       
         
-        TabView {
-            CategoryView()
-                .tabItem {
-                    Label("Kategorie", systemImage: "list.bullet")
-                }
-            ProfileView(currentUser: currentUser)
-                .tabItem {
-                    Label("Profile", systemImage: "person.fill")
-                }
-        }
-        .accentColor(.red)
+        CategoryView(currentUser: currentUser)
         
+        
+        /*
+         
+         TabView {
+             CategoryView()
+                 .tabItem {
+                     Label("Kategorie", systemImage: "list.bullet")
+                 }
+             ProfileView(currentUser: currentUser)
+                 .tabItem {
+                     Label("Profile", systemImage: "person.fill")
+                 }
+         }
+         .accentColor(.red)
+         
+         */
     }
 }
     

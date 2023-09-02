@@ -11,7 +11,7 @@ import PhotosUI
 struct ProfileView: View {
     
     @ObservedObject var viewModel = ProfileViewViewModel()
-
+    
     // Try move this to View Model
     @State private var selectedPickerItem: PhotosPickerItem?
     
@@ -24,96 +24,97 @@ struct ProfileView: View {
             VStack {
                 if let user = currentUser {
                     VStack() {
-  
-                                ZStack {
-                                    
-                                    if let image = viewModel.avatarImage {
-                                        Image(uiImage: image)
-                                            .resizable()
-                                            .scaledToFit()
-                                            .aspectRatio(contentMode: .fill)
-                                            .frame(width: 150, height: 150)
-                                            .clipShape(Circle())
-                                            .overlay(Circle().stroke(Color.white, lineWidth: 4))
-                                            .shadow(radius: 10)
-                                            .padding(.top, 30)
-                                    } else {
-                                        Image("memoji_white")
-                                            .resizable()
-                                            .scaledToFit()
-                                            .aspectRatio(contentMode: .fill)
-                                            .frame(width: 150, height: 150)
-                                            .clipShape(Circle())
-                                            .overlay(Circle().stroke(Color.white, lineWidth: 4))
-                                            .shadow(radius: 10)
-                                            .padding(.top, 30)
-                                    }
-                                    
-                                    PhotosPicker(selection: $selectedPickerItem, matching: .images) {
-                                        Circle()
-                                            .opacity(0.0)
-                                            .frame(width: 150, height: 150)
-                                            .padding(.top, 30)
-                                            
-                                    }
-                                    
-                                    
-                                    Image(systemName: "plus")
-                                        .foregroundColor(.white)
-                                        .frame(width: 35, height: 35)
-                                        .background(.blue)
-                                        .clipShape(Circle())
-                                        .font(.system(size: 25))
-                                        .fontWeight(.bold)
-                                        .overlay(Circle().stroke(Color.white, lineWidth: 3))
-                                        .padding(.leading, 130)
-                                        .padding(.top, 145)
-                                    
-                                }
                         
-                                
-                                 
-                                 
-                                
-                                    
-                 
-                            VStack(spacing: 5) {
-                                Text("\(user.firstName) \(user.lastName)")
-                                    .bold()
-                                    .font(.title)
-                                Text("\(user.email)")
-                                    .font(.body)
-                                    .foregroundColor(.secondary)
-                            }.padding()
-                        
-                        SettingsView()
+                        ZStack {
                             
-                        
-                        
-                        
-                        .onChange(of: selectedPickerItem) { _ in
-                            Task {
-                                if let data = try? await selectedPickerItem?.loadTransferable(type: Data.self) {
-                                    if let uiImage = UIImage(data: data) {
-                                        viewModel.avatarImage = uiImage
-                                        try await viewModel.uploadPhoto(image: uiImage)
-                                        return
-                                    }
-                                }
-                                
-                                print("Failed")
+                            if let image = viewModel.avatarImage {
+                                Image(uiImage: image)
+                                    .resizable()
+                                    .scaledToFit()
+                                    .aspectRatio(contentMode: .fill)
+                                    .frame(width: 150, height: 150)
+                                    .clipShape(Circle())
+                                    .overlay(Circle().stroke(Color.white, lineWidth: 4))
+                                    .shadow(radius: 10)
+                                    .padding(.top, 30)
+                            } else {
+                                Image("memoji_white")
+                                    .resizable()
+                                    .scaledToFit()
+                                    .aspectRatio(contentMode: .fill)
+                                    .frame(width: 150, height: 150)
+                                    .clipShape(Circle())
+                                    .overlay(Circle().stroke(Color.white, lineWidth: 4))
+                                    .shadow(radius: 10)
+                                    .padding(.top, 30)
                             }
+                            
+                            PhotosPicker(selection: $selectedPickerItem, matching: .images) {
+                                Circle()
+                                    .opacity(0.0)
+                                    .frame(width: 150, height: 150)
+                                    .padding(.top, 30)
+                                
+                            }
+                            
+                            
+                            Image(systemName: "plus")
+                                .foregroundColor(.white)
+                                .frame(width: 35, height: 35)
+                                .background(.blue)
+                                .clipShape(Circle())
+                                .font(.system(size: 25))
+                                .fontWeight(.bold)
+                                .overlay(Circle().stroke(Color.white, lineWidth: 3))
+                                .padding(.leading, 130)
+                                .padding(.top, 145)
+                            
                         }
                         
-                        .onAppear { Task { try await viewModel.loadUserProfileImage() } }
                         
                         
                         
+                        
+                        
+                        
+                        VStack(spacing: 5) {
+                            Text("\(user.firstName) \(user.lastName)")
+                                .bold()
+                                .font(.title)
+                            Text("\(user.email)")
+                                .font(.body)
+                                .foregroundColor(.secondary)
+                        }.padding()
+                        
+                        
+                        SettingsView()
+                        
+                        
+                        
+                        
+                            .onChange(of: selectedPickerItem) { _ in
+                                Task {
+                                    if let data = try? await selectedPickerItem?.loadTransferable(type: Data.self) {
+                                        if let uiImage = UIImage(data: data) {
+                                            print("on change called")
+                                            viewModel.avatarImage = uiImage
+                                            await viewModel.uploadPhoto(image: uiImage)
+                                            return
+                                        }
+                                    }
+                                    
+                                    print("Failed")
+                                }
+                            }
+                        
+                            .refreshable {
+                                Task { try await viewModel.loadUserProfileImage() }
+                            }
+                        
+      
                         Spacer()
-                        
-                        
-                        
                     }
+                    
                     
                     
                 } else {
@@ -121,7 +122,8 @@ struct ProfileView: View {
                     Text("Something Went Wrong")
                     Button {
                         print("tapped logout")
-                        Task { try await viewModel.logout() }
+                        Task { await AuthService.shared.signOut() }
+                        
                     } label: {
                         Text("Emergency Logout")
                             .frame(width: 330)
@@ -137,37 +139,18 @@ struct ProfileView: View {
                 
             }
             
-        }
-        
-    }
-}
-
-
-
-
-
-
-struct PlusButtonStyle: ButtonStyle {
-    func makeBody(configuration: Configuration) -> some View {
-        ZStack {
-            RoundedRectangle(cornerRadius: 10)
-                .fill(Color.blue)
-                .frame(width: 50, height: 50)
-                .overlay(
-                    RoundedRectangle(cornerRadius: 10)
-                        .stroke(Color.white, lineWidth: 2)
-                )
             
-            Image(systemName: "plus")
-                .foregroundColor(.white)
-                .font(.system(size: 24, weight: .bold))
         }
-        .opacity(configuration.isPressed ? 0.7 : 1.0)
-        .onTapGesture {
-            //
+        .onAppear() {
+            Task { try await viewModel.loadUserProfileImage() }
         }
     }
+        
+    
+        
+    
 }
+    
 
 
 

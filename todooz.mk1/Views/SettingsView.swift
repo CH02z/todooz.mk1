@@ -91,6 +91,27 @@ struct SettingsView: View {
                     }
                 }
                 
+                HStack {
+                    Image(systemName: "person.fill")
+                        .foregroundColor(.white)
+                        .frame(width: 30, height: 30)
+                        .background(.gray)
+                        .cornerRadius(5)
+                        .font(.system(size: 19))
+                        .fontWeight(.bold)
+                        .padding(.vertical, 2.5)
+                        .padding(.trailing, 5)
+                    
+                    Text("abmelden")
+                        .foregroundColor(.red)
+                }
+                .onTapGesture {
+                    Task { await AuthService.shared.signOut() }
+                }
+                
+                
+                
+                
                 
             }
             
