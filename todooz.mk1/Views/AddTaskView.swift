@@ -7,18 +7,18 @@
 
 import SwiftUI
 
-struct AddTodoView: View {
+struct AddTaskView: View {
     
-    @StateObject var viewModel: AddTodoViewModel
+    @StateObject var viewModel: AddTaskViewModel
     
     init(category: Category) {
-        self._viewModel = StateObject(wrappedValue: AddTodoViewModel(category: category))
+        self._viewModel = StateObject(wrappedValue: AddTaskViewModel(category: category))
     }
     
     
     var body: some View {
         VStack {
-            Text("Neue Todo")
+            Text("Neuer Task")
                 .bold()
                 .font(.system(size: 32))
                 .padding(.top, 10)
@@ -36,6 +36,7 @@ struct AddTodoView: View {
                 
                 //High Priority Toggle
                 Toggle("Hohe Priorität", isOn: $viewModel.isHighPriority)
+                    .padding(.vertical, 3)
                 
                 //Categeory Selection
                 Picker("Kategorie", selection: $viewModel.categorySelection) {
@@ -44,15 +45,18 @@ struct AddTodoView: View {
                                 }
                             }
                 .pickerStyle(.menu)
+                .padding(.vertical, 3)
                 
                 Button {
                     //Haptic Feedback on Tap
                     let impactHeavy = UIImpactFeedbackGenerator(style: .heavy)
                     impactHeavy.impactOccurred()
-                    //Safe
+                    Task { try await viewModel.save()}
+                    
                 } label: {
                     Text("hinzufügen")
                         .padding(.vertical, 2.5)
+                        .frame(maxWidth: .infinity, alignment: .center)
                     
                 }
                 .buttonStyle(.borderedProminent)
@@ -60,13 +64,13 @@ struct AddTodoView: View {
                 .cornerRadius(8)
                 .frame(maxWidth: .infinity, alignment: .center)
                 .padding(.vertical, 20)
-                .disabled(false)
+                .disabled(!viewModel.formIsValid())
                 
                 
                 
             }
             
-            .padding()
+            
            
             
             
@@ -78,6 +82,6 @@ struct AddTodoView: View {
 
 struct AddTodoView_Previews: PreviewProvider {
     static var previews: some View {
-        AddTodoView(category: Category(id: "dkfjddk213", name: "Swisscom", dateCreated: getCurrentDateString(), lastModified: getCurrentDateString()))
+        AddTaskView(category: Category(id: "dkfjddk213", name: "Swisscom", dateCreated: getCurrentDateString(), lastModified: getCurrentDateString()))
     }
 }

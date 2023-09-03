@@ -21,7 +21,7 @@ struct CategoryView: View {
         
                 List(categories, id: \.id) { category in
                     
-                    NavigationLink(destination: ToDoListView(category: category)) {
+                    NavigationLink(destination: TasklistView(category: category, currentUser: currentUser)) {
                         CategoryPreviewView(category: category)
                     }
                 }

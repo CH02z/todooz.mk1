@@ -7,7 +7,7 @@
 
 import Foundation
 
-class AddTodoViewModel: ObservableObject {
+class AddTaskViewModel: ObservableObject {
     
     
     @Published var title: String = ""
@@ -27,12 +27,21 @@ class AddTodoViewModel: ObservableObject {
         self.categorySelection = category.name
     }
     
-    func validateForm() -> Bool {
-        return false
+    func formIsValid() -> Bool {
+        guard !title.trimmingCharacters(in: .whitespaces).isEmpty else {
+            return false
+        }
         
+        guard dueDate > Date() else {
+            return false
+        }
+        
+        return true
     }
     
-    func save() {
+    func save() async throws {
+    
+        try await TaskService.shared.createTask(title: self.title, category: self.categorySelection, dueDate: self.dueDate, description: self.description, isHighPriority: self.isHighPriority)
         
     }
     

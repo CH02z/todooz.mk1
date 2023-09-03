@@ -17,7 +17,6 @@ struct ProfileView: View {
     
     let currentUser: User?
     
-    
     var body: some View {
         
         NavigationStack {
@@ -70,13 +69,7 @@ struct ProfileView: View {
                                 .padding(.top, 145)
                             
                         }
-                        
-                        
-                        
-                        
-                        
-                        
-                        
+   
                         VStack(spacing: 5) {
                             Text("\(user.firstName) \(user.lastName)")
                                 .bold()

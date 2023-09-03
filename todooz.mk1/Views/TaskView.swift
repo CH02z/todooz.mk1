@@ -7,12 +7,12 @@
 
 import SwiftUI
 
-struct TodoListItemView: View {
+struct TaskView: View {
     
     //@Binding var checked: Bool
     
     
-    var item: ToDoListItem
+    var item: Tasc
     
     var body: some View {
         
@@ -22,7 +22,7 @@ struct TodoListItemView: View {
                 Text(item.title)
                     .font(.body)
                     .fontWeight(.semibold)
-                Text(item.dateCreated!)
+                Text(item.dueDate)
                     
                     .foregroundColor(Color(.secondaryLabel))
             }
@@ -49,6 +49,6 @@ struct TodoListItemView: View {
 
 struct TodoListItemView_Previews: PreviewProvider {
     static var previews: some View {
-        TodoListItemView(item: ToDoListItem(id: "dfadf684923!", title: "CR1 neu starten", category: "Swisscom", dueDate: getCurrentDateString(), isDone: false, dateCreated: getCurrentDateString(), isHighPriority: false))
+        TaskView(item: Tasc(id: "dfadf684923!", title: "CR1 neu starten", category: "Swisscom", dueDate: getCurrentDateString(), isDone: false, dateCreated: getCurrentDateString(), isHighPriority: false))
     }
 }
