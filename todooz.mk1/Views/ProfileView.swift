@@ -19,9 +19,10 @@ struct ProfileView: View {
     
     var body: some View {
         
-        NavigationStack {
-            VStack {
-                if let user = currentUser {
+        if let user = currentUser {
+            
+            NavigationStack {
+                VStack {
                     VStack() {
                         
                         ZStack {
@@ -69,7 +70,7 @@ struct ProfileView: View {
                                 .padding(.top, 145)
                             
                         }
-   
+                        
                         VStack(spacing: 5) {
                             Text("\(user.firstName) \(user.lastName)")
                                 .bold()
@@ -102,48 +103,51 @@ struct ProfileView: View {
                         
                             .refreshable {
                                 Task { try await viewModel.loadUserProfileImage() }
+                                print(currentUser?.id)
                             }
                         
-      
                         Spacer()
                     }
                     
-                    
-                    
-                } else {
-                    LoadingView()
-                    Text("Something Went Wrong")
-                    Button {
-                        print("tapped logout")
-                        Task { await AuthService.shared.signOut() }
-                        
-                    } label: {
-                        Text("Emergency Logout")
-                            .frame(width: 330)
-                            .padding(.vertical, 2.5)
-                        
-                    }
-                    .buttonStyle(.borderedProminent)
-                    .accentColor(Color.red)
-                    .cornerRadius(8)
-                    .padding(.top, 10)
                 }
                 
                 
             }
+            .onAppear() {
+                Task { try await viewModel.loadUserProfileImage() }
+            }
             
             
+            
+            
+        } else {
+            LoadingView()
+            Text("Something Went Wrong")
+            Button {
+                print("tapped logout")
+                Task { await AuthService.shared.signOut() }
+                
+            } label: {
+                Text("Emergency Logout")
+                    .frame(width: 330)
+                    .padding(.vertical, 2.5)
+                
+            }
+            .buttonStyle(.borderedProminent)
+            .accentColor(Color.red)
+            .cornerRadius(8)
+            .padding(.top, 10)
         }
-        .onAppear() {
-            Task { try await viewModel.loadUserProfileImage() }
-        }
+        
+        
+        
     }
-        
     
-        
+    
+    
     
 }
-    
+
 
 
 

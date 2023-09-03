@@ -23,27 +23,33 @@ class TaskService {
     
     
     
-    func getStringFromDate(date: Date) -> String {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "d MMM YY, HH:mm:ss"
-        return dateFormatter.string(from: date)
-    }
-    
     
     @MainActor
-    func createTask(title: String, category: String, dueDate: Date, description: String, isHighPriority: Bool) async throws {
+    func createTask(title: String, category: String, dueDate: String?, description: String, isHighPriority: Bool) async throws {
+        
+        
         
         guard let uid = self.userID else { return }
         let newTask = Tasc(id: UUID().uuidString,
                            title: title,
                            category: category,
-                           dueDate: getStringFromDate(date: dueDate),
+                           dueDate: dueDate,
                            isDone: false,
-                           dateCreated: getStringFromDate(date: Date()),
+                           description: description,
+                           dateCreated: getStringFromDate(date: Date(), dateFormat: "d MMM YY, HH:mm:ss"),
                            isHighPriority: isHighPriority
         )
         try await Firestore.firestore().collection("users").document(uid).collection("tasks").document(newTask.id).setData(newTask.asDictionary())
         print("Task \(newTask.title) inserted to firestore")
+    }
+    
+    
+    func toggleTask(finishedTaskID: String, currentState: Bool) async throws {
+        guard let uid = self.userID else { return }
+        
+        try await Firestore.firestore().collection("users").document(uid).collection("tasks").document(finishedTaskID).setData([ "isDone": !currentState], merge: true)
+        print("Task with id \(finishedTaskID) was toggled")
+        
     }
     
     @MainActor
@@ -52,7 +58,7 @@ class TaskService {
         try await Firestore.firestore().collection("users").document(uid).collection("tasks").document(taskID).delete()
         print("Task with ID: \(taskID) deleted from firestore")
     }
-    
+        
     
     
 }

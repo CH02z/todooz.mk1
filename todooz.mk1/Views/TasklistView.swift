@@ -14,44 +14,27 @@ struct TasklistView: View {
     let category: Category
     let currentUser: User?
     
-    
     @State var showAddItemSheet: Bool = false
-    
+   
     
     @FirestoreQuery(collectionPath: "users") var tasks: [Tasc]
-    
     @ObservedObject var viewModel = TaskListViewModel()
     
-
-    
-    init(category: Category, currentUser: User?) {
-        
-        self.category = category
-        self.currentUser = currentUser
-        
-    }
     
     
-    /*
      
      //Test Data
-     var items: [Tasc] = TestData.todos
-     
-     var filteredItems: [Tasc] {
-     return items.filter { item in
-     return item.category == category.name
-     }
-     }
+     var testItems: [Tasc] = TestData.todos
      
      
-     */
+     
   
     var body: some View {
         NavigationStack {
             
             List {
                 ForEach(tasks) { item in
-                    TaskView(item: item)
+                    TaskViewPreview(item: item)
                         .swipeActions {
        
                             Button("löschen") {
@@ -59,20 +42,28 @@ struct TasklistView: View {
                             }
                             .tint(.red)
                         }
+                        
                 }
             
             }
             .refreshable {
+                let cat = self.category.name
                 $tasks.path = "users/\(self.currentUser?.id ?? "")/tasks"
-                //Task { _tasks = FirestoreQuery(collectionPath: "users/\(currentUser?.id)/tasks")
+                $tasks.predicates = [
+                    .isEqualTo("category", cat),
+                    .order(by: "dueDate", descending: true),
+                    .limit(to: 8)
+                    ]
             }
             
             
             .navigationTitle(category.name)
             
             .sheet(isPresented: $showAddItemSheet, content: {
-                AddTaskView(category: category)
+                AddTaskView(category: category, isPresented: $showAddItemSheet)
             })
+            
+            
             
             
             .toolbar {
@@ -111,8 +102,14 @@ struct TasklistView: View {
             
         }
         .onAppear() {
-            print("onapear ran")
+            //print("onapear ran")
+            let cat = self.category.name
             $tasks.path = "users/\(self.currentUser?.id ?? "")/tasks"
+            $tasks.predicates = [
+                .isEqualTo("category", cat),
+                .order(by: "dueDate", descending: true),
+                .limit(to: 8)
+                ]
         }
     }
         
