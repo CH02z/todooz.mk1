@@ -18,13 +18,12 @@ struct AddCategoryView: View {
             Text("Neue Kategorie")
                 .bold()
                 .font(.system(size: 32))
-                .padding(.top, 10)
+                .padding(.top, 30)
             
             Form {
                 //Title
                 TextField("Name", text: $viewModel.name)
                     .textFieldStyle(RoundTextFieldStyle())
-                    .padding(.horizontal, 20)
                     .submitLabel(.next)
                 
            
@@ -33,6 +32,7 @@ struct AddCategoryView: View {
                 
                 TextField("Beschreibung", text: $viewModel.description,  axis: .vertical)
                     .lineLimit(5...10)
+                    .textFieldStyle(RoundTextFieldStyle())
                 
                 
                 
@@ -46,7 +46,7 @@ struct AddCategoryView: View {
                 } label: {
                     Text("hinzufügen")
                         .padding(.vertical, 2.5)
-                        .frame(maxWidth: .infinity, alignment: .center)
+                        .frame(maxWidth: .infinity)
                     
                 }
                 .buttonStyle(.borderedProminent)

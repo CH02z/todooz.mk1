@@ -26,14 +26,14 @@ struct AddTaskView: View {
             Text("Neuer Task")
                 .bold()
                 .font(.system(size: 32))
-                .padding(.top, 10)
+                .padding(.top, 30)
             
             Form {
                 //Title
                 TextField("Titel", text: $viewModel.title)
                     .textFieldStyle(RoundTextFieldStyle())
-                    .padding(.horizontal, 20)
                     .submitLabel(.next)
+                    .frame(maxWidth: .infinity, alignment: .trailing)
                 
                 HStack {
                     Image(systemName: "calendar")
@@ -93,6 +93,7 @@ struct AddTaskView: View {
                 
                 TextField("Notizen", text: $viewModel.description,  axis: .vertical)
                     .lineLimit(5...10)
+                    .textFieldStyle(RoundTextFieldStyle())
                 
                 
                 //High Priority Toggle
@@ -118,7 +119,7 @@ struct AddTaskView: View {
                 } label: {
                     Text("hinzufügen")
                         .padding(.vertical, 2.5)
-                        .frame(maxWidth: .infinity, alignment: .center)
+                        .frame(maxWidth: .infinity)
                     
                 }
                 .buttonStyle(.borderedProminent)
@@ -126,6 +127,7 @@ struct AddTaskView: View {
                 .cornerRadius(8)
                 .frame(maxWidth: .infinity, alignment: .center)
                 .padding(.vertical, 20)
+                
                 .disabled(!viewModel.formIsValid())
               
             }
