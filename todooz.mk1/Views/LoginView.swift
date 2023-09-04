@@ -23,11 +23,11 @@ struct LoginView: View {
                 Spacer()
                 
                 
-                Image("Instagram-logo-text")
+                Image("todoozlogo_test1")
                     .resizable()
                     .scaledToFit()
                     .frame(width: 200)
-                    .padding(.bottom, 20)
+                    .padding(.bottom, 40)
                 
                 
                 TextField("Enter your Email", text: $email)
@@ -55,6 +55,9 @@ struct LoginView: View {
                 
                 
                 Button {
+                    //Haptic Feedback on Tap
+                    let impactHeavy = UIImpactFeedbackGenerator(style: .heavy)
+                    impactHeavy.impactOccurred()
                     viewModel.email = self.email
                     viewModel.password = self.password
                     Task { try await viewModel.login() }
@@ -88,6 +91,9 @@ struct LoginView: View {
                 
                 
                 Button(action: {
+                    //Haptic Feedback on Tap
+                    let impactHeavy = UIImpactFeedbackGenerator(style: .heavy)
+                    impactHeavy.impactOccurred()
                     Task { await viewModel.signInWithGoogle() }
                 }) {
                     HStack {
@@ -98,7 +104,7 @@ struct LoginView: View {
                         Text("Continue with Google")
                             .fontWeight(.semibold)
                             .font(.body)
-                            .foregroundColor(.black)
+                            .foregroundColor(.white)
                             .cornerRadius(10)
                     }
                     .padding(.horizontal, 50)
@@ -106,15 +112,18 @@ struct LoginView: View {
                     .foregroundColor(.white)
                     
                 }
-                .border(Color.gray, width: 1.5, cornerRadius: 20)
-                    .padding(.vertical, 5)
-                    .frame(width: 400)
+                .padding(.vertical, 8)
+                //.border(Color.gray, width: 1.5, cornerRadius: 20)
                 
                 Button(action: {
+                    //Haptic Feedback on Tap
+                    let impactHeavy = UIImpactFeedbackGenerator(style: .heavy)
+                    impactHeavy.impactOccurred()
+                    
                     print("apple button tapped!")
                 }) {
                     HStack {
-                        Image("Apple-logo-white")
+                        Image("Apple-logo-black")
                             .resizable()
                             .scaledToFit()
                             .frame(height: 20)
@@ -125,8 +134,8 @@ struct LoginView: View {
                     }
                     .padding(.horizontal, 70)
                     .padding(.vertical, 13)
-                    .background(.black)
-                    .foregroundColor(.white)
+                    .background(.white)
+                    .foregroundColor(.black)
                     
                 }
                 .cornerRadius(20)
