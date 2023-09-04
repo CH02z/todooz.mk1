@@ -12,14 +12,32 @@ struct AddTaskView: View {
     @StateObject var viewModel: AddTaskViewModel
     @Binding var isPresented: Bool
     
+    //Input Properties
+    let allCategories: [Category]
+    let originalCat: String
+    
+    //used for Picker
+    var categories: [String] = []
     
     
-    init(category: Category, isPresented: Binding<Bool>) {
-        self._viewModel = StateObject(wrappedValue: AddTaskViewModel(category: category))
+    
+    
+    init(isPresented: Binding<Bool>, allCategories: [Category], originalCat: String) {
+        self._viewModel = StateObject(wrappedValue: AddTaskViewModel(originalCat: originalCat))
         self._isPresented = isPresented
+        self.allCategories = allCategories
+        self.originalCat = originalCat
+        self.categories = allCategories.map({ category in
+            return category.name
+        })
         
     }
     
+    
+    
+    
+    
+    //"Swisscom", "Privat", "Todooz", "Allgemein"
     
     var body: some View {
         VStack {
@@ -102,8 +120,11 @@ struct AddTaskView: View {
                 
                 //Categeory Selection
                 Picker("Kategorie", selection: $viewModel.categorySelection) {
-                    ForEach(viewModel.TestCategories, id: \.self) {
-                                    Text($0)
+                    
+                    ForEach(categories, id: \.self){
+
+                        Text($0)
+
                                 }
                             }
                 .pickerStyle(.menu)
@@ -133,6 +154,9 @@ struct AddTaskView: View {
             }
   
         }
+        .onAppear() {
+         
+        }
         
         
     }
@@ -141,6 +165,6 @@ struct AddTaskView: View {
 struct AddTodoView_Previews: PreviewProvider {
     @State var isPresented: Bool = false
     static var previews: some View {
-        AddTaskView(category: Category(id: "dkfjddk213", name: "Swisscom", dateCreated: getCurrentDateString(), lastModified: getCurrentDateString()), isPresented: .constant(true) )
+        AddTaskView(isPresented: .constant(true), allCategories: [Category(id: "dkfjddk213", name: "Swisscom", dateCreated: getCurrentDateString(), lastModified: getCurrentDateString())], originalCat: "Swisscom" )
     }
 }

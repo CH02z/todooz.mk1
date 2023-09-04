@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import FirebaseFirestoreSwift
 
 class AddTaskViewModel: ObservableObject {
     
@@ -21,14 +22,13 @@ class AddTaskViewModel: ObservableObject {
     
     @Published var categorySelection = ""
     
-    let TestCategories = ["Swisscom", "Privat", "Todooz", "Allgemein"]
-    
     
     
     @Published var errorMessage: String = ""
     
-    init(category: Category) {
-        self.categorySelection = category.name
+    init(originalCat: String) {
+        print("selection set to \(originalCat)")
+        self.categorySelection = originalCat
     }
     
     func formIsValid() -> Bool {

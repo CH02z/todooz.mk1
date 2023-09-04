@@ -16,21 +16,27 @@ struct CategoryView: View {
     @State var showAddCategorySheet: Bool = false
     @FirestoreQuery(collectionPath: "users") var categories: [Category]
     
-    var TestCategories: [Category] = TestData.categories
+    //var TestCategories: [Category] = TestData.categories
     
     
     
     var body: some View {
         
         if let user = currentUser {
-            
+         
             NavigationStack {
-                
+  
                 VStack(alignment: .leading) {
                     
+                    StandardCategoryPreviewView(currentUser: user)
+                        .padding(.top, 20)
+                        .padding()
+                        //.frame(maxWidth: .infinity, alignment: .center)
+                    
                     List{
-                        ForEach(TestCategories) { category in
-                            NavigationLink(destination: TasklistView(category: category, currentUser: currentUser)) {
+                        ForEach(categories) { category in
+                            NavigationLink(destination: TasklistView(category: category, allCategories: categories, currentUser: currentUser)) {
+                                //Displayed List Item Design:
                                 CategoryPreviewView(category: category, currentUser: self.currentUser )
                             }
                         }
@@ -40,18 +46,13 @@ struct CategoryView: View {
                         $categories.path = "users/\(user.id)/categories"
                         $categories.predicates = [
                             //.isEqualTo("category", cat),
-                            .order(by: "name", descending: true),
+                            .order(by: "dateCreated", descending: false),
                             .limit(to: 8)
                         ]
                     }
                     .sheet(isPresented: $showAddCategorySheet, content: {
                         AddCategoryView(isPresented: $showAddCategorySheet)
                     })
-                    
-                    
-                    
-                    
-                    
                 }
                 
                 .navigationTitle("Kategorien")
@@ -94,7 +95,7 @@ struct CategoryView: View {
                 $categories.path = "users/\(user.id)/categories"
                 $categories.predicates = [
                     //.isEqualTo("category", cat),
-                    .order(by: "name", descending: true),
+                    .order(by: "dateCreated", descending: false),
                     .limit(to: 8)
                 ]
             }
@@ -105,9 +106,7 @@ struct CategoryView: View {
             LoadingView()
             
         }
-    }
-    
-    
+    } 
 }
 
 

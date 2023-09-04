@@ -43,7 +43,7 @@ struct TaskViewPreview: View {
             Spacer()
             
             Image(systemName: item.isDone ? "checkmark.circle" : "circle")
-                .foregroundColor(item.isDone ? Color.purple : Color.purple)
+                .foregroundColor(Color.purple)
                 .font(.system(size: 30))
                 .onTapGesture {
                     //Haptic Feedback on Tap

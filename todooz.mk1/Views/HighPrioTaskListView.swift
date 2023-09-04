@@ -9,11 +9,8 @@ import SwiftUI
 import FirebaseFirestoreSwift
 import FirebaseAuth
 
-struct TasklistView: View {
+struct HighPrioTaskListView: View {
     
-    let category: Category
-    
-    let allCategories: [Category]
     let currentUser: User?
     
     @State var showAddItemSheet: Bool = false
@@ -49,21 +46,17 @@ struct TasklistView: View {
             
             }
             .refreshable {
-                let cat = self.category.name
+                //let cat = self.category.name
                 $tasks.path = "users/\(self.currentUser?.id ?? "")/tasks"
                 $tasks.predicates = [
-                    .isEqualTo("category", cat),
+                    .isEqualTo("isHighPriority", true),
                     .order(by: "dueDate", descending: true),
                     //.limit(to: 8)
                     ]
             }
             
             
-            .navigationTitle(category.name)
-            
-            .sheet(isPresented: $showAddItemSheet, content: {
-                AddTaskView(isPresented: $showAddItemSheet, allCategories: allCategories, originalCat: category.name)
-            })
+            .navigationTitle("Hohe Priorität")
             
             
             
@@ -80,35 +73,15 @@ struct TasklistView: View {
                 }
             }
             
-            .safeAreaInset(edge: .bottom, alignment: .center) {
-                Button{
-                    //Haptic Feedback on Tap
-                    let impactHeavy = UIImpactFeedbackGenerator(style: .heavy)
-                    impactHeavy.impactOccurred()
-                    
-                    self.showAddItemSheet = true
-                } label: {
-                    Label("hinzufügen", systemImage: "plus")
-                        .bold()
-                        .font(.title2)
-                        .padding(8)
-                        .background(.gray.opacity(0.1),
-                                    in: Capsule())
-                        .padding(.leading)
-                        .symbolVariant(.circle.fill)
-                }
-            }
-            .padding(.bottom, 10)
-            
             
             
         }
         .onAppear() {
             //print("onapear ran")
-            let cat = self.category.name
+            //let cat = self.category.name
             $tasks.path = "users/\(self.currentUser?.id ?? "")/tasks"
             $tasks.predicates = [
-                .isEqualTo("category", cat),
+                .isEqualTo("isHighPriority", true),
                 .order(by: "dueDate", descending: true),
                 //.limit(to: 8)
                 ]
@@ -121,8 +94,8 @@ struct TasklistView: View {
 
 
 
-struct ToDoListView_Previews: PreviewProvider {
+struct HighPrioTaskListView_Previews: PreviewProvider {
     static var previews: some View {
-        TasklistView(category: Category(id: "dkfjddk213", name: "Swisscom", dateCreated: getCurrentDateString()), allCategories: [], currentUser: User(id: "234j3i4j34kl3j43l", firstName: "Chris", lastName: "Zimmermann", email: "chris.zimmermann@hotmail.ch", joined: Date().timeIntervalSince1970))
+        HighPrioTaskListView(currentUser: User(id: "234j3i4j34kl3j43l", firstName: "Chris", lastName: "Zimmermann", email: "chris.zimmermann@hotmail.ch", joined: Date().timeIntervalSince1970))
     }
 }

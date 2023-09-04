@@ -27,6 +27,8 @@
 		83BB2EC02A9E76E00079A680 /* FirebaseFirestoreSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 83BB2EBF2A9E76E00079A680 /* FirebaseFirestoreSwift */; };
 		83BB2EC22A9E76E00079A680 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 83BB2EC12A9E76E00079A680 /* FirebaseStorage */; };
 		83BB2EC42A9E76E00079A680 /* FirebaseStorageCombine-Community in Frameworks */ = {isa = PBXBuildFile; productRef = 83BB2EC32A9E76E00079A680 /* FirebaseStorageCombine-Community */; };
+		83CDAF882AA64E1D00AF09AA /* StandardCategoryPreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83CDAF872AA64E1D00AF09AA /* StandardCategoryPreviewView.swift */; };
+		83CDAF8A2AA6695200AF09AA /* HighPrioTaskListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83CDAF892AA6695200AF09AA /* HighPrioTaskListView.swift */; };
 		83D60C0C2A9A4C2D00723215 /* todooz_mk1App.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83D60C0B2A9A4C2D00723215 /* todooz_mk1App.swift */; };
 		83D60C0E2A9A4C2D00723215 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83D60C0D2A9A4C2D00723215 /* MainView.swift */; };
 		83D60C102A9A4C2E00723215 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 83D60C0F2A9A4C2E00723215 /* Assets.xcassets */; };
@@ -69,6 +71,8 @@
 		83B486B72AA51A630017CE91 /* AddCategoryView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddCategoryView.swift; sourceTree = "<group>"; };
 		83B486B92AA51AA50017CE91 /* AddCategoryViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddCategoryViewModel.swift; sourceTree = "<group>"; };
 		83BB2EB42A9E72F20079A680 /* ProfileService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileService.swift; sourceTree = "<group>"; };
+		83CDAF872AA64E1D00AF09AA /* StandardCategoryPreviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StandardCategoryPreviewView.swift; sourceTree = "<group>"; };
+		83CDAF892AA6695200AF09AA /* HighPrioTaskListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HighPrioTaskListView.swift; sourceTree = "<group>"; };
 		83D60C082A9A4C2D00723215 /* todooz.mk1.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = todooz.mk1.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		83D60C0B2A9A4C2D00723215 /* todooz_mk1App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = todooz_mk1App.swift; sourceTree = "<group>"; };
 		83D60C0D2A9A4C2D00723215 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
@@ -173,11 +177,13 @@
 				83D60C362A9A593000723215 /* CategoryView.swift */,
 				83D60C382A9A596300723215 /* ProfileView.swift */,
 				83E2540D2AA1186700D400A3 /* TasklistView.swift */,
+				83CDAF892AA6695200AF09AA /* HighPrioTaskListView.swift */,
 				83E254112AA11B6A00D400A3 /* SettingsView.swift */,
 				83B486A92AA275420017CE91 /* TaskViewPreview.swift */,
 				83B486AB2AA31E210017CE91 /* AddTaskView.swift */,
 				83B486B72AA51A630017CE91 /* AddCategoryView.swift */,
 				83B486B12AA49AD90017CE91 /* TaskDetailView.swift */,
+				83CDAF872AA64E1D00AF09AA /* StandardCategoryPreviewView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -328,6 +334,7 @@
 				83B486AC2AA31E210017CE91 /* AddTaskView.swift in Sources */,
 				83B486B62AA5154D0017CE91 /* CategoryService.swift in Sources */,
 				83B486B22AA49AD90017CE91 /* TaskDetailView.swift in Sources */,
+				83CDAF882AA64E1D00AF09AA /* StandardCategoryPreviewView.swift in Sources */,
 				83B486A82AA262890017CE91 /* TaskListViewModel.swift in Sources */,
 				83D60C0E2A9A4C2D00723215 /* MainView.swift in Sources */,
 				83D60C2F2A9A560D00723215 /* FinalRegistrationView.swift in Sources */,
@@ -343,6 +350,7 @@
 				83B486AE2AA321940017CE91 /* AddTaskViewModel.swift in Sources */,
 				83D60C3F2A9A5E5A00723215 /* Tasc.swift in Sources */,
 				83D60C352A9A57CF00723215 /* RegistrationViewModel.swift in Sources */,
+				83CDAF8A2AA6695200AF09AA /* HighPrioTaskListView.swift in Sources */,
 				83D60C292A9A559600723215 /* LoginView.swift in Sources */,
 				83B486AA2AA275420017CE91 /* TaskViewPreview.swift in Sources */,
 				83E2540E2AA1186700D400A3 /* TasklistView.swift in Sources */,
