@@ -31,12 +31,6 @@ class AddCategoryViewModel: ObservableObject {
     func save() async throws {
         
         try await CategoryService.shared.createCategory(name: self.name, description: self.description, iconColor: "*7384djd")
-        
-      
-        //let DateNoTime = self.dueDate.removeTimeStamp()
-        //let DateString = getStringFromDate(date: DateNoTime!, dateFormat: "dd.MM.yyyy")
-        //try await TaskService.shared.createTask(title: self.title, category: self.categorySelection, dueDate: DateString, description: self.description, isHighPriority: self.isHighPriority)
-       
     
         
         

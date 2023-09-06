@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		83048E4E2A9BBC4F003F1C59 /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = 83048E4D2A9BBC4F003F1C59 /* GoogleSignIn */; };
 		83048E502A9BBC4F003F1C59 /* GoogleSignInSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 83048E4F2A9BBC4F003F1C59 /* GoogleSignInSwift */; };
+		837362642AA79AD9000548D9 /* TodayTaskListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 837362632AA79AD9000548D9 /* TodayTaskListView.swift */; };
 		83B486A82AA262890017CE91 /* TaskListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83B486A72AA262890017CE91 /* TaskListViewModel.swift */; };
 		83B486AA2AA275420017CE91 /* TaskViewPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83B486A92AA275420017CE91 /* TaskViewPreview.swift */; };
 		83B486AC2AA31E210017CE91 /* AddTaskView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83B486AB2AA31E210017CE91 /* AddTaskView.swift */; };
@@ -60,6 +61,7 @@
 
 /* Begin PBXFileReference section */
 		83048E512A9BBCA1003F1C59 /* todooz-mk1-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "todooz-mk1-Info.plist"; sourceTree = SOURCE_ROOT; };
+		837362632AA79AD9000548D9 /* TodayTaskListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TodayTaskListView.swift; sourceTree = "<group>"; };
 		83B486A72AA262890017CE91 /* TaskListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskListViewModel.swift; sourceTree = "<group>"; };
 		83B486A92AA275420017CE91 /* TaskViewPreview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskViewPreview.swift; sourceTree = "<group>"; };
 		83B486AB2AA31E210017CE91 /* AddTaskView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTaskView.swift; sourceTree = "<group>"; };
@@ -178,6 +180,7 @@
 				83D60C382A9A596300723215 /* ProfileView.swift */,
 				83E2540D2AA1186700D400A3 /* TasklistView.swift */,
 				83CDAF892AA6695200AF09AA /* HighPrioTaskListView.swift */,
+				837362632AA79AD9000548D9 /* TodayTaskListView.swift */,
 				83E254112AA11B6A00D400A3 /* SettingsView.swift */,
 				83B486A92AA275420017CE91 /* TaskViewPreview.swift */,
 				83B486AB2AA31E210017CE91 /* AddTaskView.swift */,
@@ -340,6 +343,7 @@
 				83D60C2F2A9A560D00723215 /* FinalRegistrationView.swift in Sources */,
 				83B486BA2AA51AA50017CE91 /* AddCategoryViewModel.swift in Sources */,
 				83B486B82AA51A630017CE91 /* AddCategoryView.swift in Sources */,
+				837362642AA79AD9000548D9 /* TodayTaskListView.swift in Sources */,
 				83E254102AA1188600D400A3 /* CategoryViewModel.swift in Sources */,
 				83D60C412A9A659A00723215 /* LoginViewModel.swift in Sources */,
 				83D60C392A9A596300723215 /* ProfileView.swift in Sources */,

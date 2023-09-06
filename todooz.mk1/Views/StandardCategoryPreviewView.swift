@@ -16,7 +16,7 @@ struct StandardCategoryPreviewView: View {
         
         HStack {
             
-            NavigationLink(destination: Text("Today View")) {
+            NavigationLink(destination: TodayTaskListView(currentUser: currentUser)) {
                 HStack {
                     VStack {
                         Image(systemName: "calendar.badge.exclamationmark")

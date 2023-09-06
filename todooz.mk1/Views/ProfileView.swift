@@ -10,12 +10,29 @@ import PhotosUI
 
 struct ProfileView: View {
     
-    @ObservedObject var viewModel = ProfileViewViewModel()
+    @StateObject var viewModel: ProfileViewViewModel
     
     // Try move this to View Model
     @State private var selectedPickerItem: PhotosPickerItem?
     
+    @State var avatarImage: UIImage?
+    @State var avatarMemojiImage: UIImage = UIImage(named: "memoji_white")!
+    
+    
     let currentUser: User?
+    
+    
+    init(currentUser: User?) {
+        self._viewModel = StateObject(wrappedValue: ProfileViewViewModel())
+        self.currentUser = currentUser
+        
+    }
+    
+    
+    private func loadUserImage() async throws {
+        try await Task.sleep(seconds: 0.5)
+        self.avatarImage = try await viewModel.loadUserProfileImage()
+    }
     
     var body: some View {
         
@@ -27,8 +44,8 @@ struct ProfileView: View {
                         
                         ZStack {
                             
-                            if let image = viewModel.avatarImage {
-                                Image(uiImage: image)
+                            
+                            Image(uiImage: self.avatarImage ?? avatarMemojiImage)
                                     .resizable()
                                     .scaledToFit()
                                     .aspectRatio(contentMode: .fill)
@@ -37,17 +54,7 @@ struct ProfileView: View {
                                     .overlay(Circle().stroke(Color.white, lineWidth: 4))
                                     .shadow(radius: 10)
                                     .padding(.top, 30)
-                            } else {
-                                Image("memoji_white")
-                                    .resizable()
-                                    .scaledToFit()
-                                    .aspectRatio(contentMode: .fill)
-                                    .frame(width: 150, height: 150)
-                                    .clipShape(Circle())
-                                    .overlay(Circle().stroke(Color.white, lineWidth: 4))
-                                    .shadow(radius: 10)
-                                    .padding(.top, 30)
-                            }
+                            
                             
                             PhotosPicker(selection: $selectedPickerItem, matching: .images) {
                                 Circle()
@@ -102,8 +109,7 @@ struct ProfileView: View {
                             }
                         
                             .refreshable {
-                                Task { try await viewModel.loadUserProfileImage() }
-                                print(currentUser?.id)
+                                Task { try await self.loadUserImage() }
                             }
                         
                         Spacer()
@@ -114,7 +120,10 @@ struct ProfileView: View {
                 
             }
             .onAppear() {
-                Task { try await viewModel.loadUserProfileImage() }
+                Task { @MainActor in
+                    try await Task.sleep(seconds: 4.0)
+                    try await self.loadUserImage()
+                }
             }
             
             

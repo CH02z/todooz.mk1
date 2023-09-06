@@ -12,11 +12,14 @@ import FirebaseAuth
 struct CategoryView: View {
     
     let currentUser: User?
+    @State var avatarImage: UIImage?
     
+    @ObservedObject var viewModel = CategoryViewModel()
     @State var showAddCategorySheet: Bool = false
     @FirestoreQuery(collectionPath: "users") var categories: [Category]
     
     //var TestCategories: [Category] = TestData.categories
+
     
     
     
@@ -82,7 +85,7 @@ struct CategoryView: View {
                             .bold()
                             .font(.title2)
                             .padding(8)
-                            .background(.gray.opacity(0.1),
+                            .background(.black,
                                         in: Capsule())
                             .padding(.leading)
                             .symbolVariant(.circle.fill)

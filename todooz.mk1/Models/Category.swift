@@ -31,6 +31,31 @@ func getStringFromDate(date: Date, dateFormat: String) -> String {
     return dateFormatter.string(from: date)
 }
 
+func getDateFromString(dateString: String) -> Date {
+    let dateFormatter = DateFormatter()
+    if dateString.count > 11 {
+        dateFormatter.dateFormat = "dd.MM.yyyy, HH:mm"
+    } else {
+        print("Dateformater in short format set")
+        dateFormatter.dateFormat = "dd.MM.yyyy"
+    }
+    //"dd.MM.yyyy"
+    //"dd.MM.yyyy, HH:mm"
+    
+    //print("print in Dateformater: \(dateFormatter.date(from: dateString) ?? Date())")
+    print("input String: \(dateString) and Date objecct produded: \(dateFormatter.date(from: dateString))")
+    return dateFormatter.date(from: dateString) ?? Date()
+}
+
+func isSameDay(date1: Date, date2: Date) -> Bool {
+    let diff = Calendar.current.dateComponents([.day], from: date1, to: date2)
+    if diff.day == 0 {
+        return true
+    } else {
+        return false
+    }
+}
+
 
 class TestData {
     static let categories: [Category] = [

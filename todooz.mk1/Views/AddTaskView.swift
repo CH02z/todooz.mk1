@@ -30,7 +30,6 @@ struct AddTaskView: View {
         self.categories = allCategories.map({ category in
             return category.name
         })
-        
     }
     
     
@@ -47,6 +46,7 @@ struct AddTaskView: View {
                 .padding(.top, 30)
             
             Form {
+                
                 //Title
                 TextField("Titel", text: $viewModel.title)
                     .textFieldStyle(RoundTextFieldStyle())
@@ -165,6 +165,6 @@ struct AddTaskView: View {
 struct AddTodoView_Previews: PreviewProvider {
     @State var isPresented: Bool = false
     static var previews: some View {
-        AddTaskView(isPresented: .constant(true), allCategories: [Category(id: "dkfjddk213", name: "Swisscom", dateCreated: getCurrentDateString(), lastModified: getCurrentDateString())], originalCat: "Swisscom" )
+        AddTaskView(isPresented: .constant(true), allCategories: [Category(id: "dkfjddk213", name: "Swisscom", dateCreated: getCurrentDateString(), lastModified: getCurrentDateString())], originalCat: "Swisscom")
     }
 }

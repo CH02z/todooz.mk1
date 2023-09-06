@@ -15,6 +15,9 @@ class AddTaskViewModel: ObservableObject {
     @Published var letPickDate: Bool = false
     @Published var letPickDateAndTime: Bool = false
     
+    
+    @Published var taskID: String = ""
+    
     @Published var title: String = ""
     @Published var dueDate: Date = Date()
     @Published var description: String = ""
