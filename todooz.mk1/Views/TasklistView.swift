@@ -26,7 +26,7 @@ struct TasklistView: View {
     
      
      //Test Data
-     var testItems: [Tasc] = TestData.todos
+     var testItems: [Tasc] = TestData.tasks
      
      
      
@@ -36,7 +36,7 @@ struct TasklistView: View {
             
             List {
                 ForEach(tasks) { item in
-                    TaskViewPreview(item: item)
+                    TaskViewPreview(item: item, allCategories: allCategories)
                         .swipeActions {
        
                             Button("löschen") {
@@ -123,6 +123,6 @@ struct TasklistView: View {
 
 struct ToDoListView_Previews: PreviewProvider {
     static var previews: some View {
-        TasklistView(category: Category(id: "dkfjddk213", name: "Swisscom", dateCreated: getCurrentDateString()), allCategories: [], currentUser: User(id: "234j3i4j34kl3j43l", firstName: "Chris", lastName: "Zimmermann", email: "chris.zimmermann@hotmail.ch", joined: Date().timeIntervalSince1970))
+        TasklistView(category: TestData.categories[0], allCategories: [], currentUser: TestData.users[0])
     }
 }

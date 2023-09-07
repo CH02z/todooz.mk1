@@ -13,8 +13,11 @@ struct TaskViewPreview: View {
     
     @State var showDetailTaskSheet: Bool = false
     
-    
     var item: Tasc
+    let allCategories: [Category]
+    
+    
+    
     
     var body: some View {
         
@@ -57,7 +60,7 @@ struct TaskViewPreview: View {
         .frame(height: 40)
         .sheet(isPresented: $showDetailTaskSheet, content: {
             
-            TaskDetailView(task: item)
+            DetailTaskView(task: item, allCategories: allCategories)
         })
         
         
@@ -66,6 +69,6 @@ struct TaskViewPreview: View {
 
 struct TodoListItemView_Previews: PreviewProvider {
     static var previews: some View {
-        TaskViewPreview(item: Tasc(id: "dfadf684923!", title: "CR1 neu starten", category: "Swisscom", dueDate: getCurrentDateString(), isDone: false, dateCreated: getCurrentDateString(), isHighPriority: false))
+        TaskViewPreview(item: TestData.tasks[1], allCategories: [TestData.categories[0]])
     }
 }

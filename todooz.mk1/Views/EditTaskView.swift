@@ -7,14 +7,10 @@
 
 import SwiftUI
 
-struct AddTaskView: View {
+struct EditTaskView: View {
     
-    @StateObject var viewModel: AddTaskViewModel
+    @StateObject var viewModel: EditTaskViewModel
     @Binding var isPresented: Bool
-    
-    //Input Properties
-    let allCategories: [Category]
-    let originalCat: String
     
     //used for Picker
     var categories: [String] = []
@@ -22,11 +18,9 @@ struct AddTaskView: View {
     
     
     
-    init(isPresented: Binding<Bool>, allCategories: [Category], originalCat: String) {
-        self._viewModel = StateObject(wrappedValue: AddTaskViewModel(originalCat: originalCat))
+    init(isPresented: Binding<Bool>, allCategories: [Category], editTask: Tasc) {
+        self._viewModel = StateObject(wrappedValue: EditTaskViewModel(taskID: editTask.id, title: editTask.title, category: editTask.category, dueDate: editTask.dueDate ?? "", description: editTask.description ?? "", isHighPriority: editTask.isHighPriority))
         self._isPresented = isPresented
-        self.allCategories = allCategories
-        self.originalCat = originalCat
         self.categories = allCategories.map({ category in
             return category.name
         })
@@ -40,7 +34,7 @@ struct AddTaskView: View {
     
     var body: some View {
         VStack {
-            Text("Neuer Task")
+            Text("Task bearbeiten")
                 .bold()
                 .font(.system(size: 32))
                 .padding(.top, 30)
@@ -162,9 +156,9 @@ struct AddTaskView: View {
     }
 }
 
-struct AddTodoView_Previews: PreviewProvider {
+struct EditTodoView_Previews: PreviewProvider {
     @State var isPresented: Bool = false
     static var previews: some View {
-        AddTaskView(isPresented: .constant(true), allCategories: [TestData.categories[0]], originalCat: "Swisscom")
+        EditTaskView(isPresented: .constant(true), allCategories: [TestData.categories[0]], editTask: TestData.tasks[0])
     }
 }

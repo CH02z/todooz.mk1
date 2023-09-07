@@ -43,6 +43,14 @@ class TaskService {
         print("Task \(newTask.title) inserted to firestore")
     }
     
+    func editTask(taskID: String, title: String, category: String, dueDate: String?, description: String, isHighPriority: Bool) async throws {
+        
+        guard let uid = self.userID else { return }
+        try await Firestore.firestore().collection("users").document(uid).collection("tasks").document(taskID).setData([ "title": title, "category": category, "dueDate": dueDate ?? "", "description": description, "isHighPriority": isHighPriority], merge: true)
+        print("Task \(title) updated in Firestore")
+    }
+    
+    
     
     func toggleTask(finishedTaskID: String, currentState: Bool) async throws {
         guard let uid = self.userID else { return }

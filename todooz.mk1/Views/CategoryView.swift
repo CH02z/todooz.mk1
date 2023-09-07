@@ -31,7 +31,7 @@ struct CategoryView: View {
   
                 VStack(alignment: .leading) {
                     
-                    StandardCategoryPreviewView(currentUser: user)
+                    StandardCategoryPreviewView(currentUser: user, allCategories: categories)
                         .padding(.top, 20)
                         .padding()
                         //.frame(maxWidth: .infinity, alignment: .center)
@@ -151,6 +151,6 @@ struct CategoryPreviewView: View {
 
 struct CategoryView_Previews: PreviewProvider {
     static var previews: some View {
-        CategoryView(currentUser: User(id: "234j3i4j34kl3j43l", firstName: "Chris", lastName: "Zimmermann", email: "chris.zimmermann@hotmail.ch", joined: Date().timeIntervalSince1970))
+        CategoryView(currentUser: TestData.users[0])
     }
 }

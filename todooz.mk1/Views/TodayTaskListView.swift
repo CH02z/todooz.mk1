@@ -12,6 +12,7 @@ import FirebaseAuth
 struct TodayTaskListView: View {
     
     let currentUser: User?
+    let allCategories: [Category]
     
     @State var showAddItemSheet: Bool = false
     @State var filteredByDateTasks: [Tasc] = []
@@ -34,7 +35,7 @@ struct TodayTaskListView: View {
             
             List {
                 ForEach(filteredByDateTasks) { item in
-                    TaskViewPreview(item: item)
+                    TaskViewPreview(item: item, allCategories: allCategories)
                         .swipeActions {
                             
                             Button("löschen") {
@@ -116,6 +117,6 @@ struct TodayTaskListView: View {
 
 struct TodayTaskListViewPreview: PreviewProvider {
     static var previews: some View {
-        TodayTaskListView(currentUser: User(id: "234j3i4j34kl3j43l", firstName: "Chris", lastName: "Zimmermann", email: "chris.zimmermann@hotmail.ch", joined: Date().timeIntervalSince1970))
+        TodayTaskListView(currentUser: TestData.users[0], allCategories: [TestData.categories[0]])
     }
 }

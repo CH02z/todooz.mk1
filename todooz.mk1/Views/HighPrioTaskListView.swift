@@ -12,6 +12,7 @@ import FirebaseAuth
 struct HighPrioTaskListView: View {
     
     let currentUser: User?
+    let allCategories: [Category]
     
     @State var showAddItemSheet: Bool = false
    
@@ -23,7 +24,7 @@ struct HighPrioTaskListView: View {
     
      
      //Test Data
-     var testItems: [Tasc] = TestData.todos
+     var testItems: [Tasc] = TestData.tasks
      
      
      
@@ -33,7 +34,7 @@ struct HighPrioTaskListView: View {
             
             List {
                 ForEach(tasks) { item in
-                    TaskViewPreview(item: item)
+                    TaskViewPreview(item: item, allCategories: allCategories)
                         .swipeActions {
        
                             Button("löschen") {
@@ -96,6 +97,6 @@ struct HighPrioTaskListView: View {
 
 struct HighPrioTaskListView_Previews: PreviewProvider {
     static var previews: some View {
-        HighPrioTaskListView(currentUser: User(id: "234j3i4j34kl3j43l", firstName: "Chris", lastName: "Zimmermann", email: "chris.zimmermann@hotmail.ch", joined: Date().timeIntervalSince1970))
+        HighPrioTaskListView(currentUser: TestData.users[0], allCategories: [TestData.categories[0]])
     }
 }

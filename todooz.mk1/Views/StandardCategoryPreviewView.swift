@@ -11,12 +11,13 @@ struct StandardCategoryPreviewView: View {
     
 
     let currentUser: User?
+    let allCategories: [Category]
     
     var body: some View {
         
         HStack {
             
-            NavigationLink(destination: TodayTaskListView(currentUser: currentUser)) {
+            NavigationLink(destination: TodayTaskListView(currentUser: currentUser, allCategories: allCategories)) {
                 HStack {
                     VStack {
                         Image(systemName: "calendar.badge.exclamationmark")
@@ -52,7 +53,7 @@ struct StandardCategoryPreviewView: View {
             Spacer()
             
             
-            NavigationLink(destination: HighPrioTaskListView(currentUser: currentUser)) {
+            NavigationLink(destination: HighPrioTaskListView(currentUser: currentUser, allCategories: allCategories)) {
                 HStack {
                     VStack {
                         Image(systemName: "exclamationmark.circle")
@@ -95,6 +96,6 @@ struct StandardCategoryPreviewView: View {
 
 struct StandardCategorieView_Previews: PreviewProvider {
     static var previews: some View {
-        StandardCategoryPreviewView(currentUser: User(id: "234j3i4j34kl3j43l", firstName: "Chris", lastName: "Zimmermann", email: "chris.zimmermann@hotmail.ch", joined: Date().timeIntervalSince1970))
+        StandardCategoryPreviewView(currentUser: TestData.users[0], allCategories: [TestData.categories[0]])
     }
 }
