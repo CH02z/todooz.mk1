@@ -77,11 +77,13 @@ struct AddTaskView: View {
                 
                 //Due Data
                 if viewModel.letPickDate && !viewModel.letPickDateAndTime {
+                    Text("Zu erldigen bis:")
                     DatePicker("Zu erledigen bis", selection: $viewModel.dueDate, displayedComponents: .date)
                         .datePickerStyle(GraphicalDatePickerStyle())
                 }
                 
                 if viewModel.letPickDate && viewModel.letPickDateAndTime {
+                    Text("Zu erldigen bis:")
                     DatePicker("Zu erledigen bis", selection: $viewModel.dueDate)
                         .datePickerStyle(GraphicalDatePickerStyle())
                 }
@@ -162,7 +164,7 @@ struct AddTaskView: View {
     }
 }
 
-struct AddTodoView_Previews: PreviewProvider {
+struct AddTaskView_Previews: PreviewProvider {
     @State var isPresented: Bool = false
     static var previews: some View {
         AddTaskView(isPresented: .constant(true), allCategories: [TestData.categories[0]], originalCat: "Swisscom")

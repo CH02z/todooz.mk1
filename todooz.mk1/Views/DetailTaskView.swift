@@ -59,9 +59,9 @@ struct DetailTaskView: View {
             .buttonStyle(.borderedProminent)
             .accentColor(Color.blue)
             .cornerRadius(8)
-            .frame(maxWidth: .infinity, alignment: .center)
-            .padding(.vertical, 20)
-            
+            .padding(.leading, 30)
+            .padding(.trailing, 30)
+            .padding(.bottom, 20)
             .disabled(task.isDone)
             
             

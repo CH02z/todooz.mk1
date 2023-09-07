@@ -32,19 +32,33 @@ func getStringFromDate(date: Date, dateFormat: String) -> String {
 }
 
 func getDateFromString(dateString: String) -> Date {
-    let dateFormatter = DateFormatter()
-    if dateString.count > 11 {
-        dateFormatter.dateFormat = "dd.MM.yyyy, HH:mm"
+    if dateString != "" {
+        let dateFormatter = DateFormatter()
+        dateFormatter.timeZone = TimeZone(abbreviation: "CEST")
+        if dateString.count > 11 {
+            print("Dateformater in long format set for \(dateString)")
+            dateFormatter.dateFormat = "dd.MM.yyyy, HH:mm"
+            let correctHourDate = Calendar.current.date(byAdding: .hour, value: 2, to: dateFormatter.date(from: dateString)!)!
+            print("input String: \(dateString) and Date objecct produded: \(correctHourDate))")
+            return correctHourDate
+        } else {
+            print("Dateformater in short format set for \(dateString)")
+            dateFormatter.dateFormat = "dd.MM.yyyy"
+            let correctHourDate = Calendar.current.date(byAdding: .hour, value: 2, to: dateFormatter.date(from: dateString)!)!
+            return Calendar.current.date(byAdding: .day, value: 1, to: correctHourDate)!
+        }
     } else {
-        print("Dateformater in short format set")
-        dateFormatter.dateFormat = "dd.MM.yyyy"
+        print("empty input datestring, returning date()")
+        return Date()
     }
+    
+    
     //"dd.MM.yyyy"
     //"dd.MM.yyyy, HH:mm"
     
     //print("print in Dateformater: \(dateFormatter.date(from: dateString) ?? Date())")
-    print("input String: \(dateString) and Date objecct produded: \(dateFormatter.date(from: dateString))")
-    return dateFormatter.date(from: dateString) ?? Date()
+    //print("input String: \(dateString) and Date objecct produded: \(dateFormatter.date(from: dateString))")
+    
 }
 
 func isSameDay(date1: Date, date2: Date) -> Bool {
@@ -59,10 +73,10 @@ func isSameDay(date1: Date, date2: Date) -> Bool {
 
 class TestData {
     static let categories: [Category] = [
-        Category(id: "dkfjddk213", name: "Swisscom", dateCreated: getCurrentDateString(), lastModified: getCurrentDateString(), numberOfTasks: 3),
-        Category(id: "dkfj2334343?k213", name: "Privat",dateCreated: getCurrentDateString(), lastModified: getCurrentDateString(), numberOfTasks: 2),
-        Category(id: "dfadsfdsaf34%&/&(", name: "Allgemein", dateCreated: getCurrentDateString(), lastModified: getCurrentDateString(), numberOfTasks: 0),
-        Category(id: "dfzerzsfdsaf3!!!/&(", name: "Todooz", dateCreated: getCurrentDateString(), lastModified: getCurrentDateString(), numberOfTasks: 0)
+        Category(id: "dkfjddk213", name: "Swisscom", dateCreated: getCurrentDateString(), lastModified: getCurrentDateString()),
+        Category(id: "dkfj2334343?k213", name: "Privat",dateCreated: getCurrentDateString(), lastModified: getCurrentDateString()),
+        Category(id: "dfadsfdsaf34%&/&(", name: "Allgemein", dateCreated: getCurrentDateString(), lastModified: getCurrentDateString()),
+        Category(id: "dfzerzsfdsaf3!!!/&(", name: "Todooz", dateCreated: getCurrentDateString(), lastModified: getCurrentDateString())
     ]
     
     static let tasks: [Tasc] = [

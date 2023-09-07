@@ -50,7 +50,6 @@ struct CategoryView: View {
                         $categories.predicates = [
                             //.isEqualTo("category", cat),
                             .order(by: "dateCreated", descending: false),
-                            .limit(to: 8)
                         ]
                     }
                     .sheet(isPresented: $showAddCategorySheet, content: {
@@ -99,7 +98,6 @@ struct CategoryView: View {
                 $categories.predicates = [
                     //.isEqualTo("category", cat),
                     .order(by: "dateCreated", descending: false),
-                    .limit(to: 8)
                 ]
             }
             
@@ -117,33 +115,63 @@ struct CategoryPreviewView: View {
     
     let category: Category
     let currentUser: User?
+    @State var NumberOfTasks: String = ""
+    
+    init(category: Category, currentUser: User?) {
+        self.category = category
+        self.currentUser = currentUser
+        
+    }
+    
+    @FirestoreQuery(collectionPath: "users") var numberOfTasks: [Tasc]
+    
+    private func getNumberOfTasks(uid: String) async throws {
+        $numberOfTasks.path = "users/\(uid)/tasks"
+        $numberOfTasks.predicates = [
+            .isEqualTo("category", category.name),
+            .isEqualTo("isDone", false)
+            ]
+        try await Task.sleep(seconds: 0.2)
+        self.NumberOfTasks = String(numberOfTasks.count)
+    }
     
     var body: some View {
         
-        
-        HStack {
-            Image(systemName: "list.bullet")
-                .foregroundColor(.white)
-                .frame(width: 30, height: 30)
-                .background(.green)
-                .clipShape(Circle())
-                .font(.system(size: 15))
-                .fontWeight(.bold)
-                .padding(.vertical, 3.5)
-                .padding(.trailing, 5)
-            //.overlay(Circle().stroke(Color.white, lineWidth: 1))
-            
-            Text(category.name)
-                .fontWeight(.semibold)
-                .lineLimit(2)
-                .minimumScaleFactor(0.5)
-            
-            Text("")
-                .frame(maxWidth: .infinity, alignment: .trailing)
-                .foregroundColor(.gray)
+        if let user = currentUser {
+            HStack {
+                Image(systemName: "list.bullet")
+                    .foregroundColor(.white)
+                    .frame(width: 30, height: 30)
+                    .background(.green)
+                    .clipShape(Circle())
+                    .font(.system(size: 15))
+                    .fontWeight(.bold)
+                    .padding(.vertical, 3.5)
+                    .padding(.trailing, 5)
+                //.overlay(Circle().stroke(Color.white, lineWidth: 1))
+                
+                Text(category.name)
+                    .fontWeight(.semibold)
+                    .lineLimit(2)
+                    .minimumScaleFactor(0.5)
+                
+                Text(self.NumberOfTasks)
+                    .frame(maxWidth: .infinity, alignment: .trailing)
+                    .foregroundColor(.gray)
+                
+                
+            }
+            .onAppear() {
+                Task { try await self.getNumberOfTasks(uid: user.id) }
+            }
             
             
         }
+        
+        
+        
+        
+      
     }
     
     

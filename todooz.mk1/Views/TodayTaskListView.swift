@@ -25,7 +25,8 @@ struct TodayTaskListView: View {
     private func filterTasks() async throws {
         try await Task.sleep(seconds: 0.1)
         self.filteredByDateTasks = self.tasks.filter { tasc in
-            return isSameDay(date1: Date(), date2: getDateFromString(dateString: tasc.dueDate ?? ""))
+            return isSameDay(date1: Date(), date2: getDateFromString(dateString: tasc.dueDate!))
+            
         }
         
     }
@@ -58,7 +59,6 @@ struct TodayTaskListView: View {
                     .whereField("dueDate", isNotIn: [""]),
                     .isEqualTo("isDone", false),
                     .order(by: "dueDate", descending: true),
-                    //.limit(to: 8)
                 ]
                 print(tasks)
                 Task { @MainActor in
@@ -99,7 +99,6 @@ struct TodayTaskListView: View {
                 .whereField("dueDate", isNotIn: [""]),
                 .isEqualTo("isDone", false),
                 .order(by: "dueDate", descending: true),
-                //.limit(to: 8)
             ]
             Task { @MainActor in
                 try await Task.sleep(seconds: 0.1)

@@ -32,7 +32,9 @@ struct TasklistView: View {
      
   
     var body: some View {
-        NavigationStack {
+        
+        NavigationStack {         
+            
             
             List {
                 ForEach(tasks) { item in
@@ -54,7 +56,6 @@ struct TasklistView: View {
                 $tasks.predicates = [
                     .isEqualTo("category", cat),
                     .order(by: "dueDate", descending: true),
-                    //.limit(to: 8)
                     ]
             }
             
@@ -110,7 +111,6 @@ struct TasklistView: View {
             $tasks.predicates = [
                 .isEqualTo("category", cat),
                 .order(by: "dueDate", descending: true),
-                //.limit(to: 8)
                 ]
         }
     }

@@ -71,11 +71,13 @@ struct EditTaskView: View {
                 
                 //Due Data
                 if viewModel.letPickDate && !viewModel.letPickDateAndTime {
+                    Text("Zu erldigen bis:")
                     DatePicker("Zu erledigen bis", selection: $viewModel.dueDate, displayedComponents: .date)
                         .datePickerStyle(GraphicalDatePickerStyle())
                 }
                 
                 if viewModel.letPickDate && viewModel.letPickDateAndTime {
+                    Text("Zu erldigen bis:")
                     DatePicker("Zu erledigen bis", selection: $viewModel.dueDate)
                         .datePickerStyle(GraphicalDatePickerStyle())
                 }

@@ -32,8 +32,7 @@ class CategoryService {
                                    description: description,
                                    iconColor: iconColor,
                                    dateCreated: getStringFromDate(date: Date(), dateFormat: "d MMM YY, HH:mm:ss"),
-                                   lastModified: getStringFromDate(date: Date(), dateFormat: "d MMM YY, HH:mm:ss"),
-                                   numberOfTasks: 0
+                                   lastModified: getStringFromDate(date: Date(), dateFormat: "d MMM YY, HH:mm:ss")
                                    
         )
         
@@ -56,5 +55,19 @@ class CategoryService {
         print("CategoryCounter of Category with id \(categoryID) was increased by 1")
     }
     
+    func GetNumberOfTasksinCategoryByName(categoryName: String) async throws -> Int {
+            var numberOfTasks: Int = 0
+            guard let uid = self.userID else { return 0 }
+        
+            
+            let db = Firestore.firestore()
+            let Query = db.collection("users").document(uid).collection("tasks")
+                .whereField("category", isEqualTo: categoryName)
+                .whereField("isDone", isEqualTo: false)
+        
+            let QuerySnap = try await Query.getDocuments()
+            numberOfTasks = QuerySnap.count
+            return numberOfTasks
+        }
     
 }

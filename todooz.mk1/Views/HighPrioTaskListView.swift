@@ -52,7 +52,6 @@ struct HighPrioTaskListView: View {
                 $tasks.predicates = [
                     .isEqualTo("isHighPriority", true),
                     .order(by: "dueDate", descending: true),
-                    //.limit(to: 8)
                     ]
             }
             
@@ -84,7 +83,6 @@ struct HighPrioTaskListView: View {
             $tasks.predicates = [
                 .isEqualTo("isHighPriority", true),
                 .order(by: "dueDate", descending: true),
-                //.limit(to: 8)
                 ]
         }
     }
