@@ -20,9 +20,6 @@ class ProfileViewViewModel: ObservableObject {
         let imageRef = try await getProfilePictureRef()
         return await DownloadPhoto(imageRef: imageRef)
         print("avatar image set...")
-        if !imageRef.isEmpty {
-            
-        }
     }
     
     func uploadPhoto(image: UIImage?) async {

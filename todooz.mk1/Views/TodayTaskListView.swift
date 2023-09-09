@@ -23,6 +23,12 @@ struct TodayTaskListView: View {
     
     
     private func filterTasks() async throws {
+        $tasks.path = "users/\(self.currentUser?.id ?? "")/tasks"
+        $tasks.predicates = [
+            .isEqualTo("isDone", false),
+            .whereField("dueDate", isNotIn: [""]),
+            .order(by: "dueDate", descending: true),
+        ]
         try await Task.sleep(seconds: 0.1)
         self.filteredByDateTasks = self.tasks.filter { tasc in
             return isSameDay(date1: Date(), date2: getDateFromString(dateString: tasc.dueDate!))
@@ -53,16 +59,7 @@ struct TodayTaskListView: View {
             }
             
             .refreshable {
-                //let cat = self.category.name
-                $tasks.path = "users/\(self.currentUser?.id ?? "")/tasks"
-                $tasks.predicates = [
-                    .whereField("dueDate", isNotIn: [""]),
-                    .isEqualTo("isDone", false),
-                    .order(by: "dueDate", descending: true),
-                ]
-                print(tasks)
                 Task { @MainActor in
-                    //try await Task.sleep(seconds: 0.5)
                     try await self.filterTasks()
                 }
                 
@@ -76,13 +73,14 @@ struct TodayTaskListView: View {
             
             
             
-            .toolbar {
+            .toolbar {               
+                
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button {
                         
                     } label: {
                         Image(systemName: "square.and.arrow.up")
-                            .font(.system(size: 20))
+                            //.font(.system(size: 20))
                     }
                     
                 }
@@ -92,16 +90,7 @@ struct TodayTaskListView: View {
             
         }
         .onAppear() {
-            //print("onapear ran")
-            //let cat = self.category.name
-            $tasks.path = "users/\(self.currentUser?.id ?? "")/tasks"
-            $tasks.predicates = [
-                .whereField("dueDate", isNotIn: [""]),
-                .isEqualTo("isDone", false),
-                .order(by: "dueDate", descending: true),
-            ]
             Task { @MainActor in
-                try await Task.sleep(seconds: 0.1)
                 try await self.filterTasks()
             }
             

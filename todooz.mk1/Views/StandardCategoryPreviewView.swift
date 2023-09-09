@@ -15,9 +15,15 @@ struct StandardCategoryPreviewView: View {
     let allCategories: [Category]
     
     @State var numberOfHighPrioTasks: String = ""
+    @State var numberOfTodayTasks: String = ""
     
     @FirestoreQuery(collectionPath: "users") var highPrioTasks: [Tasc]
+    @FirestoreQuery(collectionPath: "users") var todayTasks: [Tasc]
     
+    @State var filteredByDateTasks: [Tasc] = []
+    
+        
+        
     private func setNumberOfHighPrioTasks(uid: String) async throws {
         $highPrioTasks.path = "users/\(uid)/tasks"
         $highPrioTasks.predicates = [
@@ -25,6 +31,25 @@ struct StandardCategoryPreviewView: View {
         ]
         try await Task.sleep(seconds: 0.2)
         self.numberOfHighPrioTasks = String(highPrioTasks.count)
+    }
+        
+    private func setNumberOfTodayTasks(uid: String) async throws {
+        $todayTasks.path = "users/\(self.currentUser?.id ?? "")/tasks"
+        $todayTasks.predicates = [
+            .whereField("dueDate", isNotIn: [""]),
+            .isEqualTo("isDone", false),
+            .order(by: "dueDate", descending: true)
+            ]
+            try await Task.sleep(seconds: 0.2)
+            try await self.filterTodayTasks()
+            self.numberOfTodayTasks = String(self.filteredByDateTasks.count)
+        }
+    
+    private func filterTodayTasks() async throws {
+        try await Task.sleep(seconds: 0.1)
+        self.filteredByDateTasks = self.todayTasks.filter { tasc in
+            return isSameDay(date1: Date(), date2: getDateFromString(dateString: tasc.dueDate!))
+        }
     }
     
     var body: some View {
@@ -51,7 +76,7 @@ struct StandardCategoryPreviewView: View {
                         .padding(.leading, 6)
                         
                         Spacer()
-                        Text("0")
+                        Text(numberOfTodayTasks)
                             .padding(.trailing, 6)
                             .font(.title)
                     }
@@ -104,6 +129,8 @@ struct StandardCategoryPreviewView: View {
             }
             .onAppear() {
                 Task { try await self.setNumberOfHighPrioTasks(uid: user.id) }
+                Task { try await self.setNumberOfTodayTasks(uid: user.id) }
+                
             }
             
         }

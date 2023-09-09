@@ -17,24 +17,36 @@ struct CategoryView: View {
     @ObservedObject var viewModel = CategoryViewModel()
     @State var showAddCategorySheet: Bool = false
     @FirestoreQuery(collectionPath: "users") var categories: [Category]
+    @FirestoreQuery(collectionPath: "users") var Alltasks: [Tasc]
     
     //var TestCategories: [Category] = TestData.categories
-
     
+    @State private var searchText = ""
+    
+    private func filterTasks(keyword: String) {
+        $Alltasks.path = "users/\(self.currentUser?.id ?? "")/tasks"
+        $Alltasks.predicates = [
+            //.arrayContains("title", keyword),
+            //.isEqualTo("title", keyword),
+            //.whereField("title", isLessThanOrEqualTo: keyword),
+            .whereField("title", arrayContains: keyword),
+        ]
+    }
     
     
     var body: some View {
         
+        
         if let user = currentUser {
-         
+            
             NavigationStack {
-  
+                
                 VStack(alignment: .leading) {
                     
                     StandardCategoryPreviewView(currentUser: user, allCategories: categories)
                         .padding(.top, 20)
                         .padding()
-                        //.frame(maxWidth: .infinity, alignment: .center)
+                    //.frame(maxWidth: .infinity, alignment: .center)
                     
                     List{
                         ForEach(categories) { category in
@@ -53,24 +65,22 @@ struct CategoryView: View {
                         ]
                     }
                     .sheet(isPresented: $showAddCategorySheet, content: {
-                        AddCategoryView(isPresented: $showAddCategorySheet)
+                        AddCategoryView(isPresented: $showAddCategorySheet, selectedColor: .blue, selectedIcon: "list.bullet")
                     })
                 }
                 
-                .navigationTitle("Kategorien")
+                //.navigationTitle("Kategorien")
                 .toolbar {
                     ToolbarItem(placement: .navigationBarTrailing) {
                         NavigationLink(destination: ProfileView(currentUser: currentUser)) {
                             Image(systemName: "person.circle")
                             //.foregroundColor(.gray)
                                 .font(.system(size: 25))
-                            
-                            
+                                //.padding(.bottom, 10)
                         }
                         
                     }
                 }
-                
                 .safeAreaInset(edge: .bottom, alignment: .center) {
                     Button{
                         
@@ -92,22 +102,29 @@ struct CategoryView: View {
                 }
                 .padding(.bottom, 10)
                 
+                .onAppear() {
+                    $categories.path = "users/\(user.id)/categories"
+                    $categories.predicates = [
+                        //.isEqualTo("category", cat),
+                        .order(by: "dateCreated", descending: false),
+                    ]
+                }
+                
+                
+                
             }
             .onAppear() {
-                $categories.path = "users/\(user.id)/categories"
-                $categories.predicates = [
-                    //.isEqualTo("category", cat),
-                    .order(by: "dateCreated", descending: false),
-                ]
+                //filterTasks
+                Task { @MainActor in
+                    self.filterTasks(keyword: "")
+                }
             }
-            
-            
             
         } else {
             LoadingView()
             
         }
-    } 
+    }
 }
 
 
@@ -130,7 +147,7 @@ struct CategoryPreviewView: View {
         $numberOfTasks.predicates = [
             .isEqualTo("category", category.name),
             .isEqualTo("isDone", false)
-            ]
+        ]
         try await Task.sleep(seconds: 0.2)
         self.NumberOfTasks = String(numberOfTasks.count)
     }
@@ -158,20 +175,11 @@ struct CategoryPreviewView: View {
                 Text(self.NumberOfTasks)
                     .frame(maxWidth: .infinity, alignment: .trailing)
                     .foregroundColor(.gray)
-                
-                
             }
             .onAppear() {
                 Task { try await self.getNumberOfTasks(uid: user.id) }
             }
-            
-            
         }
-        
-        
-        
-        
-      
     }
     
     

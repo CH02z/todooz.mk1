@@ -36,13 +36,11 @@ func getDateFromString(dateString: String) -> Date {
         let dateFormatter = DateFormatter()
         dateFormatter.timeZone = TimeZone(abbreviation: "CEST")
         if dateString.count > 11 {
-            print("Dateformater in long format set for \(dateString)")
             dateFormatter.dateFormat = "dd.MM.yyyy, HH:mm"
             let correctHourDate = Calendar.current.date(byAdding: .hour, value: 2, to: dateFormatter.date(from: dateString)!)!
             print("input String: \(dateString) and Date objecct produded: \(correctHourDate))")
             return correctHourDate
         } else {
-            print("Dateformater in short format set for \(dateString)")
             dateFormatter.dateFormat = "dd.MM.yyyy"
             let correctHourDate = Calendar.current.date(byAdding: .hour, value: 2, to: dateFormatter.date(from: dateString)!)!
             return Calendar.current.date(byAdding: .day, value: 1, to: correctHourDate)!
@@ -51,14 +49,7 @@ func getDateFromString(dateString: String) -> Date {
         print("empty input datestring, returning date()")
         return Date()
     }
-    
-    
-    //"dd.MM.yyyy"
-    //"dd.MM.yyyy, HH:mm"
-    
-    //print("print in Dateformater: \(dateFormatter.date(from: dateString) ?? Date())")
-    //print("input String: \(dateString) and Date objecct produded: \(dateFormatter.date(from: dateString))")
-    
+
 }
 
 func isSameDay(date1: Date, date2: Date) -> Bool {

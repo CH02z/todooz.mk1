@@ -39,126 +39,137 @@ struct AddTaskView: View {
     //"Swisscom", "Privat", "Todooz", "Allgemein"
     
     var body: some View {
-        VStack {
-            Text("Neuer Task")
-                .bold()
-                .font(.system(size: 32))
-                .padding(.top, 30)
+        NavigationView {
             
-            Form {
-                
-                //Title
-                TextField("Titel", text: $viewModel.title)
-                    .textFieldStyle(RoundTextFieldStyle())
-                    .submitLabel(.next)
-                    .frame(maxWidth: .infinity, alignment: .trailing)
-                
-                HStack {
-                    Image(systemName: "calendar")
-                        .foregroundColor(.white)
-                        .frame(width: 30, height: 30)
-                        .background(.red)
-                        .cornerRadius(5)
-                        .font(.system(size: 15))
-                        .fontWeight(.bold)
-                        .padding(.vertical, 2.5)
+            VStack {
+                Form {
                     
-                    Text("Datum")
-                    
-                    //Datum toggle
-                    Toggle("", isOn: $viewModel.letPickDate)
-                        .labelsHidden()
+                    //Title
+                    TextField("Titel", text: $viewModel.title)
+                        .submitLabel(.next)
                         .frame(maxWidth: .infinity, alignment: .trailing)
-  
-                }
-                
-                
-                
-                
-                //Due Data
-                if viewModel.letPickDate && !viewModel.letPickDateAndTime {
-                    Text("Zu erldigen bis:")
-                    DatePicker("Zu erledigen bis", selection: $viewModel.dueDate, displayedComponents: .date)
-                        .datePickerStyle(GraphicalDatePickerStyle())
-                }
-                
-                if viewModel.letPickDate && viewModel.letPickDateAndTime {
-                    Text("Zu erldigen bis:")
-                    DatePicker("Zu erledigen bis", selection: $viewModel.dueDate)
-                        .datePickerStyle(GraphicalDatePickerStyle())
-                }
-                
-                if viewModel.letPickDate {
-                    HStack {
-                        Image(systemName: "clock")
-                            .foregroundColor(.white)
-                            .frame(width: 30, height: 30)
-                            .background(.blue)
-                            .cornerRadius(5)
-                            .font(.system(size: 15))
-                            .fontWeight(.bold)
-                            .padding(.vertical, 2.5)
-                        
-                        Text("Uhrzeit")
-                        
-                        //Datum toggle
-                        Toggle("", isOn: $viewModel.letPickDateAndTime)
-                            .labelsHidden()
-                            .frame(maxWidth: .infinity, alignment: .trailing)
-      
+                    
+                    Section {
+                        TextField("Notizen", text: $viewModel.description,  axis: .vertical)
+                            .lineLimit(5...10)
                     }
-                }
-                
-                
-                
-                TextField("Notizen", text: $viewModel.description,  axis: .vertical)
-                    .lineLimit(5...10)
-                    .textFieldStyle(RoundTextFieldStyle())
-                
-                
-                //High Priority Toggle
-                Toggle("Hohe Priorität", isOn: $viewModel.isHighPriority)
-                    .padding(.vertical, 3)
-                
-                //Categeory Selection
-                Picker("Kategorie", selection: $viewModel.categorySelection) {
                     
-                    ForEach(categories, id: \.self){
-
-                        Text($0)
-
-                                }
-                            }
-                .pickerStyle(.menu)
-                .padding(.vertical, 3)
-                
-                Button {
-                    //Haptic Feedback on Tap
-                    let impactHeavy = UIImpactFeedbackGenerator(style: .heavy)
-                    impactHeavy.impactOccurred()
-                    Task { try await viewModel.save()}
-                    isPresented = false
-                    
-                } label: {
-                    Text("hinzufügen")
-                        .padding(.vertical, 2.5)
-                        .frame(maxWidth: .infinity)
-                    
-                }
-                .buttonStyle(.borderedProminent)
-                .accentColor(Color.blue)
-                .cornerRadius(8)
-                .frame(maxWidth: .infinity, alignment: .center)
-                .padding(.vertical, 20)
-                
-                .disabled(!viewModel.formIsValid())
+                    Section {
+                        HStack {
+                            Image(systemName: "calendar")
+                                .foregroundColor(.white)
+                                .frame(width: 30, height: 30)
+                                .background(.red)
+                                .cornerRadius(5)
+                                .font(.system(size: 15))
+                                .fontWeight(.bold)
+                                .padding(.vertical, 2.5)
+                            
+                            Text("Zu erledigen bis:")
+                            
+                            //Datum toggle
+                            Toggle("", isOn: $viewModel.letPickDate)
+                                .labelsHidden()
+                                .frame(maxWidth: .infinity, alignment: .trailing)
+          
+                        }
+                        //Due Data
+                        if viewModel.letPickDate && !viewModel.letPickDateAndTime {
+                            DatePicker("only date", selection: $viewModel.dueDate, displayedComponents: .date)
+                                .datePickerStyle(GraphicalDatePickerStyle())
+                        }
+                        
+                        if viewModel.letPickDate && viewModel.letPickDateAndTime {
+                            DatePicker("date and Time", selection: $viewModel.dueDate)
+                                .datePickerStyle(GraphicalDatePickerStyle())
+                        }
+                        
+                        if viewModel.letPickDate {
+                            HStack {
+                                Image(systemName: "clock")
+                                    .foregroundColor(.white)
+                                    .frame(width: 30, height: 30)
+                                    .background(.blue)
+                                    .cornerRadius(5)
+                                    .font(.system(size: 15))
+                                    .fontWeight(.bold)
+                                    .padding(.vertical, 2.5)
+                                
+                                Text("Uhrzeit")
+                                
+                                //Datum toggle
+                                Toggle("", isOn: $viewModel.letPickDateAndTime)
+                                    .labelsHidden()
+                                    .frame(maxWidth: .infinity, alignment: .trailing)
               
+                            }
+                        }
+                    }
+                    
+                    
+                    
+                    
+                    Section {
+                        //High Priority Toggle
+                        Toggle("Hohe Priorität", isOn: $viewModel.isHighPriority)
+                            //.padding(.vertical, 3)
+                    }
+                    
+                    Section {
+                        //Categeory Selection
+                        Picker("Kategorie", selection: $viewModel.categorySelection) {
+                            
+                            ForEach(categories, id: \.self){
+
+                                Text($0)
+
+                                        }
+                                    }
+                        .pickerStyle(.menu)
+                        
+                    }
+                    
+                }
+                
             }
-  
+            
+            
+            .toolbar {
+                ToolbarItem(placement: .navigationBarLeading) {
+                    Button {
+                        isPresented = false
+                    } label: {
+                        Text("abbrechen")
+                    }
+                    
+                }
+                
+                ToolbarItem(placement: .principal) {
+                    Text("Neuer Task")
+                        .fontWeight(.semibold)
+                }
+                
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Button {
+                        //Haptic Feedback on Tap
+                        let impactHeavy = UIImpactFeedbackGenerator(style: .heavy)
+                        impactHeavy.impactOccurred()
+                        Task { try await viewModel.save()}
+                        isPresented = false
+                    } label: {
+                        Text("hinzufügen")
+                    }
+                    .disabled(!viewModel.formIsValid())
+                    
+                }
+                
+                
+                
+            }
         }
-        .onAppear() {
-         
-        }
+        
+        
+        
         
         
     }

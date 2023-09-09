@@ -60,7 +60,7 @@ struct TaskViewPreview: View {
         .frame(height: 40)
         .sheet(isPresented: $showDetailTaskSheet, content: {
             
-            DetailTaskView(task: item, allCategories: allCategories)
+            DetailTaskView(task: item, allCategories: allCategories, isPresented: $showDetailTaskSheet)
         })
         
         

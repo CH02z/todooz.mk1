@@ -17,50 +17,61 @@ struct TasklistView: View {
     let currentUser: User?
     
     @State var showAddItemSheet: Bool = false
-   
+    
+    //Sorting
+    let sortOptions: [String] = ["Titel", "Datum"]
+    @State var sortingSelection: String = "Datum"
+    @State var sortingField: String = "dueDate"
+    
+    
     
     @FirestoreQuery(collectionPath: "users") var tasks: [Tasc]
     @ObservedObject var viewModel = TaskListViewModel()
     
+    private func filterTasks() {
+        let cat = self.category.name
+        $tasks.path = "users/\(self.currentUser?.id ?? "")/tasks"
+        $tasks.predicates = [
+            .isEqualTo("category", cat),
+            .order(by: sortingField, descending: true),
+        ]
+    }
     
     
-     
-     //Test Data
-     var testItems: [Tasc] = TestData.tasks
-     
-     
-     
-  
+    
+    
+    //Test Data
+    var testItems: [Tasc] = TestData.tasks
+    
+    
+    
+    
     var body: some View {
         
-        NavigationStack {         
-            
-            
+        NavigationStack {
             List {
                 ForEach(tasks) { item in
                     TaskViewPreview(item: item, allCategories: allCategories)
                         .swipeActions {
-       
+                            
                             Button("löschen") {
                                 Task { try await viewModel.deleteTask(taskID: item.id) }
                             }
                             .tint(.red)
                         }
-                        
+                    
                 }
-            
+                
             }
             .refreshable {
-                let cat = self.category.name
-                $tasks.path = "users/\(self.currentUser?.id ?? "")/tasks"
-                $tasks.predicates = [
-                    .isEqualTo("category", cat),
-                    .order(by: "dueDate", descending: true),
-                    ]
+                Task { @MainActor in
+                    self.filterTasks()
+                }
             }
             
             
             .navigationTitle(category.name)
+            .navigationBarTitleDisplayMode(.large)
             
             .sheet(isPresented: $showAddItemSheet, content: {
                 AddTaskView(isPresented: $showAddItemSheet, allCategories: allCategories, originalCat: category.name)
@@ -71,14 +82,42 @@ struct TasklistView: View {
             
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
+                    
+                    Menu {
+                        Picker("sortieren", selection: $sortingSelection) {
+                            ForEach(sortOptions, id: \.self){
+                                Text($0)
+                            }
+                        }.onChange(of: self.sortingSelection) { newValue in
+                            print(newValue)
+                            switch newValue {
+                            case "Titel":
+                                self.sortingField = "title"
+                            case "Datum":
+                                self.sortingField = "dueDate"
+                            default:
+                                self.sortingField = "dueDate"
+                            }
+                            filterTasks()
+                        }
+                        
+                        
+                    } label: {
+                        Text("Sortieren")
+                    }
+                }
+                
+                ToolbarItem(placement: .navigationBarTrailing) {
                     Button {
                         
                     } label: {
                         Image(systemName: "square.and.arrow.up")
-                            .font(.system(size: 20))
+                        //.font(.system(size: 20))
                     }
                     
                 }
+                
+                
             }
             
             .safeAreaInset(edge: .bottom, alignment: .center) {
@@ -105,18 +144,14 @@ struct TasklistView: View {
             
         }
         .onAppear() {
-            //print("onapear ran")
-            let cat = self.category.name
-            $tasks.path = "users/\(self.currentUser?.id ?? "")/tasks"
-            $tasks.predicates = [
-                .isEqualTo("category", cat),
-                .order(by: "dueDate", descending: true),
-                ]
+            Task { @MainActor in
+                self.filterTasks()
+            }
         }
     }
-        
-}
     
+}
+
 
 
 

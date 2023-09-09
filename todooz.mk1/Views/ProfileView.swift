@@ -17,6 +17,7 @@ struct ProfileView: View {
     
     @State var avatarImage: UIImage?
     @State var avatarMemojiImage: UIImage = UIImage(named: "memoji_white")!
+    @State var showAvatarImage: Bool = false
     
     
     let currentUser: User?
@@ -30,7 +31,6 @@ struct ProfileView: View {
     
     
     private func loadUserImage() async throws {
-        try await Task.sleep(seconds: 0.5)
         self.avatarImage = try await viewModel.loadUserProfileImage()
     }
     
@@ -44,17 +44,17 @@ struct ProfileView: View {
                         
                         ZStack {
                             
-                            
-                            Image(uiImage: self.avatarImage ?? avatarMemojiImage)
-                                    .resizable()
-                                    .scaledToFit()
-                                    .aspectRatio(contentMode: .fill)
-                                    .frame(width: 150, height: 150)
-                                    .clipShape(Circle())
-                                    .overlay(Circle().stroke(Color.white, lineWidth: 4))
-                                    .shadow(radius: 10)
-                                    .padding(.top, 30)
-                            
+                            if showAvatarImage {
+                                Image(uiImage: self.avatarImage ?? avatarMemojiImage)
+                                        .resizable()
+                                        .scaledToFit()
+                                        .aspectRatio(contentMode: .fill)
+                                        .frame(width: 150, height: 150)
+                                        .clipShape(Circle())
+                                        .overlay(Circle().stroke(Color.white, lineWidth: 4))
+                                        .shadow(radius: 10)
+                                        .padding(.top, 30)
+                            }
                             
                             PhotosPicker(selection: $selectedPickerItem, matching: .images) {
                                 Circle()
@@ -121,8 +121,14 @@ struct ProfileView: View {
             }
             .onAppear() {
                 Task { @MainActor in
-                    try await Task.sleep(seconds: 4.0)
+                    //
                     try await self.loadUserImage()
+                    try await Task.sleep(seconds: 0.5)
+                    try await self.loadUserImage()
+                    try await Task.sleep(seconds: 0.5)
+                    self.showAvatarImage = true
+                    
+                   
                 }
             }
             
