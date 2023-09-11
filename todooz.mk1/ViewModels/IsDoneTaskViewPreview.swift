@@ -7,14 +7,30 @@
 
 import SwiftUI
 
-struct TaskViewPreview: View {
+struct IsDoneTaskViewPreview: View {
     
     @ObservedObject var viewModel = TaskViewPreviewViewModel()
     
-    @State var showDetailTaskSheet: Bool = false
+    
+    @State var isStrikedThrough: Bool = true;
     
     var item: Tasc
     let allCategories: [Category]
+    
+    
+    func deleteTask(taskID: String) async throws {
+        try await TaskService.shared.deleteTask(taskID: taskID)
+    }
+    
+    
+    @MainActor
+    func toggleTask(finishedTaskID: String, currentState: Bool) async throws {
+        self.isStrikedThrough.toggle()
+        try await Task.sleep(seconds: 2.0)
+        try await TaskService.shared.toggleTask(finishedTaskID: finishedTaskID, currentState: currentState)
+        self.isStrikedThrough.toggle()
+    }
+    
     
     var body: some View {
         
@@ -24,7 +40,7 @@ struct TaskViewPreview: View {
                 Text(item.title)
                     .font(.body)
                     .fontWeight(.semibold)
-                    .strikethrough(viewModel.isStrikedThrough)
+                    .strikethrough(self.isStrikedThrough)
                 
                 if item.dueDate! != "" {
                     Text(item.dueDate ?? "")
@@ -33,13 +49,9 @@ struct TaskViewPreview: View {
               
             }
             
-            .onTapGesture {
-                self.showDetailTaskSheet = true
-            }
-            
             Spacer()
             
-            Image(systemName: viewModel.isStrikedThrough ? "checkmark.circle" : "circle")
+            Image(systemName: self.isStrikedThrough ? "checkmark.circle" : "circle")
                 .foregroundColor(Color.purple)
                 .font(.system(size: 30))
                 .onTapGesture {
@@ -52,17 +64,13 @@ struct TaskViewPreview: View {
             
         }
         .frame(height: 40)
-        .sheet(isPresented: $showDetailTaskSheet, content: {
-            
-            DetailTaskView(task: item, allCategories: allCategories, isPresented: $showDetailTaskSheet)
-        })
         
         
     }
 }
 
-struct TodoListItemView_Previews: PreviewProvider {
+struct IsDoneTaskViewPreview_Previews: PreviewProvider {
     static var previews: some View {
-        TaskViewPreview(item: TestData.tasks[1], allCategories: [TestData.categories[0]])
+        IsDoneTaskViewPreview(item: TestData.tasks[1], allCategories: [TestData.categories[0]])
     }
 }

@@ -44,11 +44,12 @@ struct CategoryView: View {
                 VStack(alignment: .leading) {
                     
                     StandardCategoryPreviewView(currentUser: user, allCategories: categories)
-                        .padding(.top, 20)
                         .padding()
+                        
                     //.frame(maxWidth: .infinity, alignment: .center)
                     
                     List{
+                        
                         ForEach(categories) { category in
                             NavigationLink(destination: TasklistView(category: category, allCategories: categories, currentUser: currentUser)) {
                                 //Displayed List Item Design:
@@ -65,12 +66,29 @@ struct CategoryView: View {
                         ]
                     }
                     .sheet(isPresented: $showAddCategorySheet, content: {
-                        AddCategoryView(isPresented: $showAddCategorySheet, selectedColor: .blue, selectedIcon: "list.bullet")
+                        AddCategoryView(isPresented: $showAddCategorySheet)
                     })
                 }
                 
-                //.navigationTitle("Kategorien")
+                .navigationTitle("Kategorien")
                 .toolbar {
+                    ToolbarItem(placement: .navigationBarTrailing) {
+                        Button{
+                            
+                            //Haptic Feedback on Tap
+                            let impactHeavy = UIImpactFeedbackGenerator(style: .heavy)
+                            impactHeavy.impactOccurred()
+                            self.showAddCategorySheet = true
+                            
+                        } label: {
+                            Image(systemName: "plus")
+                            //.foregroundColor(.gray)
+                                .font(.system(size: 25))
+                            
+                        }
+                        
+                    }
+                    
                     ToolbarItem(placement: .navigationBarTrailing) {
                         NavigationLink(destination: ProfileView(currentUser: currentUser)) {
                             Image(systemName: "person.circle")
@@ -81,26 +99,6 @@ struct CategoryView: View {
                         
                     }
                 }
-                .safeAreaInset(edge: .bottom, alignment: .center) {
-                    Button{
-                        
-                        //Haptic Feedback on Tap
-                        let impactHeavy = UIImpactFeedbackGenerator(style: .heavy)
-                        impactHeavy.impactOccurred()
-                        
-                        self.showAddCategorySheet = true
-                    } label: {
-                        Label("hinzufügen", systemImage: "plus")
-                            .bold()
-                            .font(.title2)
-                            .padding(8)
-                            .background(.black,
-                                        in: Capsule())
-                            .padding(.leading)
-                            .symbolVariant(.circle.fill)
-                    }
-                }
-                .padding(.bottom, 10)
                 
                 .onAppear() {
                     $categories.path = "users/\(user.id)/categories"
@@ -156,12 +154,12 @@ struct CategoryPreviewView: View {
         
         if let user = currentUser {
             HStack {
-                Image(systemName: "list.bullet")
+                Image(systemName: category.icon ?? "list.bullet")
                     .foregroundColor(.white)
-                    .frame(width: 30, height: 30)
-                    .background(.green)
+                    .frame(width: 35, height: 35)
+                    .background(Color(hex: category.iconColor!) ?? .green)
                     .clipShape(Circle())
-                    .font(.system(size: 15))
+                    .font(.system(size: 17))
                     .fontWeight(.bold)
                     .padding(.vertical, 3.5)
                     .padding(.trailing, 5)

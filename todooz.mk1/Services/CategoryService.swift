@@ -21,16 +21,14 @@ class CategoryService {
     
     static let shared = CategoryService()
     
-    
-    
-    
     @MainActor
-    func createCategory(name: String, description: String, iconColor: String) async throws {
+    func createCategory(name: String, description: String, iconColor: String, icon: String) async throws {
         guard let uid = self.userID else { return }
         let newCategory = Category(id: UUID().uuidString,
                                    name: name,
                                    description: description,
                                    iconColor: iconColor,
+                                   icon: icon,
                                    dateCreated: getStringFromDate(date: Date(), dateFormat: "d MMM YY, HH:mm:ss"),
                                    lastModified: getStringFromDate(date: Date(), dateFormat: "d MMM YY, HH:mm:ss")
                                    
@@ -47,27 +45,5 @@ class CategoryService {
         print("Category with ID: \(categoryID) deleted from firestore")
     }
     
-    
-    func updateCategoryCounter(categoryID: String, currentCount: Int, isIncreased: Bool) async throws {
-        guard let uid = self.userID else { return }
-        let newCount = isIncreased ? currentCount + 1 : currentCount - 1
-        try await Firestore.firestore().collection("users").document(uid).collection("categories").document(categoryID).setData([ "numberOfTasks": newCount, "lastModified": getStringFromDate(date: Date(), dateFormat: "d MMM YY, HH:mm:ss")], merge: true)
-        print("CategoryCounter of Category with id \(categoryID) was increased by 1")
-    }
-    
-    func GetNumberOfTasksinCategoryByName(categoryName: String) async throws -> Int {
-            var numberOfTasks: Int = 0
-            guard let uid = self.userID else { return 0 }
-        
-            
-            let db = Firestore.firestore()
-            let Query = db.collection("users").document(uid).collection("tasks")
-                .whereField("category", isEqualTo: categoryName)
-                .whereField("isDone", isEqualTo: false)
-        
-            let QuerySnap = try await Query.getDocuments()
-            numberOfTasks = QuerySnap.count
-            return numberOfTasks
-        }
     
 }

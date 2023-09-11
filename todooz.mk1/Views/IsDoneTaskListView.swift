@@ -9,12 +9,11 @@ import SwiftUI
 import FirebaseFirestoreSwift
 import FirebaseAuth
 
-struct HighPrioTaskListView: View {
+struct IsDoneTaskListView: View {
+
     
-    let currentUser: User?
     let allCategories: [Category]
-    
-    @State var showAddItemSheet: Bool = false
+    let currentUser: User?
     
     
     @FirestoreQuery(collectionPath: "users") var tasks: [Tasc]
@@ -23,18 +22,23 @@ struct HighPrioTaskListView: View {
     private func filterTasks() {
         $tasks.path = "users/\(self.currentUser?.id ?? "")/tasks"
         $tasks.predicates = [
-            .isEqualTo("isHighPriority", true),
-            .whereField("isDone", isEqualTo: false),
-            .order(by: "dueDate", descending: true),
+            //.isEqualTo("category", cat),
+            .whereField("isDone", isEqualTo: true)
         ]
     }
     
+    
+    
+    
+    //Test Data
+    var testItems: [Tasc] = TestData.tasks
+    
     var body: some View {
+        
         NavigationStack {
-            
             List {
                 ForEach(tasks) { item in
-                    TaskViewPreview(item: item, allCategories: allCategories)
+                    IsDoneTaskViewPreview(item: item, allCategories: allCategories)
                         .swipeActions {
                             
                             Button("löschen") {
@@ -52,7 +56,12 @@ struct HighPrioTaskListView: View {
                 }
             }
             
-            .navigationTitle("Hohe Priorität")
+            
+            .navigationTitle("Erledigt")
+            .navigationBarTitleDisplayMode(.large)
+                      
+            
+            
             
             .toolbar {
                 
@@ -64,7 +73,11 @@ struct HighPrioTaskListView: View {
                         //.font(.system(size: 20))
                     }
                     
-                }            }
+                }
+                
+                
+            }
+            
             
             
             
@@ -82,8 +95,8 @@ struct HighPrioTaskListView: View {
 
 
 
-struct HighPrioTaskListView_Previews: PreviewProvider {
+struct IsDoneTaskListView_Previews: PreviewProvider {
     static var previews: some View {
-        HighPrioTaskListView(currentUser: TestData.users[0], allCategories: [TestData.categories[0]])
+        IsDoneTaskListView(allCategories: [], currentUser: TestData.users[0])
     }
 }

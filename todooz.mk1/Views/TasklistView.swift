@@ -33,7 +33,8 @@ struct TasklistView: View {
         $tasks.path = "users/\(self.currentUser?.id ?? "")/tasks"
         $tasks.predicates = [
             .isEqualTo("category", cat),
-            .order(by: sortingField, descending: true),
+            .whereField("isDone", isEqualTo: false),
+            .order(by: sortingField, descending: sortingField == "dueDate" ? true : false),
         ]
     }
     

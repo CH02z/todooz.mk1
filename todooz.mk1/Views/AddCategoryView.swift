@@ -11,13 +11,7 @@ struct AddCategoryView: View {
     
     @ObservedObject var viewModel = AddCategoryViewModel()
     @Binding var isPresented: Bool
-    
-    private let colors:[Color] = [.red, .yellow, .orange, .purple, .blue, .indigo, .green, .mint, .black]
-    @State var selectedColor: Color
-    
-    private let icons: [String] = ["list.bullet", "car.fill", "house.fill", "person.fill", "dumbbell.fill", "desktopcomputer"]
-    @State var selectedIcon: String
-    
+
     
     var body: some View {
         
@@ -29,10 +23,10 @@ struct AddCategoryView: View {
                     
                     HStack {
                         
-                        Image(systemName: selectedIcon)
+                        Image(systemName: viewModel.selectedIcon)
                             .foregroundColor(.white)
                             .frame(width: 80, height: 80)
-                            .background(selectedColor)
+                            .background(Color(hex: viewModel.selectedColor))
                             .clipShape(Circle())
                             .font(.system(size: 40))
                             .fontWeight(.bold)
@@ -56,13 +50,13 @@ struct AddCategoryView: View {
                             GridRow {
                                     ForEach(0...4, id: \.self) { index in
                                         Circle()
-                                            .foregroundColor(colors[index])
+                                            .foregroundColor(Color(hex: viewModel.colors[index]))
                                             .frame(width: 40, height: 40)
-                                            .overlay(Circle().stroke(Color.gray, lineWidth: colors[index] == selectedColor ? 4 : 0))
+                                            .overlay(Circle().stroke(Color.gray, lineWidth: viewModel.colors[index] == viewModel.selectedColor ? 4 : 0))
                                             .padding(.horizontal, 8)
                                             .padding(.bottom, 10)
                                             .onTapGesture {
-                                                selectedColor = colors[index]
+                                                viewModel.selectedColor = viewModel.colors[index]
                                             }
                                     }
                                 
@@ -71,11 +65,11 @@ struct AddCategoryView: View {
                             GridRow {
                                 ForEach(5...8, id: \.self) { index in
                                     Circle()
-                                        .foregroundColor(colors[index])
+                                        .foregroundColor(Color(hex: viewModel.colors[index]))
                                         .frame(width: 40, height: 40)
-                                        .overlay(Circle().stroke(Color.gray, lineWidth: colors[index] == selectedColor ? 4 : 0))
+                                        .overlay(Circle().stroke(Color.gray, lineWidth: viewModel.colors[index] == viewModel.selectedColor ? 4 : 0))
                                         .onTapGesture {
-                                            selectedColor = colors[index]
+                                            viewModel.selectedColor = viewModel.colors[index]
                                         }
                                 }
                             }
@@ -91,24 +85,47 @@ struct AddCategoryView: View {
                             GridRow {
                                     ForEach(0...5, id: \.self) { index in
                                         
-                                        Image(systemName: icons[index])
+                                        Image(systemName: viewModel.icons[index])
                                             .foregroundColor(.white)
                                             .frame(width: 40, height: 40)
                                             .background(Color(.systemGray4))
-                                            .overlay(Circle().stroke(Color.gray, lineWidth: icons[index] == selectedIcon ? 4 : 0))
+                                            .overlay(Circle().stroke(Color.gray, lineWidth: viewModel.icons[index] == viewModel.selectedIcon ? 4 : 0))
                                             .padding(.horizontal, 4)
                                             .clipShape(Circle())
                                             .font(.system(size: 20))
                                             .fontWeight(.bold)
                                             .onTapGesture {
-                                                selectedIcon = icons[index]
+                                                viewModel.selectedIcon = viewModel.icons[index]
                                             }
                                         
 
                                     }
-                                
-                                
                             }
+                            
+                            GridRow {
+                                    ForEach(6...9, id: \.self) { index in
+                                        
+                                        Image(systemName: viewModel.icons[index])
+                                            .foregroundColor(.white)
+                                            .frame(width: 40, height: 40)
+                                            .background(Color(.systemGray4))
+                                            .overlay(Circle().stroke(Color.gray, lineWidth: viewModel.icons[index] == viewModel.selectedIcon ? 4 : 0))
+                                            .padding(.horizontal, 4)
+                                            .clipShape(Circle())
+                                            .font(.system(size: 20))
+                                            .fontWeight(.bold)
+                                            .onTapGesture {
+                                                viewModel.selectedIcon = viewModel.icons[index]
+                                            }
+                                        
+
+                                    }
+                            }
+                            
+                            
+                            
+                            
+                            
                             
                             
                         }
@@ -168,6 +185,6 @@ struct AddCategoryView: View {
 struct AddCategoryView_Previews: PreviewProvider {
     @State var isPresented: Bool = false
     static var previews: some View {
-        AddCategoryView(isPresented: .constant(true), selectedColor: .blue, selectedIcon: "list.bullet")
+        AddCategoryView(isPresented: .constant(true))
     }
 }

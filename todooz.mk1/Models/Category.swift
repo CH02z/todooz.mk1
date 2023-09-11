@@ -13,6 +13,7 @@ struct Category: Codable, Identifiable, Hashable {
     let name: String
     var description: String?
     var iconColor: String?
+    var icon: String?
     let dateCreated: String?
     var lastModified: String?
     var numberOfTasks: Int?
