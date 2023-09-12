@@ -7,14 +7,10 @@
 
 import SwiftUI
 
-struct AddTaskView: View {
+struct EditTaskView: View {
     
-    @StateObject var viewModel: AddTaskViewModel
+    @StateObject var viewModel: EditTaskViewModel
     @Binding var isPresented: Bool
-    
-    //Input Properties
-    let allCategories: [Category]
-    let originalCat: String
     
     //used for Picker
     var categories: [String] = []
@@ -22,19 +18,13 @@ struct AddTaskView: View {
     
     
     
-    init(isPresented: Binding<Bool>, allCategories: [Category], originalCat: String) {
-        self._viewModel = StateObject(wrappedValue: AddTaskViewModel(originalCat: originalCat))
+    init(isPresented: Binding<Bool>, allCategories: [Category], editTask: Tasc) {
+        self._viewModel = StateObject(wrappedValue: EditTaskViewModel(taskID: editTask.id, title: editTask.title, category: editTask.category, dueDate: editTask.dueDate ?? "", description: editTask.description ?? "", isHighPriority: editTask.isHighPriority))
         self._isPresented = isPresented
-        self.allCategories = allCategories
-        self.originalCat = originalCat
         self.categories = allCategories.map({ category in
             return category.name
         })
     }
-    
-    
-    
-    
     
     //"Swisscom", "Privat", "Todooz", "Allgemein"
     
@@ -99,7 +89,6 @@ struct AddTaskView: View {
                             }
                             
                         }
-                        
                         //Due Data
                         if viewModel.letPickDate && !viewModel.letPickDateAndTime {
                             DatePicker("only date", selection: $viewModel.dueDate, displayedComponents: .date)
@@ -172,7 +161,7 @@ struct AddTaskView: View {
                 }
                 
                 ToolbarItem(placement: .principal) {
-                    Text("Neuer Task")
+                    Text("Task bearbeiten")
                         .fontWeight(.semibold)
                 }
                 
@@ -184,7 +173,7 @@ struct AddTaskView: View {
                         Task { try await viewModel.save()}
                         isPresented = false
                     } label: {
-                        Text("hinzufügen")
+                        Text("speichern")
                     }
                     .disabled(!viewModel.formIsValid())
                     
@@ -196,15 +185,12 @@ struct AddTaskView: View {
         }
         
         
-        
-        
-        
     }
 }
 
-struct AddTaskView_Previews: PreviewProvider {
+struct EditTodoView_Previews: PreviewProvider {
     @State var isPresented: Bool = false
     static var previews: some View {
-        AddTaskView(isPresented: .constant(true), allCategories: [TestData.categories[0]], originalCat: "Swisscom")
+        EditTaskView(isPresented: .constant(true), allCategories: [TestData.categories[0]], editTask: TestData.tasks[0])
     }
 }

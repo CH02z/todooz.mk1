@@ -10,12 +10,29 @@ import PhotosUI
 
 struct ProfileView: View {
     
-    @ObservedObject var viewModel = ProfileViewViewModel()
+    @StateObject var viewModel: ProfileViewViewModel
     
     // Try move this to View Model
     @State private var selectedPickerItem: PhotosPickerItem?
     
+    @State var avatarImage: UIImage?
+    @State var avatarMemojiImage: UIImage = UIImage(named: "memoji_white")!
+    @State var showAvatarImage: Bool = false
+    
+    
     let currentUser: User?
+    
+    
+    init(currentUser: User?) {
+        self._viewModel = StateObject(wrappedValue: ProfileViewViewModel())
+        self.currentUser = currentUser
+        
+    }
+    
+    
+    private func loadUserImage() async throws {
+        self.avatarImage = try await viewModel.loadUserProfileImage()
+    }
     
     var body: some View {
         
@@ -27,26 +44,16 @@ struct ProfileView: View {
                         
                         ZStack {
                             
-                            if let image = viewModel.avatarImage {
-                                Image(uiImage: image)
-                                    .resizable()
-                                    .scaledToFit()
-                                    .aspectRatio(contentMode: .fill)
-                                    .frame(width: 150, height: 150)
-                                    .clipShape(Circle())
-                                    .overlay(Circle().stroke(Color.white, lineWidth: 4))
-                                    .shadow(radius: 10)
-                                    .padding(.top, 30)
-                            } else {
-                                Image("memoji_white")
-                                    .resizable()
-                                    .scaledToFit()
-                                    .aspectRatio(contentMode: .fill)
-                                    .frame(width: 150, height: 150)
-                                    .clipShape(Circle())
-                                    .overlay(Circle().stroke(Color.white, lineWidth: 4))
-                                    .shadow(radius: 10)
-                                    .padding(.top, 30)
+                            if showAvatarImage {
+                                Image(uiImage: self.avatarImage ?? avatarMemojiImage)
+                                        .resizable()
+                                        .scaledToFit()
+                                        .aspectRatio(contentMode: .fill)
+                                        .frame(width: 150, height: 150)
+                                        .clipShape(Circle())
+                                        .overlay(Circle().stroke(Color.white, lineWidth: 4))
+                                        .shadow(radius: 10)
+                                        .padding(.top, 30)
                             }
                             
                             PhotosPicker(selection: $selectedPickerItem, matching: .images) {
@@ -102,8 +109,7 @@ struct ProfileView: View {
                             }
                         
                             .refreshable {
-                                Task { try await viewModel.loadUserProfileImage() }
-                                print(currentUser?.id)
+                                Task { try await self.loadUserImage() }
                             }
                         
                         Spacer()
@@ -114,7 +120,16 @@ struct ProfileView: View {
                 
             }
             .onAppear() {
-                Task { try await viewModel.loadUserProfileImage() }
+                Task { @MainActor in
+                    //
+                    try await self.loadUserImage()
+                    try await Task.sleep(seconds: 0.5)
+                    try await self.loadUserImage()
+                    try await Task.sleep(seconds: 0.5)
+                    self.showAvatarImage = true
+                    
+                   
+                }
             }
             
             
@@ -153,6 +168,6 @@ struct ProfileView: View {
 
 struct ProfileView_Previews: PreviewProvider {
     static var previews: some View {
-        ProfileView(currentUser: User(id: "234j3i4j34kl3j43l", firstName: "Chris", lastName: "Zimmermann", email: "chris.zimmermann@hotmail.ch", joined: Date().timeIntervalSince1970))
+        ProfileView(currentUser: TestData.users[0])
     }
 }

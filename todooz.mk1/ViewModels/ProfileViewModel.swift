@@ -16,12 +16,10 @@ class ProfileViewViewModel: ObservableObject {
     
     init() {}
     
-    func loadUserProfileImage() async throws {
+    func loadUserProfileImage() async throws -> UIImage? {
         let imageRef = try await getProfilePictureRef()
-        if !imageRef.isEmpty {
-            self.avatarImage = await DownloadPhoto(imageRef: imageRef)
-            print("avatar image set...")
-        }
+        return await DownloadPhoto(imageRef: imageRef)
+        print("avatar image set...")
     }
     
     func uploadPhoto(image: UIImage?) async {

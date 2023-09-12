@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Bucket
+   uuid = "B1D0EEE1-DC4F-4A3E-ADAC-4EE8B21674EC"
+   type = "1"
+   version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "7CEF152A-02FB-4070-BBF2-E401679E30C9"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "todooz.mk1/Views/CategoryView.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "155"
+            endingLineNumber = "155"
+            landmarkName = "body"
+            landmarkType = "24">
+            <Locations>
+               <Location
+                  uuid = "7CEF152A-02FB-4070-BBF2-E401679E30C9 - 7ed7b2b8140082c4"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "todooz_mk1.CategoryPreviewView.body.getter : some"
+                  moduleName = "todooz.mk1"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/chris/Documents/private_code/IOS_DEV/todooz.mk1/todooz.mk1/Views/CategoryView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "145"
+                  endingLineNumber = "145"
+                  offsetFromSymbolStart = "648">
+               </Location>
+               <Location
+                  uuid = "7CEF152A-02FB-4070-BBF2-E401679E30C9 - 305c8f0897d36a30"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 () -&gt; SwiftUI.TupleView&lt;(&lt;&lt;opaque return type of SwiftUI.View.padding(SwiftUI.Edge.Set, Swift.Optional&lt;CoreGraphics.CGFloat&gt;) -&gt; some&gt;&gt;.0, &lt;&lt;opaque return type of SwiftUI.View.minimumScaleFactor(CoreGraphics.CGFloat) -&gt; some&gt;&gt;.0, &lt;&lt;opaque return type of SwiftUI.View.foregroundColor(Swift.Optional&lt;SwiftUI.Color&gt;) -&gt; some&gt;&gt;.0)&gt; in todooz_mk1.CategoryPreviewView.body.getter : some"
+                  moduleName = "todooz.mk1"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/chris/Documents/private_code/IOS_DEV/todooz.mk1/todooz.mk1/Views/CategoryView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "146"
+                  endingLineNumber = "146"
+                  offsetFromSymbolStart = "328">
+               </Location>
+               <Location
+                  uuid = "7CEF152A-02FB-4070-BBF2-E401679E30C9 - 7ed7b2b81400829b"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "todooz_mk1.CategoryPreviewView.body.getter : some"
+                  moduleName = "todooz.mk1"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/chris/Documents/private_code/IOS_DEV/todooz.mk1/todooz.mk1/Views/CategoryView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "144"
+                  endingLineNumber = "144"
+                  offsetFromSymbolStart = "792">
+               </Location>
+               <Location
+                  uuid = "7CEF152A-02FB-4070-BBF2-E401679E30C9 - 7ed7b2b81400829b"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "todooz_mk1.CategoryPreviewView.body.getter : some"
+                  moduleName = "todooz.mk1"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/chris/Documents/private_code/IOS_DEV/todooz.mk1/todooz.mk1/Views/CategoryView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "144"
+                  endingLineNumber = "144"
+                  offsetFromSymbolStart = "876">
+               </Location>
+               <Location
+                  uuid = "7CEF152A-02FB-4070-BBF2-E401679E30C9 - 7ed7b2b81400821f"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "todooz_mk1.CategoryPreviewView.body.getter : some"
+                  moduleName = "todooz.mk1"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/chris/Documents/private_code/IOS_DEV/todooz.mk1/todooz.mk1/Views/CategoryView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "140"
+                  endingLineNumber = "140"
+                  offsetFromSymbolStart = "808">
+               </Location>
+               <Location
+                  uuid = "7CEF152A-02FB-4070-BBF2-E401679E30C9 - 7ed7b2b81400821f"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "todooz_mk1.CategoryPreviewView.body.getter : some"
+                  moduleName = "todooz.mk1"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/chris/Documents/private_code/IOS_DEV/todooz.mk1/todooz.mk1/Views/CategoryView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "140"
+                  endingLineNumber = "140"
+                  offsetFromSymbolStart = "892">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
+</Bucket>

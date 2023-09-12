@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import FirebaseFirestoreSwift
 
 class AddTaskViewModel: ObservableObject {
     
@@ -14,6 +15,9 @@ class AddTaskViewModel: ObservableObject {
     @Published var letPickDate: Bool = false
     @Published var letPickDateAndTime: Bool = false
     
+    
+    @Published var taskID: String = ""
+    
     @Published var title: String = ""
     @Published var dueDate: Date = Date()
     @Published var description: String = ""
@@ -21,14 +25,13 @@ class AddTaskViewModel: ObservableObject {
     
     @Published var categorySelection = ""
     
-    let TestCategories = ["Swisscom", "Privat", "Todooz", "Allgemein"]
-    
     
     
     @Published var errorMessage: String = ""
     
-    init(category: Category) {
-        self.categorySelection = category.name
+    init(originalCat: String) {
+        print("selection set to \(originalCat)")
+        self.categorySelection = originalCat
     }
     
     func formIsValid() -> Bool {
@@ -37,7 +40,7 @@ class AddTaskViewModel: ObservableObject {
         }
         
         if letPickDate {
-            guard dueDate > Date() else { return false }
+            guard dueDate >= Calendar.current.date(byAdding: .minute, value: -5, to: Date())! else { return false }
         }
         
         return true
@@ -59,7 +62,7 @@ class AddTaskViewModel: ObservableObject {
             try await TaskService.shared.createTask(title: self.title, category: self.categorySelection, dueDate: DateTimeString, description: self.description, isHighPriority: self.isHighPriority)
         }
         
-        if !self.letPickDate && !self.letPickDateAndTime {
+        if !self.letPickDate {
             //Task without any DueDate is Created
             try await TaskService.shared.createTask(title: self.title, category: self.categorySelection, dueDate: "", description: self.description, isHighPriority: self.isHighPriority)
             
