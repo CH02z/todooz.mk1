@@ -99,13 +99,13 @@ struct StandardCategoryPreviewView: View {
                                 .padding(.trailing, 6)
                                 .font(.title)
                         }
-                        .foregroundColor(.white)
+                        .foregroundColor(Color("MainFontColor"))
                         .frame(width: 155, height: 80)
                         .cornerRadius(8)
                         .padding(.horizontal, 5)
                         .padding(.vertical, 5)
                     }
-                    .background(Color(.systemGray6))
+                    .background(Color("ElementBackround"))
                     .cornerRadius(10)
                     //.padding(.leading, 25)
                     
@@ -135,13 +135,13 @@ struct StandardCategoryPreviewView: View {
                                 .padding(.trailing, 6)
                                 .font(.title)
                         }
-                        .foregroundColor(.white)
+                        .foregroundColor(Color("MainFontColor"))
                         .frame(width: 155, height: 80)
                         .cornerRadius(8)
                         .padding(.horizontal, 5)
                         .padding(.vertical, 5)
                     }
-                    .background(Color(.systemGray6))
+                    .background(Color("ElementBackround"))
                     .cornerRadius(10)
                     //.padding(.trailing, 25)
                     
@@ -169,19 +169,19 @@ struct StandardCategoryPreviewView: View {
                         //.overlay(Circle().stroke(Color.white, lineWidth: 1))
                         
                         Text("Erledigt")
-                            .foregroundColor(.white)
+                            .foregroundColor(Color("MainFontColor"))
                             .fontWeight(.semibold)
                             .lineLimit(2)
                             .minimumScaleFactor(0.5)
                         
                         Text(numberOfDoneTasks)
                             .frame(maxWidth: .infinity, alignment: .trailing)
-                            .foregroundColor(.gray)
                             .padding(.trailing, 20)
+                            .foregroundColor(Color("MainFontColor"))
                     }
                     .padding(.vertical, 4)
                 }
-                .background(Color(.systemGray6))
+                .background(Color("ElementBackround"))
                 .cornerRadius(10)
                 .padding(.top, 30)
                 

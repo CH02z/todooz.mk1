@@ -45,7 +45,7 @@ struct CategoryView: View {
                     
                     StandardCategoryPreviewView(currentUser: user, allCategories: categories)
                         .padding()
-                        
+                    
                     //.frame(maxWidth: .infinity, alignment: .center)
                     
                     List{
@@ -94,7 +94,7 @@ struct CategoryView: View {
                             Image(systemName: "person.circle")
                             //.foregroundColor(.gray)
                                 .font(.system(size: 25))
-                                //.padding(.bottom, 10)
+                            //.padding(.bottom, 10)
                         }
                         
                     }
@@ -153,6 +153,7 @@ struct CategoryPreviewView: View {
     var body: some View {
         
         if let user = currentUser {
+            
             HStack {
                 Image(systemName: category.icon ?? "list.bullet")
                     .foregroundColor(.white)
@@ -177,7 +178,10 @@ struct CategoryPreviewView: View {
             .onAppear() {
                 Task { try await self.getNumberOfTasks(uid: user.id) }
             }
+            
         }
+        
+        
     }
     
     
