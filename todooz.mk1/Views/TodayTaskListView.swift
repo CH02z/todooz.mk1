@@ -14,7 +14,6 @@ struct TodayTaskListView: View {
     let currentUser: User?
     let allCategories: [Category]
     
-    @State var showAddItemSheet: Bool = false
     @State var filteredByDateTasks: [Tasc] = []
    
     

@@ -39,10 +39,21 @@ class TaskService {
     }
     
     @MainActor
-    func editTask(taskID: String, title: String, category: String, dueDate: String?, description: String, isHighPriority: Bool) async throws {
-        
+    func editTask(taskID: String, title: String, category: String, dueDate: String, description: String, isHighPriority: Bool) async throws {
         guard let uid = self.userID else { return }
-        try await Firestore.firestore().collection("users").document(uid).collection("tasks").document(taskID).setData([ "title": title, "category": category, "dueDate": dueDate ?? "", "description": description, "isHighPriority": isHighPriority], merge: true)
+        
+        /*...
+        if dueDate == "" {
+            //delete Date from existing Task
+            try await Firestore.firestore().collection("users").document(uid).collection("tasks").document(taskID).setData([ "dueDate": ""], merge: true)
+        }
+        
+        if dueDate.count < 11 {
+            //insert task with full
+        }
+         */
+        
+        try await Firestore.firestore().collection("users").document(uid).collection("tasks").document(taskID).setData([ "title": title, "category": category, "dueDate": dueDate, "description": description, "isHighPriority": isHighPriority], merge: true)
         print("Task \(title) updated in Firestore")
     }
     

@@ -72,7 +72,7 @@ class EditTaskViewModel: ObservableObject {
         }
         
         if letPickDate {
-            guard dueDate > Date() else { return false }
+            guard dueDate >= Calendar.current.date(byAdding: .minute, value: -5, to: Date())! else { return false }
         }
         
         return true
@@ -82,6 +82,7 @@ class EditTaskViewModel: ObservableObject {
         
         if self.letPickDate && !self.letPickDateAndTime {
             //Date without Time gets inserted
+            print("one was")
             let DateNoTime = self.dueDate.removeTimeStamp()
             let DateString = getStringFromDate(date: DateNoTime!, dateFormat: "dd.MM.yyyy")
             try await TaskService.shared.editTask(taskID: self.taskID, title: self.title, category: self.categorySelection, dueDate: DateString, description: self.description, isHighPriority: self.isHighPriority)
@@ -90,12 +91,14 @@ class EditTaskViewModel: ObservableObject {
         if self.letPickDate && self.letPickDateAndTime {
             //Date with Time gets inserted
             //"d MMM YY, HH:mm:ss"
+            print("two was")
             let DateTimeString = getStringFromDate(date: self.dueDate, dateFormat: "dd.MM.yyyy, HH:mm")
             try await TaskService.shared.editTask(taskID: self.taskID, title: self.title, category: self.categorySelection, dueDate: DateTimeString, description: self.description, isHighPriority: self.isHighPriority)
         }
         
-        if !self.letPickDate && !self.letPickDateAndTime {
+        if !self.letPickDate {
             //Task without any DueDate is Created
+            print("edit task and remove date / time \(self.dueDate)")
             try await TaskService.shared.editTask(taskID: self.taskID, title: self.title, category: self.categorySelection, dueDate: "", description: self.description, isHighPriority: self.isHighPriority)
             
         }

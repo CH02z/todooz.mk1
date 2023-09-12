@@ -48,6 +48,19 @@ struct AddTaskView: View {
                     TextField("Titel", text: $viewModel.title)
                         .submitLabel(.next)
                         .frame(maxWidth: .infinity, alignment: .trailing)
+                    if viewModel.title.trimmingCharacters(in: .whitespaces).isEmpty {
+                        HStack {
+                            Image(systemName: "xmark")
+                                .foregroundColor(.red)
+                                .font(.system(size: 15))
+                                .fontWeight(.bold)
+                                .padding(.vertical, 2.5)
+                            Text("Titel darf nicht leer sein")
+                                .font(.footnote)
+                                .foregroundColor(.red)
+                        }
+                        
+                    }
                     
                     Section {
                         TextField("Notizen", text: $viewModel.description,  axis: .vertical)
@@ -73,6 +86,20 @@ struct AddTaskView: View {
                                 .frame(maxWidth: .infinity, alignment: .trailing)
           
                         }
+                        if viewModel.letPickDate && viewModel.dueDate <= Calendar.current.date(byAdding: .minute, value: -5, to: Date())! {
+                            HStack {
+                                Image(systemName: "xmark")
+                                    .foregroundColor(.red)
+                                    .font(.system(size: 15))
+                                    .fontWeight(.bold)
+                                    .padding(.vertical, 2.5)
+                                Text("Datum darf nicht in der Vergangenheit liegen")
+                                    .font(.footnote)
+                                    .foregroundColor(.red)
+                            }
+                            
+                        }
+                        
                         //Due Data
                         if viewModel.letPickDate && !viewModel.letPickDateAndTime {
                             DatePicker("only date", selection: $viewModel.dueDate, displayedComponents: .date)

@@ -88,6 +88,11 @@ struct DetailTaskView: View {
             
             
         }
+        .onChange(of: self.showEditItemSheet) { newValue in
+            if newValue == false {
+                isPresented = false
+            }
+        }
         
         
         

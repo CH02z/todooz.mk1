@@ -14,8 +14,6 @@ struct HighPrioTaskListView: View {
     let currentUser: User?
     let allCategories: [Category]
     
-    @State var showAddItemSheet: Bool = false
-    
     
     @FirestoreQuery(collectionPath: "users") var tasks: [Tasc]
     @ObservedObject var viewModel = TaskListViewModel()

@@ -40,7 +40,7 @@ class AddTaskViewModel: ObservableObject {
         }
         
         if letPickDate {
-            guard dueDate > Date() else { return false }
+            guard dueDate >= Calendar.current.date(byAdding: .minute, value: -5, to: Date())! else { return false }
         }
         
         return true
@@ -62,7 +62,7 @@ class AddTaskViewModel: ObservableObject {
             try await TaskService.shared.createTask(title: self.title, category: self.categorySelection, dueDate: DateTimeString, description: self.description, isHighPriority: self.isHighPriority)
         }
         
-        if !self.letPickDate && !self.letPickDateAndTime {
+        if !self.letPickDate {
             //Task without any DueDate is Created
             try await TaskService.shared.createTask(title: self.title, category: self.categorySelection, dueDate: "", description: self.description, isHighPriority: self.isHighPriority)
             

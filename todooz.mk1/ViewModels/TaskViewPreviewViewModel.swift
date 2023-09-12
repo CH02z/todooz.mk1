@@ -28,7 +28,7 @@ class TaskViewPreviewViewModel: ObservableObject {
     @MainActor
     func toggleTask(finishedTaskID: String, currentState: Bool) async throws {
         self.isStrikedThrough.toggle()
-        try await Task.sleep(seconds: 2.0)
+        try await Task.sleep(seconds: 1.0)
         //Haptic Feedback on remove
         let impactLight = UIImpactFeedbackGenerator(style: .light)
         impactLight.impactOccurred()
