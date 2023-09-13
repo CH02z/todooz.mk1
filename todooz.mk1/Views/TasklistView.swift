@@ -133,7 +133,7 @@ struct TasklistView: View {
                         .bold()
                         .font(.title2)
                         .padding(8)
-                        .background(.black,
+                        .background(Color("ElementBackround"),
                                     in: Capsule())
                         .padding(.leading)
                         .symbolVariant(.circle.fill)

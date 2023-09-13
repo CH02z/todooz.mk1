@@ -12,27 +12,19 @@ import FirebaseAuth
 struct CategoryView: View {
     
     let currentUser: User?
-    @State var avatarImage: UIImage?
+    //@State var avatarImage: UIImage?
     
     @ObservedObject var viewModel = CategoryViewModel()
     @State var showAddCategorySheet: Bool = false
     @FirestoreQuery(collectionPath: "users") var categories: [Category]
-    @FirestoreQuery(collectionPath: "users") var Alltasks: [Tasc]
+    //@FirestoreQuery(collectionPath: "users") var Alltasks: [Tasc]
+    
+    @State private var showDeleteCatConfirmationDialog: Bool = false
+    @State private var categorytoDelete: Category = Category(id: "", name: "", dateCreated: "")
     
     //var TestCategories: [Category] = TestData.categories
     
-    @State private var searchText = ""
-    
-    private func filterTasks(keyword: String) {
-        $Alltasks.path = "users/\(self.currentUser?.id ?? "")/tasks"
-        $Alltasks.predicates = [
-            //.arrayContains("title", keyword),
-            //.isEqualTo("title", keyword),
-            //.whereField("title", isLessThanOrEqualTo: keyword),
-            .whereField("title", arrayContains: keyword),
-        ]
-    }
-    
+   
     
     var body: some View {
         
@@ -46,8 +38,6 @@ struct CategoryView: View {
                     StandardCategoryPreviewView(currentUser: user, allCategories: categories)
                         .padding()
                     
-                    //.frame(maxWidth: .infinity, alignment: .center)
-                    
                     List{
                         
                         ForEach(categories) { category in
@@ -55,6 +45,23 @@ struct CategoryView: View {
                                 //Displayed List Item Design:
                                 CategoryPreviewView(category: category, currentUser: self.currentUser )
                             }
+                            .swipeActions {
+                                
+                                Button("löschen") {
+                                    showDeleteCatConfirmationDialog = true
+                                    self.categorytoDelete = category
+                                }
+                                .confirmationDialog("Are you sure?",
+                                     isPresented: $showDeleteCatConfirmationDialog) {
+                                     Button("Delete categore?", role: .destructive) {
+                                                                              }
+                                    } message: {
+                                        Text("Alle Tasks in dieser Kategorie werden gelöscht")
+                                      }
+                                    .tint(.red)
+                                
+                            }
+                            
                         }
                         
                     }
@@ -68,6 +75,16 @@ struct CategoryView: View {
                     .sheet(isPresented: $showAddCategorySheet, content: {
                         AddCategoryView(isPresented: $showAddCategorySheet)
                     })
+                    .confirmationDialog("Are you sure?",
+                         isPresented: $showDeleteCatConfirmationDialog) {
+                         Button("Kategorie löschen?", role: .destructive) {
+                             
+                             Task { try await viewModel.deleteCategory(category: self.categorytoDelete) }
+                             
+                         }
+                        } message: {
+                            Text("Alle Tasks in dieser Kategorie werden gelöscht")
+                          }
                 }
                 
                 .navigationTitle("Kategorien")
@@ -112,10 +129,7 @@ struct CategoryView: View {
                 
             }
             .onAppear() {
-                //filterTasks
-                Task { @MainActor in
-                    self.filterTasks(keyword: "")
-                }
+               //action
             }
             
         } else {
