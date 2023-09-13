@@ -42,13 +42,20 @@ struct HighPrioTaskListView: View {
                         }
                     
                 }
-                
+                if tasks.count == 0 {
+                        Text("Keine Tasks mit hoher Priorität vorhanden")
+                            .frame(maxWidth: .infinity, alignment: .center)
+                            .font(.subheadline)
+                            .foregroundColor(.secondary)
+                }
             }
             .refreshable {
                 Task { @MainActor in
                     self.filterTasks()
                 }
             }
+            
+            
             
             .navigationTitle("Hohe Priorität")
             
@@ -63,7 +70,7 @@ struct HighPrioTaskListView: View {
                     }
                     
                 }            }
-            
+         
             
             
         }
@@ -72,7 +79,7 @@ struct HighPrioTaskListView: View {
                 self.filterTasks()
             }
         }
-    }
+            }
     
 }
 

@@ -17,12 +17,12 @@ struct AddEmailView: View {
     var body: some View {
         VStack(spacing: 12) {
             
-            Text("Add your email")
+            Text("Email hinzufügen")
                 .font(.title2)
                 .fontWeight(.bold)
                 .padding(.top)
             
-            Text("You'll use this email to sign in to your account")
+            Text("Die Email wird als Benutzername gebraucht, um dich anzumelden")
                 .font(.footnote)
                 .foregroundColor(.gray)
                 .multilineTextAlignment(.center)
@@ -37,11 +37,11 @@ struct AddEmailView: View {
                 VStack(alignment: .leading) {
                     
                     if viewModel.isValidEmail(self.email) {
-                        Label("Email is valid", systemImage: "checkmark")
+                        Label("Email is gültig", systemImage: "checkmark")
                             .foregroundColor(.green)
                             .font(.subheadline)
                     } else {
-                        Label("Email is invalid", systemImage: "xmark")
+                        Label("Email ist ungültig", systemImage: "xmark")
                             .foregroundColor(.red)
                             .font(.subheadline)
                     }
@@ -52,7 +52,7 @@ struct AddEmailView: View {
             NavigationLink {
                 SetPasswordView(InputEmail: self.email)
             } label: {
-                Text("Next")
+                Text("weiter")
                     .fontWeight(.semibold)
                     .frame(width: 350)
                     .padding(.vertical, 10)

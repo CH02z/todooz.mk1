@@ -36,6 +36,7 @@ struct IsDoneTaskListView: View {
     var body: some View {
         
         NavigationStack {
+            
             List {
                 ForEach(tasks) { item in
                     IsDoneTaskViewPreview(item: item, allCategories: allCategories)
@@ -48,7 +49,13 @@ struct IsDoneTaskListView: View {
                         }
                     
                 }
-                
+                if tasks.count == 0 {
+                        Text("Ab an die Arbeit, du hast noch keine erledigten Tasks")
+                            .frame(maxWidth: .infinity, alignment: .center)
+                            .font(.subheadline)
+                            .foregroundColor(.secondary)
+                            
+                }
             }
             .refreshable {
                 Task { @MainActor in

@@ -54,8 +54,15 @@ struct TodayTaskListView: View {
                         }
                     
                 }
-                
+                if tasks.count == 0 {
+                        Text("Heute scheint ein ruhiger Tag zu sein; Keine Tasks zu erledigen")
+                            .frame(maxWidth: .infinity, alignment: .center)
+                            .font(.subheadline)
+                            .foregroundColor(.secondary)
+                            
+                }
             }
+            
             
             .refreshable {
                 Task { @MainActor in
@@ -65,6 +72,7 @@ struct TodayTaskListView: View {
                 
                 
             }
+            
             
             
             .navigationTitle("Heute zu erledigen")

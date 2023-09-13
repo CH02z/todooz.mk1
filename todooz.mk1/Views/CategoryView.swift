@@ -38,6 +38,35 @@ struct CategoryView: View {
                     StandardCategoryPreviewView(currentUser: user, allCategories: categories)
                         .padding()
                     
+                    if categories.count == 0 {
+                        VStack {
+                            Text("Erstelle zuerst eine Kategorie, um neue Tasks hinzuzufügen")
+                                .frame(maxWidth: .infinity, alignment: .center)
+                                .font(.subheadline)
+                                .foregroundColor(.secondary)
+                                .padding(.bottom, 40)
+                            Button{
+                                
+                                //Haptic Feedback on Tap
+                                let impactHeavy = UIImpactFeedbackGenerator(style: .heavy)
+                                impactHeavy.impactOccurred()
+                                self.showAddCategorySheet = true
+                                
+                            } label: {
+                                Label("hinzufügen", systemImage: "plus")
+                                    .bold()
+                                    .font(.title2)
+                                    .padding(8)
+                                    .background(Color("ElementBackround"),
+                                                in: Capsule())
+                                    .padding(.leading)
+                                    .symbolVariant(.circle.fill)
+                            }
+                        }
+                        .padding(.top, 60)
+                        
+                    }
+                    
                     List{
                         
                         ForEach(categories) { category in
@@ -52,13 +81,13 @@ struct CategoryView: View {
                                     self.categorytoDelete = category
                                 }
                                 .confirmationDialog("Are you sure?",
-                                     isPresented: $showDeleteCatConfirmationDialog) {
-                                     Button("Delete categore?", role: .destructive) {
-                                                                              }
-                                    } message: {
-                                        Text("Alle Tasks in dieser Kategorie werden gelöscht")
-                                      }
-                                    .tint(.red)
+                                                    isPresented: $showDeleteCatConfirmationDialog) {
+                                    Button("Delete categore?", role: .destructive) {
+                                    }
+                                } message: {
+                                    Text("Alle Tasks in dieser Kategorie werden gelöscht")
+                                }
+                                .tint(.red)
                                 
                             }
                             
@@ -76,15 +105,15 @@ struct CategoryView: View {
                         AddCategoryView(isPresented: $showAddCategorySheet)
                     })
                     .confirmationDialog("Are you sure?",
-                         isPresented: $showDeleteCatConfirmationDialog) {
-                         Button("Kategorie löschen?", role: .destructive) {
-                             
-                             Task { try await viewModel.deleteCategory(category: self.categorytoDelete) }
-                             
-                         }
-                        } message: {
-                            Text("Alle Tasks in dieser Kategorie werden gelöscht")
-                          }
+                                        isPresented: $showDeleteCatConfirmationDialog) {
+                        Button("Kategorie löschen?", role: .destructive) {
+                            
+                            Task { try await viewModel.deleteCategory(category: self.categorytoDelete) }
+                            
+                        }
+                    } message: {
+                        Text("Alle Tasks in dieser Kategorie werden gelöscht")
+                    }
                 }
                 
                 .navigationTitle("Kategorien")
@@ -125,12 +154,12 @@ struct CategoryView: View {
                     ]
                 }
                 
-                
-                
             }
-            .onAppear() {
-               //action
-            }
+            
+            
+            
+                
+
             
         } else {
             LoadingView()

@@ -27,12 +27,12 @@ struct FinalRegistrationView: View {
             
             Spacer()
             
-            Text("New Account")
+            Text("Neuer Account")
                 .font(.title2)
                 .fontWeight(.bold)
                 .padding(.top)
             
-            Text("Create account for the following User: ")
+            Text("Es wird ein neuer Account für folgenden Benutzer erstellt.")
                 .font(.footnote)
                 .foregroundColor(.gray)
                 .multilineTextAlignment(.center)
@@ -43,8 +43,6 @@ struct FinalRegistrationView: View {
                 .font(.body)
                 .fontWeight(.semibold)
                 .accentColor(.black)
-            
-            Text(self.InputPW)
             
             
             /*
@@ -63,7 +61,7 @@ struct FinalRegistrationView: View {
                 
                 
             } label: {
-                Text("Sign Up")
+                Text("Registrieren")
                     .frame(width: 330)
                     .padding(.vertical, 2.5)
                 
