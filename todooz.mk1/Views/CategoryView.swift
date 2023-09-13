@@ -12,27 +12,19 @@ import FirebaseAuth
 struct CategoryView: View {
     
     let currentUser: User?
-    @State var avatarImage: UIImage?
+    //@State var avatarImage: UIImage?
     
     @ObservedObject var viewModel = CategoryViewModel()
     @State var showAddCategorySheet: Bool = false
     @FirestoreQuery(collectionPath: "users") var categories: [Category]
-    @FirestoreQuery(collectionPath: "users") var Alltasks: [Tasc]
+    //@FirestoreQuery(collectionPath: "users") var Alltasks: [Tasc]
+    
+    @State private var showDeleteCatConfirmationDialog: Bool = false
+    @State private var categorytoDelete: Category = Category(id: "", name: "", dateCreated: "")
     
     //var TestCategories: [Category] = TestData.categories
     
-    @State private var searchText = ""
-    
-    private func filterTasks(keyword: String) {
-        $Alltasks.path = "users/\(self.currentUser?.id ?? "")/tasks"
-        $Alltasks.predicates = [
-            //.arrayContains("title", keyword),
-            //.isEqualTo("title", keyword),
-            //.whereField("title", isLessThanOrEqualTo: keyword),
-            .whereField("title", arrayContains: keyword),
-        ]
-    }
-    
+   
     
     var body: some View {
         
@@ -45,8 +37,35 @@ struct CategoryView: View {
                     
                     StandardCategoryPreviewView(currentUser: user, allCategories: categories)
                         .padding()
+                    
+                    if categories.count == 0 {
+                        VStack {
+                            Text("Erstelle zuerst eine Kategorie, um neue Tasks hinzuzufügen")
+                                .frame(maxWidth: .infinity, alignment: .center)
+                                .font(.subheadline)
+                                .foregroundColor(.secondary)
+                                .padding(.bottom, 40)
+                            Button{
+                                
+                                //Haptic Feedback on Tap
+                                let impactHeavy = UIImpactFeedbackGenerator(style: .heavy)
+                                impactHeavy.impactOccurred()
+                                self.showAddCategorySheet = true
+                                
+                            } label: {
+                                Label("hinzufügen", systemImage: "plus")
+                                    .bold()
+                                    .font(.title2)
+                                    .padding(8)
+                                    .background(Color("ElementBackround"),
+                                                in: Capsule())
+                                    .padding(.leading)
+                                    .symbolVariant(.circle.fill)
+                            }
+                        }
+                        .padding(.top, 60)
                         
-                    //.frame(maxWidth: .infinity, alignment: .center)
+                    }
                     
                     List{
                         
@@ -55,6 +74,23 @@ struct CategoryView: View {
                                 //Displayed List Item Design:
                                 CategoryPreviewView(category: category, currentUser: self.currentUser )
                             }
+                            .swipeActions {
+                                
+                                Button("löschen") {
+                                    showDeleteCatConfirmationDialog = true
+                                    self.categorytoDelete = category
+                                }
+                                .confirmationDialog("Are you sure?",
+                                                    isPresented: $showDeleteCatConfirmationDialog) {
+                                    Button("Delete categore?", role: .destructive) {
+                                    }
+                                } message: {
+                                    Text("Alle Tasks in dieser Kategorie werden gelöscht")
+                                }
+                                .tint(.red)
+                                
+                            }
+                            
                         }
                         
                     }
@@ -68,6 +104,16 @@ struct CategoryView: View {
                     .sheet(isPresented: $showAddCategorySheet, content: {
                         AddCategoryView(isPresented: $showAddCategorySheet)
                     })
+                    .confirmationDialog("Are you sure?",
+                                        isPresented: $showDeleteCatConfirmationDialog) {
+                        Button("Kategorie löschen?", role: .destructive) {
+                            
+                            Task { try await viewModel.deleteCategory(category: self.categorytoDelete) }
+                            
+                        }
+                    } message: {
+                        Text("Alle Tasks in dieser Kategorie werden gelöscht")
+                    }
                 }
                 
                 .navigationTitle("Kategorien")
@@ -94,7 +140,7 @@ struct CategoryView: View {
                             Image(systemName: "person.circle")
                             //.foregroundColor(.gray)
                                 .font(.system(size: 25))
-                                //.padding(.bottom, 10)
+                            //.padding(.bottom, 10)
                         }
                         
                     }
@@ -108,15 +154,12 @@ struct CategoryView: View {
                     ]
                 }
                 
-                
-                
             }
-            .onAppear() {
-                //filterTasks
-                Task { @MainActor in
-                    self.filterTasks(keyword: "")
-                }
-            }
+            
+            
+            
+                
+
             
         } else {
             LoadingView()
@@ -153,6 +196,7 @@ struct CategoryPreviewView: View {
     var body: some View {
         
         if let user = currentUser {
+            
             HStack {
                 Image(systemName: category.icon ?? "list.bullet")
                     .foregroundColor(.white)
@@ -177,7 +221,10 @@ struct CategoryPreviewView: View {
             .onAppear() {
                 Task { try await self.getNumberOfTasks(uid: user.id) }
             }
+            
         }
+        
+        
     }
     
     

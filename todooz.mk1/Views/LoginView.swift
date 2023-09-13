@@ -30,22 +30,22 @@ struct LoginView: View {
                     .padding(.bottom, 40)
                 
                 
-                TextField("Enter your Email", text: $email)
+                TextField("Email eingeben", text: $email)
                     .textFieldStyle(RoundTextFieldStyle())
                     .padding(.horizontal, 20)
              
               
                 
-                SecureField("Enter your Password", text: $password)
+                SecureField("Passwort eingeben", text: $password)
                     .textFieldStyle(RoundTextFieldStyle())
                     .padding(.horizontal, 20)
                 
                 
                 
                 Button {
-                    print("forgot pw")
+                    //print("forgot pw")
                 } label: {
-                    Text("Forgot Password")
+                    Text("Passwort vergessen?")
                         .foregroundColor(Color.blue)
                         .font(.footnote)
                         .padding(.trailing, 28)
@@ -78,7 +78,7 @@ struct LoginView: View {
                     Rectangle()
                         .frame(width: (UIScreen.main.bounds.width / 2) - 40, height: 0.5)
                     //(UIScreen.main.bounds.width / 2)
-                    Text("OR")
+                    Text("Oder")
                         .font(.footnote)
                         .fontWeight(.semibold)
                     Rectangle()
@@ -101,10 +101,9 @@ struct LoginView: View {
                             .resizable()
                             .scaledToFit()
                             .frame(height: 25)
-                        Text("Continue with Google")
-                            .fontWeight(.semibold)
+                        Text("Weiter mit Google")
                             .font(.body)
-                            .foregroundColor(.white)
+                            .foregroundColor(Color("MainFontColor"))
                             .cornerRadius(10)
                     }
                     .padding(.horizontal, 50)
@@ -127,7 +126,7 @@ struct LoginView: View {
                             .resizable()
                             .scaledToFit()
                             .frame(height: 20)
-                        Text("Sign in with Apple")
+                        Text("Anmelden mit Apple")
                             .fontWeight(.light)
                             .font(.body)
                             .cornerRadius(10)
@@ -159,8 +158,8 @@ struct LoginView: View {
             NavigationLink {
                 AddEmailView()
             } label: {
-                Text("Don't have an Account Yet?")
-                Text("Sign up")
+                Text("Noch kein Account?")
+                Text("Registrieren")
                     .fontWeight(.semibold)
             }
             .padding(.vertical, 20)

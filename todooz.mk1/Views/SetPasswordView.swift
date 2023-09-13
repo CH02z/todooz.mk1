@@ -25,12 +25,12 @@ struct SetPasswordView: View {
     var body: some View {
         VStack(spacing: 12) {
             
-            Text("Create a Password")
+            Text("Passwort erstellen")
                 .font(.title2)
                 .fontWeight(.bold)
                 .padding(.top)
             
-            Text("You'll use this email to sign in to your account")
+            Text("Mit diesem Passwort wirst du dich anmelden")
                 .font(.footnote)
                 .foregroundColor(.gray)
                 .multilineTextAlignment(.center)
@@ -40,11 +40,11 @@ struct SetPasswordView: View {
             
             HStack {
                 if ShowPassword {
-                    TextField("password", text: $PasswordEntry)
+                    TextField("Passwort", text: $PasswordEntry)
                         .textFieldStyle(RoundTextFieldStyle())
                         .padding(.horizontal, 20)
                 } else {
-                    SecureField("password", text: $PasswordEntry)
+                    SecureField("Passwort", text: $PasswordEntry)
                         .textFieldStyle(RoundTextFieldStyle())
                         .padding(.horizontal, 20)
                 }
@@ -65,11 +65,11 @@ struct SetPasswordView: View {
             
             if PasswordEntry != "" {
                 if ShowPassword {
-                    TextField("password (verify)", text: $PasswordReEntry)
+                    TextField("Passwort (verifizieren)", text: $PasswordReEntry)
                         .textFieldStyle(RoundTextFieldStyle())
                         .padding(.horizontal, 20)
                 } else {
-                    SecureField("password (verify)", text: $PasswordReEntry)
+                    SecureField("Passwort (verifizieren)", text: $PasswordReEntry)
                         .textFieldStyle(RoundTextFieldStyle())
                         .padding(.horizontal, 20)
                 }
@@ -82,22 +82,22 @@ struct SetPasswordView: View {
             VStack(alignment: .leading) {
                 if !PasswordEntry.isEmpty && !PasswordReEntry.isEmpty {
                     if PasswordEntry != PasswordReEntry {
-                        Label("Passwords entered do not match", systemImage: "xmark")
+                        Label("Passwörter stimmen nicht überein", systemImage: "xmark")
                             .foregroundColor(.red)
                             .font(.subheadline)
                     } else {
-                        Label("Passwords entered match", systemImage: "checkmark")
+                        Label("Passwörter stimmen überein", systemImage: "checkmark")
                             .foregroundColor(.green)
                             .font(.subheadline)
                     }
                 }
                 if !PasswordEntry.isEmpty {
                     if IsSecPassword {
-                        Label("Passwords passed all security checks", systemImage: "checkmark")
+                        Label("Passwart erfüllt alle Sicherheitsanforderungen", systemImage: "checkmark")
                             .foregroundColor(.green)
                             .font(.subheadline)
                     } else{
-                        Label("Password does not meet the security requirements: [a-z], [A-Z], min. length 8 characters, at least 1 special character and Number", systemImage: "xmark")
+                        Label("Passwort erfüllt folgende Anforderungen nicht: [a-z], [A-Z], min. länge 8 zeichen, mind. ein Sonderzeichen und Zahl", systemImage: "xmark")
                             .foregroundColor(.red)
                             .font(.subheadline)
                     }
@@ -111,7 +111,7 @@ struct SetPasswordView: View {
             NavigationLink {
                 FinalRegistrationView(InputEmail: self.InputEmail, InputPW: self.PasswordReEntry)
             } label: {
-                Text("Next")
+                Text("weiter")
                     .fontWeight(.semibold)
                     .frame(width: 350)
                     .padding(.vertical, 10)

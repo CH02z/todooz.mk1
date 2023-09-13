@@ -15,7 +15,7 @@ struct RoundTextFieldStyle: TextFieldStyle {
             .autocapitalization(.none)
             .disableAutocorrection(true)
             .padding(10)
-            .background(Color(.systemGray6))
+            .background(Color("ElementBackround"))
             .cornerRadius(10)
             //.shadow(color: .gray, radius: 10)
     }

@@ -41,17 +41,7 @@ class TaskService {
     @MainActor
     func editTask(taskID: String, title: String, category: String, dueDate: String, description: String, isHighPriority: Bool) async throws {
         guard let uid = self.userID else { return }
-        
-        /*...
-        if dueDate == "" {
-            //delete Date from existing Task
-            try await Firestore.firestore().collection("users").document(uid).collection("tasks").document(taskID).setData([ "dueDate": ""], merge: true)
-        }
-        
-        if dueDate.count < 11 {
-            //insert task with full
-        }
-         */
+
         
         try await Firestore.firestore().collection("users").document(uid).collection("tasks").document(taskID).setData([ "title": title, "category": category, "dueDate": dueDate, "description": description, "isHighPriority": isHighPriority], merge: true)
         print("Task \(title) updated in Firestore")
@@ -72,7 +62,19 @@ class TaskService {
         try await Firestore.firestore().collection("users").document(uid).collection("tasks").document(taskID).delete()
         print("Task with ID: \(taskID) deleted from firestore")
     }
-        
+    
+    @MainActor
+    func deleteAllTasksFromCategory(categoryName: String) async throws {
+        guard let uid = self.userID else { return }
+        let db = Firestore.firestore()
+        let QuerySnapshot = try await db.collection("users").document(uid).collection("tasks").whereField("category", isEqualTo: categoryName).getDocuments()
+        for document in QuerySnapshot.documents {
+                    let data = document.data()
+                    let json = try JSONSerialization.data(withJSONObject: data)
+                    let tasc = try JSONDecoder().decode(Tasc.self, from: json)
+                    try await deleteTask(taskID: tasc.id)
+                }
+    }
     
     
 }

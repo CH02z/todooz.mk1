@@ -20,9 +20,11 @@ class AppDelegate: NSObject, UIApplicationDelegate {
 @main
 struct todooz_mk1App: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
+    @AppStorage("isDarkMode") private var isDarkMode = true
     var body: some Scene {
         WindowGroup {
             MainView()
+                .preferredColorScheme(isDarkMode ? .dark : .light)
         }
     }
 }

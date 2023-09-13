@@ -10,7 +10,7 @@ import SwiftUI
 struct SettingsView: View {
     
     
-    @State private var Flugmodus = false
+    @AppStorage("isDarkMode") private var isDarkMode = true
     
     
     var body: some View {
@@ -19,7 +19,7 @@ struct SettingsView: View {
             
             Section(header: Text("Allgmein")) {
                 HStack {
-                    Image(systemName: "airplane")
+                    Image(systemName: "lightbulb")
                         .foregroundColor(.white)
                         .frame(width: 30, height: 30)
                         .background(.orange)
@@ -28,30 +28,13 @@ struct SettingsView: View {
                         .fontWeight(.bold)
                         .padding(.vertical, 2.5)
                     
-                    Text("Flugmodus")
+                    Text("Dunkelmodus")
                     
-                    Toggle("Flugmodus", isOn: $Flugmodus)
+                    Toggle("Flugmodus", isOn: $isDarkMode)
                         .labelsHidden()
                         .frame(maxWidth: .infinity, alignment: .trailing)
                     
                     
-                    
-                }
-                
-                NavigationLink(destination: Text("Wlan Settings")) {
-                    HStack {
-                        Image(systemName: "wifi")
-                            .foregroundColor(.white)
-                            .frame(width: 30, height: 30)
-                            .background(.blue)
-                            .cornerRadius(5)
-                            .font(.system(size: 15))
-                            .fontWeight(.bold)
-                            .padding(.vertical, 2.5)
-                            .padding(.trailing, 5)
-                        
-                        Text("Wlan")
-                    }
                     
                 }
                 

@@ -50,6 +50,7 @@ struct TasklistView: View {
     var body: some View {
         
         NavigationStack {
+            
             List {
                 ForEach(tasks) { item in
                     TaskViewPreview(item: item, allCategories: allCategories)
@@ -62,7 +63,13 @@ struct TasklistView: View {
                         }
                     
                 }
-                
+                if tasks.count == 0 {
+                    Text("In dieser Kategorie wurden noch keine Tasks hinzugefügt")
+                        .frame(maxWidth: .infinity, alignment: .center)
+                        .font(.subheadline)
+                        .foregroundColor(.secondary)
+                    
+                }
             }
             .refreshable {
                 Task { @MainActor in
@@ -121,25 +128,23 @@ struct TasklistView: View {
                 
             }
             
-            .safeAreaInset(edge: .bottom, alignment: .center) {
-                Button{
-                    //Haptic Feedback on Tap
-                    let impactHeavy = UIImpactFeedbackGenerator(style: .heavy)
-                    impactHeavy.impactOccurred()
-                    
-                    self.showAddItemSheet = true
-                } label: {
-                    Label("hinzufügen", systemImage: "plus")
-                        .bold()
-                        .font(.title2)
-                        .padding(8)
-                        .background(.black,
-                                    in: Capsule())
-                        .padding(.leading)
-                        .symbolVariant(.circle.fill)
-                }
+            Button{
+                //Haptic Feedback on Tap
+                let impactHeavy = UIImpactFeedbackGenerator(style: .heavy)
+                impactHeavy.impactOccurred()
+                
+                self.showAddItemSheet = true
+            } label: {
+                Label("hinzufügen", systemImage: "plus")
+                    .bold()
+                    .font(.title2)
+                    .padding(8)
+                    .background(Color("ElementBackround"),
+                                in: Capsule())
+                    .padding(.leading)
+                    .symbolVariant(.circle.fill)
             }
-            .padding(.bottom, 10)
+            
             
             
             
