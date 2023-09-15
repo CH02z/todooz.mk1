@@ -43,16 +43,16 @@ struct TaskViewPreview: View {
                     .fontWeight(.semibold)
                     .strikethrough(viewModel.isStrikedThrough)
                 
-                if item.dueDate! != "" {
-                    Text(item.dueDate ?? "")
+                if item.dueDate != "" {
+                    Text(item.dueDate)
                         .foregroundColor(Color(.secondaryLabel))
                 }
               
             }
             
-            .onTapGesture {
-                self.showDetailTaskSheet = true
-            }
+            //.onTapGesture {
+              //  self.showDetailTaskSheet = true
+            //}
             
             Spacer()
             
@@ -69,10 +69,6 @@ struct TaskViewPreview: View {
             
         }
         .frame(height: 40)
-        .sheet(isPresented: $showDetailTaskSheet, content: {
-            
-            DetailTaskView(task: item, allCategories: allCategories, isPresented: $showDetailTaskSheet)
-        })
         
         
     }

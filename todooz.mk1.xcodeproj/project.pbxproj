@@ -10,7 +10,6 @@
 		83048E4E2A9BBC4F003F1C59 /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = 83048E4D2A9BBC4F003F1C59 /* GoogleSignIn */; };
 		83048E502A9BBC4F003F1C59 /* GoogleSignInSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 83048E4F2A9BBC4F003F1C59 /* GoogleSignInSwift */; };
 		8347D9CF2AAF976300ABB779 /* IsDoneTaskListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8347D9CE2AAF976300ABB779 /* IsDoneTaskListView.swift */; };
-		834E8BFE2AB44632003D34A4 /* MarkedTaskList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 834E8BFD2AB44632003D34A4 /* MarkedTaskList.swift */; };
 		837362642AA79AD9000548D9 /* TodayTaskListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 837362632AA79AD9000548D9 /* TodayTaskListView.swift */; };
 		8382238D2AB22C30004B7833 /* NotesListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8382238C2AB22C30004B7833 /* NotesListView.swift */; };
 		8382238F2AB2303C004B7833 /* QuickNote.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8382238E2AB2303C004B7833 /* QuickNote.swift */; };
@@ -68,13 +67,13 @@
 		83E2540E2AA1186700D400A3 /* TasklistView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83E2540D2AA1186700D400A3 /* TasklistView.swift */; };
 		83E254102AA1188600D400A3 /* CategoryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83E2540F2AA1188600D400A3 /* CategoryViewModel.swift */; };
 		83E254122AA11B6A00D400A3 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83E254112AA11B6A00D400A3 /* SettingsView.swift */; };
+		83E2CD012AB4987E008C8F73 /* MarkedTaskListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83E2CD002AB4987E008C8F73 /* MarkedTaskListView.swift */; };
 		83F8B4D12AB3369F003AE576 /* NoteService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83F8B4D02AB3369F003AE576 /* NoteService.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		83048E512A9BBCA1003F1C59 /* todooz-mk1-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "todooz-mk1-Info.plist"; sourceTree = SOURCE_ROOT; };
 		8347D9CE2AAF976300ABB779 /* IsDoneTaskListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IsDoneTaskListView.swift; sourceTree = "<group>"; };
-		834E8BFD2AB44632003D34A4 /* MarkedTaskList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkedTaskList.swift; sourceTree = "<group>"; };
 		837362632AA79AD9000548D9 /* TodayTaskListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TodayTaskListView.swift; sourceTree = "<group>"; };
 		8382238C2AB22C30004B7833 /* NotesListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesListView.swift; sourceTree = "<group>"; };
 		8382238E2AB2303C004B7833 /* QuickNote.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QuickNote.swift; sourceTree = "<group>"; };
@@ -126,6 +125,7 @@
 		83E2540D2AA1186700D400A3 /* TasklistView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TasklistView.swift; sourceTree = "<group>"; };
 		83E2540F2AA1188600D400A3 /* CategoryViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CategoryViewModel.swift; sourceTree = "<group>"; };
 		83E254112AA11B6A00D400A3 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		83E2CD002AB4987E008C8F73 /* MarkedTaskListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkedTaskListView.swift; sourceTree = "<group>"; };
 		83F8B4D02AB3369F003AE576 /* NoteService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoteService.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -203,6 +203,7 @@
 				83D60C362A9A593000723215 /* CategoryView.swift */,
 				83D60C382A9A596300723215 /* ProfileView.swift */,
 				83E2540D2AA1186700D400A3 /* TasklistView.swift */,
+				83E2CD002AB4987E008C8F73 /* MarkedTaskListView.swift */,
 				8347D9CE2AAF976300ABB779 /* IsDoneTaskListView.swift */,
 				83CDAF892AA6695200AF09AA /* HighPrioTaskListView.swift */,
 				837362632AA79AD9000548D9 /* TodayTaskListView.swift */,
@@ -216,7 +217,6 @@
 				8382238C2AB22C30004B7833 /* NotesListView.swift */,
 				838223922AB23569004B7833 /* NoteView.swift */,
 				838223982AB23EAA004B7833 /* AddNoteView.swift */,
-				834E8BFD2AB44632003D34A4 /* MarkedTaskList.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -394,7 +394,6 @@
 				83D60C4B2A9B45EF00723215 /* AuthService.swift in Sources */,
 				83D60C3D2A9A5E3500723215 /* User.swift in Sources */,
 				83D60C1A2A9A4C7F00723215 /* TabsView.swift in Sources */,
-				834E8BFE2AB44632003D34A4 /* MarkedTaskList.swift in Sources */,
 				83B486AE2AA321940017CE91 /* AddTaskViewModel.swift in Sources */,
 				83D60C3F2A9A5E5A00723215 /* Tasc.swift in Sources */,
 				83D60C352A9A57CF00723215 /* RegistrationViewModel.swift in Sources */,
@@ -413,6 +412,7 @@
 				83D60C462A9A7D5B00723215 /* ProfileViewModel.swift in Sources */,
 				83D60C372A9A593000723215 /* CategoryView.swift in Sources */,
 				83D60C2D2A9A55E900723215 /* SetPasswordView.swift in Sources */,
+				83E2CD012AB4987E008C8F73 /* MarkedTaskListView.swift in Sources */,
 				83D60C442A9A6FA700723215 /* Extensions.swift in Sources */,
 				83D60C312A9A563600723215 /* RoundTextFieldStyle.swift in Sources */,
 				83D60C482A9A839D00723215 /* LoadingView.swift in Sources */,

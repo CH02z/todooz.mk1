@@ -134,12 +134,15 @@ func getStringFromDate(date: Date, dateFormat: String) -> String {
 }
 
 func getDateFromString(dateString: String) -> Date {
-    if dateString != "" {
+    print("DateString in GetDatefunciton: \(dateString)")
+    if !dateString.isEmpty {
         let dateFormatter = DateFormatter()
         dateFormatter.timeZone = TimeZone(abbreviation: "CEST")
         if dateString.count > 11 {
             dateFormatter.dateFormat = "dd.MM.yyyy, HH:mm"
-            return dateFormatter.date(from: dateString)!
+            let dObj = dateFormatter.date(from: dateString)
+            return dObj ?? Date()
+            
         } else {
             dateFormatter.dateFormat = "dd.MM.yyyy"
             return dateFormatter.date(from: dateString)!

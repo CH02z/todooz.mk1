@@ -29,21 +29,6 @@ struct NoteView: View {
                 
                 Spacer(minLength: 0)
                 
-                
-                /*
-                 Button {
-                     
-                 } label: {
-                     Image(systemName: "pencil")
-                         .font(.system(size: 15, weight: .bold))
-                         .padding(8)
-                         .foregroundColor(.white)
-                         .background(Color.black)
-                         .clipShape(Circle())
-                         
-                 }
-                */
-                
                
             }
             .padding(.top, 55)

@@ -23,7 +23,7 @@ class TaskService {
     
     
     @MainActor
-    func createTask(title: String, category: String, dueDate: String?, description: String, isHighPriority: Bool, isMarked: Bool) async throws {
+    func createTask(title: String, category: String, dueDate: String, description: String, isHighPriority: Bool, isMarked: Bool) async throws {
         guard let uid = self.userID else { return }
         let newTask = Tasc(id: UUID().uuidString,
                            title: title,

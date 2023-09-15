@@ -30,6 +30,7 @@ struct MarkedTaskListView: View {
     var body: some View {
         NavigationStack {
             
+                
             List {
                 ForEach(tasks) { item in
                     TaskViewPreview(item: item, allCategories: allCategories)
@@ -61,23 +62,22 @@ struct MarkedTaskListView: View {
                                     .font(.system(size: 15))
                             }
                             .tint(.red)
-                            
+         
                         }
                     
-                    if tasks.count == 0 {
-                        Text("Keine Markierten Tasks vorhanden")
+                }
+                if tasks.count == 0 {
+                        Text("Keine markierten Tasks vorhanden.")
                             .frame(maxWidth: .infinity, alignment: .center)
                             .font(.subheadline)
                             .foregroundColor(.secondary)
-                    }
                 }
-                .refreshable {
-                    Task { @MainActor in
-                        self.filterTasks()
-                    }
+            }
+            .refreshable {
+                Task { @MainActor in
+                    self.filterTasks()
                 }
-                
-                
+            }
                 
                 .navigationTitle("Markiert")
                 
@@ -91,19 +91,24 @@ struct MarkedTaskListView: View {
                             //.font(.system(size: 20))
                         }
                         
-                    }            }
-                
-                
-                
-            }
-            .onAppear() {
-                Task { @MainActor in
-                    self.filterTasks()
+                    } 
+                    
+                    
+                   
+                    
                 }
+                
+                
+                
+            
+            }
+        .onAppear() {
+            Task { @MainActor in
+                self.filterTasks()
             }
         }
-        
-    }
+        }
+   
     
 }
 
@@ -116,3 +121,4 @@ struct MarkedTaskListView_Previews: PreviewProvider {
         MarkedTaskListView(currentUser: TestData.users[0], allCategories: [TestData.categories[0]])
     }
 }
+

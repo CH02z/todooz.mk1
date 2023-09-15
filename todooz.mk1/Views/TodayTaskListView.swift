@@ -30,7 +30,7 @@ struct TodayTaskListView: View {
         ]
         try await Task.sleep(seconds: 0.1)
         self.filteredByDateTasks = self.tasks.filter { tasc in
-            return isSameDay(date1: Date(), date2: getDateFromString(dateString: tasc.dueDate!))
+            return isSameDay(date1: Date(), date2: getDateFromString(dateString: tasc.dueDate))
             
         }
         

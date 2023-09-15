@@ -9,7 +9,7 @@ import SwiftUI
 
 struct DetailTaskView: View {
     
-    var task: Tasc
+    @Binding var task: Tasc
     let allCategories: [Category]
     
     @AppStorage("accentColor") private var accentColor = "B35AEF"
@@ -36,7 +36,7 @@ struct DetailTaskView: View {
                         .font(.subheadline)
                     
                     if task.dueDate != "" {
-                        Label("\(task.dueDate!)", systemImage: "calendar")
+                        Label("\(task.dueDate)", systemImage: "calendar")
                             .foregroundColor(.secondary)
                             .font(.subheadline)
                     }
@@ -44,39 +44,19 @@ struct DetailTaskView: View {
                     
                 }
                 
-                Text(task.description != "" ? task.description! : "Keine Beschreibung")
+                Text(task.description ?? "Keine Beschreibung")
                     .font(.body)
                     .padding()
                 
                 Spacer()
                 
-                Button {
-                    //Haptic Feedback on Tap
-                    let impactHeavy = UIImpactFeedbackGenerator(style: .heavy)
-                    impactHeavy.impactOccurred()
-                    //Task { try await viewModel.save()}
-                    showEditItemSheet = true
-                    
-                } label: {
-                    Text("bearbeiten")
-                        .padding(.vertical, 2.5)
-                        .frame(maxWidth: .infinity)
-                    
-                }
-                .buttonStyle(.borderedProminent)
-                .accentColor(Color(hex: accentColor))
-                .cornerRadius(8)
-                .padding(.leading, 30)
-                .padding(.trailing, 30)
-                .padding(.bottom, 20)
-                .disabled(task.isDone)
                 
                 
             }
             .padding(.top, 50)
-            .sheet(isPresented: $showEditItemSheet, content: {
-                EditTaskView(isPresented: $showEditItemSheet, allCategories: allCategories, editTask: task)
-                })
+            //.sheet(isPresented: $showEditItemSheet, content: {
+              //  EditTaskView(isPresented: $showEditItemSheet, allCategories: allCategories, editTask: task)
+               // })
             
             
             .toolbar {
@@ -99,6 +79,9 @@ struct DetailTaskView: View {
                 isPresented = false
             }
         }
+        .onAppear() {
+            print("Detail Task in View: \(task)")
+        }
         
         
         
@@ -109,6 +92,6 @@ struct DetailTaskView: View {
 
 struct TaskDetailView_Previews: PreviewProvider {
     static var previews: some View {
-        DetailTaskView(task: TestData.tasks[1], allCategories: [TestData.categories[0]], isPresented: .constant(true))
+        DetailTaskView(task: .constant(TestData.tasks[0]), allCategories: [TestData.categories[0]], isPresented: .constant(true))
     }
 }

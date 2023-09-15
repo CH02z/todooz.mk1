@@ -16,7 +16,13 @@ struct TasklistView: View {
     let allCategories: [Category]
     let currentUser: User?
     
+    //Sheets
     @State var showAddItemSheet: Bool = false
+    @State var showDetailTaskSheet: Bool = false
+    @State var showEditItemSheet: Bool = false
+    
+    @State var detailTask: Tasc = TestData.tasks[0]
+    @State var editTask: Tasc = TestData.tasks[0]
     
     //Sorting
     let sortOptions: [String] = ["Titel", "Datum"]
@@ -55,8 +61,6 @@ struct TasklistView: View {
                 ForEach(tasks) { item in
                     TaskViewPreview(item: item, allCategories: allCategories)
                         .swipeActions {
-                            
-                            
                             Button() {
                                 Task { try await viewModel.markTask(taskID: item.id, isMarkedNow: item.isMarked) }
                             } label: {
@@ -83,10 +87,36 @@ struct TasklistView: View {
                                     .font(.system(size: 15))
                             }
                             .tint(.red)
-         
+                            
+                        }
+                    
+                        .contextMenu {
+                            Button {
+                                print("Item: \(item)")
+                                self.detailTask = item
+                                print("detailTask: \(self.detailTask)")
+                                self.showDetailTaskSheet = true
+                            
+                                
+                            } label: {
+                                Label("Detailansicht", systemImage: "eye")
+                                    .foregroundColor(.red)
+                            }
+                            
+                            NavigationLink(destination: EditTaskView(allCategories: allCategories, editTask: item)) {
+                                    Text("bearbeiten")
+                                    Image(systemName: "pencil")
+                                }
+                            
+    
+                            
+                            
+                            
+                            
                         }
                     
                 }
+                
                 if tasks.count == 0 {
                     Text("In dieser Kategorie wurden noch keine Tasks hinzugefügt")
                         .frame(maxWidth: .infinity, alignment: .center)
@@ -109,6 +139,13 @@ struct TasklistView: View {
                 AddTaskView(isPresented: $showAddItemSheet, allCategories: allCategories, originalCat: category.name)
             })
             
+            .sheet(isPresented: $showDetailTaskSheet, content: {
+                DetailTaskView(task: $detailTask, allCategories: allCategories, isPresented: $showDetailTaskSheet)
+            })
+            
+            //.sheet(item: $detailTask) { task in
+              //  DetailTaskView(task: task, allCategories: allCategories, isPresented: $showDetailTaskSheet)
+                //    }
             
             
             

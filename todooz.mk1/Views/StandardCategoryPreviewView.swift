@@ -66,7 +66,7 @@ struct StandardCategoryPreviewView: View {
     private func filterTodayTasks() async throws {
         try await Task.sleep(seconds: 0.1)
         self.filteredByDateTasks = self.todayTasks.filter { tasc in
-            return isSameDay(date1: Date(), date2: getDateFromString(dateString: tasc.dueDate!))
+            return isSameDay(date1: Date(), date2: getDateFromString(dateString: tasc.dueDate))
         }
     }
     

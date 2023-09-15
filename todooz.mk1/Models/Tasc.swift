@@ -11,7 +11,7 @@ struct Tasc: Codable, Identifiable {
     let id: String
     let title: String
     let category: String
-    var dueDate: String?
+    var dueDate: String
     var isDone: Bool
     var description: String?
     var iconColor: String?
