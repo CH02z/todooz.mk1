@@ -10,6 +10,7 @@ import FirebaseFirestoreSwift
 
 struct StandardCategoryPreviewView: View {
     
+    @AppStorage("accentColor") private var accentColor = "B35AEF"    
     
     let currentUser: User?
     let allCategories: [Category]
@@ -79,13 +80,10 @@ struct StandardCategoryPreviewView: View {
                     NavigationLink(destination: TodayTaskListView(currentUser: currentUser, allCategories: allCategories)) {
                         HStack {
                             VStack {
-                                Image(systemName: "calendar.badge.exclamationmark")
-                                    .foregroundColor(.white)
-                                    .frame(width: 35, height: 35)
-                                    .background(.orange)
-                                    .clipShape(Circle())
-                                    .font(.system(size: 20))
-                                    .fontWeight(.bold)
+                                Image(systemName: "calendar.circle")
+                                    .foregroundColor(Color(hex: accentColor))
+                                    .font(.system(size: 35))
+                                    .fontWeight(.semibold)
                                     .padding(.vertical, 3.5)
                                     .padding(.trailing, 5)
                                 
@@ -116,9 +114,9 @@ struct StandardCategoryPreviewView: View {
                         HStack {
                             VStack {
                                 Image(systemName: "exclamationmark.circle")
-                                    .foregroundColor(Color.red)
-                                    .font(.system(size: 30))
-                                    .fontWeight(.bold)
+                                    .foregroundColor(Color(hex: accentColor))
+                                    .font(.system(size: 35))
+                                    .fontWeight(.semibold)
                                     .padding(.vertical, 3.5)
                                     .padding(.trailing, 20)
                                 
@@ -156,13 +154,10 @@ struct StandardCategoryPreviewView: View {
                 NavigationLink(destination: IsDoneTaskListView(allCategories: allCategories, currentUser: currentUser)) {
                     // Done Task Preview:
                     HStack {
-                        Image(systemName:  "checkmark")
-                            .foregroundColor(.white)
-                            .frame(width: 35, height: 35)
-                            .background(.green)
-                            .clipShape(Circle())
-                            .font(.system(size: 17))
-                            .fontWeight(.bold)
+                        Image(systemName: "checkmark.circle")
+                            .foregroundColor(Color(hex: accentColor))
+                            .font(.system(size: 35))
+                            .fontWeight(.semibold)
                             .padding(.vertical, 3.5)
                             .padding(.trailing, 5)
                             .padding(.leading, 20)

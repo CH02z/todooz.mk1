@@ -9,6 +9,7 @@ import SwiftUI
 
 struct TaskViewPreview: View {
     
+    @AppStorage("accentColor") private var accentColor = "B35AEF"   
     @ObservedObject var viewModel = TaskViewPreviewViewModel()
     
     @State var showDetailTaskSheet: Bool = false
@@ -20,6 +21,15 @@ struct TaskViewPreview: View {
         
         
         HStack {
+            
+            if item.isHighPriority {
+                Image(systemName: "exclamationmark")
+                    .foregroundColor(Color.red)
+                    .font(.system(size: 20))
+                    .padding(.horizontal, 5)
+            }
+            
+            
             VStack(alignment: .leading) {
                 Text(item.title)
                     .font(.body)
@@ -40,7 +50,7 @@ struct TaskViewPreview: View {
             Spacer()
             
             Image(systemName: viewModel.isStrikedThrough ? "checkmark.circle" : "circle")
-                .foregroundColor(Color.purple)
+                .foregroundColor(Color(hex: accentColor))
                 .font(.system(size: 30))
                 .onTapGesture {
                     //Haptic Feedback on Tap

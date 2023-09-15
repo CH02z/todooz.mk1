@@ -67,7 +67,7 @@ struct CategoryView: View {
                         
                     }
                     
-                    List{
+                    List {
                         
                         ForEach(categories) { category in
                             NavigationLink(destination: TasklistView(category: category, allCategories: categories, currentUser: currentUser)) {
@@ -116,8 +116,26 @@ struct CategoryView: View {
                     }
                 }
                 
-                .navigationTitle("Kategorien")
+                .navigationTitle("Tasks")
                 .toolbar {
+                    
+                    ToolbarItem(placement: .navigationBarLeading) {
+                        Text(getStringFromDate(date: Date(), dateFormat: "dd.MM.yyyy"))
+                            .foregroundColor(.secondary)
+                    }
+                    
+                    ToolbarItem(placement: .navigationBarTrailing) {
+                        NavigationLink(destination: ProfileView(currentUser: currentUser)) {
+                            Image(systemName: "person.circle")
+                            //.foregroundColor(.gray)
+                                .font(.system(size: 25))
+                            //.padding(.bottom, 10)
+                        }
+                        
+                    }
+                    
+                    
+                    
                     ToolbarItem(placement: .navigationBarTrailing) {
                         Button{
                             
@@ -135,15 +153,7 @@ struct CategoryView: View {
                         
                     }
                     
-                    ToolbarItem(placement: .navigationBarTrailing) {
-                        NavigationLink(destination: ProfileView(currentUser: currentUser)) {
-                            Image(systemName: "person.circle")
-                            //.foregroundColor(.gray)
-                                .font(.system(size: 25))
-                            //.padding(.bottom, 10)
-                        }
-                        
-                    }
+                    
                 }
                 
                 .onAppear() {

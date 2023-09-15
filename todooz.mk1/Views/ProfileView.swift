@@ -10,6 +10,7 @@ import PhotosUI
 
 struct ProfileView: View {
     
+    @AppStorage("accentColor") private var accentColor = "B35AEF"
     @StateObject var viewModel: ProfileViewViewModel
     
     // Try move this to View Model
@@ -68,7 +69,7 @@ struct ProfileView: View {
                             Image(systemName: "plus")
                                 .foregroundColor(.white)
                                 .frame(width: 35, height: 35)
-                                .background(.blue)
+                                .background(Color(hex: accentColor))
                                 .clipShape(Circle())
                                 .font(.system(size: 25))
                                 .fontWeight(.bold)

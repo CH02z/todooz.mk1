@@ -9,6 +9,7 @@ import SwiftUI
 
 struct AddTaskView: View {
     
+    @AppStorage("accentColor") private var accentColor = "B35AEF"
     @StateObject var viewModel: AddTaskViewModel
     @Binding var isPresented: Bool
     
@@ -167,6 +168,7 @@ struct AddTaskView: View {
                         isPresented = false
                     } label: {
                         Text("abbrechen")
+                            .foregroundColor(Color(hex: accentColor))
                     }
                     
                 }
@@ -185,6 +187,7 @@ struct AddTaskView: View {
                         isPresented = false
                     } label: {
                         Text("hinzufügen")
+                            .foregroundColor(Color(hex: accentColor))
                     }
                     .disabled(!viewModel.formIsValid())
                     

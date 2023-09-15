@@ -9,6 +9,7 @@ import SwiftUI
 
 struct EditTaskView: View {
     
+    @AppStorage("accentColor") private var accentColor = "B35AEF"
     @StateObject var viewModel: EditTaskViewModel
     @Binding var isPresented: Bool
     
@@ -156,6 +157,7 @@ struct EditTaskView: View {
                         isPresented = false
                     } label: {
                         Text("abbrechen")
+                            .foregroundColor(Color(hex: accentColor))
                     }
                     
                 }
@@ -174,6 +176,7 @@ struct EditTaskView: View {
                         isPresented = false
                     } label: {
                         Text("speichern")
+                            .foregroundColor(Color(hex: accentColor))
                     }
                     .disabled(!viewModel.formIsValid())
                     

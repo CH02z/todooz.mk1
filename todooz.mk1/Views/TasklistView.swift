@@ -89,6 +89,23 @@ struct TasklistView: View {
             
             
             .toolbar {
+                
+                /*
+                 ToolbarItem(placement: .navigationBarTrailing) {
+                 Button {
+                 
+                 } label: {
+                 Image(systemName: "square.and.arrow.up")
+                 //.font(.system(size: 20))
+                 }
+                 
+                 }
+                 
+                 
+                 You can write a description on multiple lines here.
+                 */
+                
+                
                 ToolbarItem(placement: .navigationBarTrailing) {
                     
                     Menu {
@@ -115,12 +132,19 @@ struct TasklistView: View {
                     }
                 }
                 
+               
                 ToolbarItem(placement: .navigationBarTrailing) {
-                    Button {
+                    Button{
+                        
+                        //Haptic Feedback on Tap
+                        let impactHeavy = UIImpactFeedbackGenerator(style: .heavy)
+                        impactHeavy.impactOccurred()
+                        self.showAddItemSheet = true
                         
                     } label: {
-                        Image(systemName: "square.and.arrow.up")
-                        //.font(.system(size: 20))
+                        Image(systemName: "plus")
+                        //.font(.system(size: 25))
+                        
                     }
                     
                 }
@@ -128,22 +152,6 @@ struct TasklistView: View {
                 
             }
             
-            Button{
-                //Haptic Feedback on Tap
-                let impactHeavy = UIImpactFeedbackGenerator(style: .heavy)
-                impactHeavy.impactOccurred()
-                
-                self.showAddItemSheet = true
-            } label: {
-                Label("hinzufügen", systemImage: "plus")
-                    .bold()
-                    .font(.title2)
-                    .padding(8)
-                    .background(Color("ElementBackround"),
-                                in: Capsule())
-                    .padding(.leading)
-                    .symbolVariant(.circle.fill)
-            }
             
             
             

@@ -29,27 +29,6 @@ class EditTaskViewModel: ObservableObject {
     @Published var errorMessage: String = ""
     
     
-    private func getDateFromString2(dateString: String) -> Date {
-        if dateString != "" {
-            let dateFormatter = DateFormatter()
-            dateFormatter.timeZone = TimeZone(abbreviation: "CEST")
-            if dateString.count > 11 {
-                dateFormatter.dateFormat = "dd.MM.yyyy, HH:mm"
-                let correctHourDate = Calendar.current.date(byAdding: .hour, value: 2, to: dateFormatter.date(from: dateString)!)!
-                print("input String: \(dateString) and Date objecct produded: \(correctHourDate))")
-                return correctHourDate
-            } else {
-                dateFormatter.dateFormat = "dd.MM.yyyy"
-                let correctHourDate = Calendar.current.date(byAdding: .hour, value: 2, to: dateFormatter.date(from: dateString)!)!
-                return Calendar.current.date(byAdding: .day, value: 1, to: correctHourDate)!
-            }
-        } else {
-            print("empty input datestring, returning date()")
-            return Date()
-        }
-
-    }
-    
     init(taskID: String, title: String, category: String, dueDate: String, description: String, isHighPriority: Bool) {
         //print("selection set to \(originalCat)")
         self.taskID = taskID
@@ -59,7 +38,7 @@ class EditTaskViewModel: ObservableObject {
                         if dueDate.count > 12 {
                 self.letPickDateAndTime = true
             }
-            self.dueDate = self.getDateFromString2(dateString: dueDate)
+            self.dueDate = getDateFromString(dateString: dueDate)
         }
         self.description = description
         self.isHighPriority = isHighPriority

@@ -12,6 +12,7 @@ struct DetailTaskView: View {
     var task: Tasc
     let allCategories: [Category]
     
+    @AppStorage("accentColor") private var accentColor = "B35AEF"
     @State var showEditItemSheet: Bool = false
     @Binding var isPresented: Bool
     
@@ -34,9 +35,13 @@ struct DetailTaskView: View {
                         .foregroundColor(.secondary)
                         .font(.subheadline)
                     
-                    Label("\(task.dueDate ?? "Kein Datum")", systemImage: "calendar")
-                        .foregroundColor(.secondary)
-                        .font(.subheadline)
+                    if task.dueDate != "" {
+                        Label("\(task.dueDate!)", systemImage: "calendar")
+                            .foregroundColor(.secondary)
+                            .font(.subheadline)
+                    }
+                    
+                    
                 }
                 
                 Text(task.description != "" ? task.description! : "Keine Beschreibung")
@@ -59,7 +64,7 @@ struct DetailTaskView: View {
                     
                 }
                 .buttonStyle(.borderedProminent)
-                .accentColor(Color.blue)
+                .accentColor(Color(hex: accentColor))
                 .cornerRadius(8)
                 .padding(.leading, 30)
                 .padding(.trailing, 30)
@@ -81,6 +86,7 @@ struct DetailTaskView: View {
                         
                     } label: {
                         Text("schliessen")
+                            .foregroundColor(Color(hex: accentColor))
                     }
                     
                 }

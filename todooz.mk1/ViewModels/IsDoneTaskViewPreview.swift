@@ -9,6 +9,7 @@ import SwiftUI
 
 struct IsDoneTaskViewPreview: View {
     
+    @AppStorage("accentColor") private var accentColor = "B35AEF"
     @ObservedObject var viewModel = TaskViewPreviewViewModel()
     
     
@@ -41,18 +42,13 @@ struct IsDoneTaskViewPreview: View {
                     .font(.body)
                     .fontWeight(.semibold)
                     .strikethrough(self.isStrikedThrough)
-                
-                if item.dueDate! != "" {
-                    Text(item.dueDate ?? "")
-                        .foregroundColor(Color(.secondaryLabel))
-                }
               
             }
             
             Spacer()
             
             Image(systemName: self.isStrikedThrough ? "checkmark.circle" : "circle")
-                .foregroundColor(Color.purple)
+                .foregroundColor(Color(hex: accentColor))
                 .font(.system(size: 30))
                 .onTapGesture {
                     //Haptic Feedback on Tap

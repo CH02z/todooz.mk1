@@ -11,6 +11,12 @@
 		83048E502A9BBC4F003F1C59 /* GoogleSignInSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 83048E4F2A9BBC4F003F1C59 /* GoogleSignInSwift */; };
 		8347D9CF2AAF976300ABB779 /* IsDoneTaskListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8347D9CE2AAF976300ABB779 /* IsDoneTaskListView.swift */; };
 		837362642AA79AD9000548D9 /* TodayTaskListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 837362632AA79AD9000548D9 /* TodayTaskListView.swift */; };
+		8382238D2AB22C30004B7833 /* NotesListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8382238C2AB22C30004B7833 /* NotesListView.swift */; };
+		8382238F2AB2303C004B7833 /* QuickNote.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8382238E2AB2303C004B7833 /* QuickNote.swift */; };
+		838223912AB230BB004B7833 /* TestData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 838223902AB230BB004B7833 /* TestData.swift */; };
+		838223932AB23569004B7833 /* NoteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 838223922AB23569004B7833 /* NoteView.swift */; };
+		838223972AB23E1F004B7833 /* AddNoteViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 838223962AB23E1F004B7833 /* AddNoteViewModel.swift */; };
+		838223992AB23EAA004B7833 /* AddNoteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 838223982AB23EAA004B7833 /* AddNoteView.swift */; };
 		83B486A82AA262890017CE91 /* TaskListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83B486A72AA262890017CE91 /* TaskListViewModel.swift */; };
 		83B486AA2AA275420017CE91 /* TaskViewPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83B486A92AA275420017CE91 /* TaskViewPreview.swift */; };
 		83B486AC2AA31E210017CE91 /* AddTaskView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83B486AB2AA31E210017CE91 /* AddTaskView.swift */; };
@@ -61,12 +67,19 @@
 		83E2540E2AA1186700D400A3 /* TasklistView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83E2540D2AA1186700D400A3 /* TasklistView.swift */; };
 		83E254102AA1188600D400A3 /* CategoryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83E2540F2AA1188600D400A3 /* CategoryViewModel.swift */; };
 		83E254122AA11B6A00D400A3 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83E254112AA11B6A00D400A3 /* SettingsView.swift */; };
+		83F8B4D12AB3369F003AE576 /* NoteService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83F8B4D02AB3369F003AE576 /* NoteService.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		83048E512A9BBCA1003F1C59 /* todooz-mk1-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "todooz-mk1-Info.plist"; sourceTree = SOURCE_ROOT; };
 		8347D9CE2AAF976300ABB779 /* IsDoneTaskListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IsDoneTaskListView.swift; sourceTree = "<group>"; };
 		837362632AA79AD9000548D9 /* TodayTaskListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TodayTaskListView.swift; sourceTree = "<group>"; };
+		8382238C2AB22C30004B7833 /* NotesListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesListView.swift; sourceTree = "<group>"; };
+		8382238E2AB2303C004B7833 /* QuickNote.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QuickNote.swift; sourceTree = "<group>"; };
+		838223902AB230BB004B7833 /* TestData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestData.swift; sourceTree = "<group>"; };
+		838223922AB23569004B7833 /* NoteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteView.swift; sourceTree = "<group>"; };
+		838223962AB23E1F004B7833 /* AddNoteViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddNoteViewModel.swift; sourceTree = "<group>"; };
+		838223982AB23EAA004B7833 /* AddNoteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNoteView.swift; sourceTree = "<group>"; };
 		83B486A72AA262890017CE91 /* TaskListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskListViewModel.swift; sourceTree = "<group>"; };
 		83B486A92AA275420017CE91 /* TaskViewPreview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskViewPreview.swift; sourceTree = "<group>"; };
 		83B486AB2AA31E210017CE91 /* AddTaskView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTaskView.swift; sourceTree = "<group>"; };
@@ -111,6 +124,7 @@
 		83E2540D2AA1186700D400A3 /* TasklistView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TasklistView.swift; sourceTree = "<group>"; };
 		83E2540F2AA1188600D400A3 /* CategoryViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CategoryViewModel.swift; sourceTree = "<group>"; };
 		83E254112AA11B6A00D400A3 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		83F8B4D02AB3369F003AE576 /* NoteService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoteService.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -197,6 +211,9 @@
 				83B486B72AA51A630017CE91 /* AddCategoryView.swift */,
 				83B486B12AA49AD90017CE91 /* DetailTaskView.swift */,
 				83CDAF872AA64E1D00AF09AA /* StandardCategoryPreviewView.swift */,
+				8382238C2AB22C30004B7833 /* NotesListView.swift */,
+				838223922AB23569004B7833 /* NoteView.swift */,
+				838223982AB23EAA004B7833 /* AddNoteView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -215,6 +232,7 @@
 				83B486AD2AA321940017CE91 /* AddTaskViewModel.swift */,
 				83CD08952AA9C37F00C7AAE8 /* EditTaskViewModel.swift */,
 				83B486B92AA51AA50017CE91 /* AddCategoryViewModel.swift */,
+				838223962AB23E1F004B7833 /* AddNoteViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -225,6 +243,7 @@
 				83D60C3C2A9A5E3500723215 /* User.swift */,
 				83E2540B2AA10CB600D400A3 /* Category.swift */,
 				83D60C3E2A9A5E5A00723215 /* Tasc.swift */,
+				8382238E2AB2303C004B7833 /* QuickNote.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -243,6 +262,7 @@
 			isa = PBXGroup;
 			children = (
 				83D60C432A9A6FA700723215 /* Extensions.swift */,
+				838223902AB230BB004B7833 /* TestData.swift */,
 			);
 			path = other;
 			sourceTree = "<group>";
@@ -253,6 +273,7 @@
 				83D60C4A2A9B45EF00723215 /* AuthService.swift */,
 				83BB2EB42A9E72F20079A680 /* ProfileService.swift */,
 				83B486AF2AA388F10017CE91 /* TaskService.swift */,
+				83F8B4D02AB3369F003AE576 /* NoteService.swift */,
 				83B486B52AA5154D0017CE91 /* CategoryService.swift */,
 			);
 			path = Services;
@@ -350,17 +371,23 @@
 				83B486B62AA5154D0017CE91 /* CategoryService.swift in Sources */,
 				83B486B22AA49AD90017CE91 /* DetailTaskView.swift in Sources */,
 				83CDAF882AA64E1D00AF09AA /* StandardCategoryPreviewView.swift in Sources */,
+				838223992AB23EAA004B7833 /* AddNoteView.swift in Sources */,
 				83B486A82AA262890017CE91 /* TaskListViewModel.swift in Sources */,
+				8382238F2AB2303C004B7833 /* QuickNote.swift in Sources */,
 				83D60C0E2A9A4C2D00723215 /* MainView.swift in Sources */,
 				83D60C2F2A9A560D00723215 /* FinalRegistrationView.swift in Sources */,
 				83B486BA2AA51AA50017CE91 /* AddCategoryViewModel.swift in Sources */,
 				83B486B82AA51A630017CE91 /* AddCategoryView.swift in Sources */,
+				838223972AB23E1F004B7833 /* AddNoteViewModel.swift in Sources */,
 				837362642AA79AD9000548D9 /* TodayTaskListView.swift in Sources */,
 				83E254102AA1188600D400A3 /* CategoryViewModel.swift in Sources */,
 				8347D9CF2AAF976300ABB779 /* IsDoneTaskListView.swift in Sources */,
 				83D60C412A9A659A00723215 /* LoginViewModel.swift in Sources */,
+				838223932AB23569004B7833 /* NoteView.swift in Sources */,
 				83D60C392A9A596300723215 /* ProfileView.swift in Sources */,
 				83D60C3B2A9A5E2600723215 /* MainViewModel.swift in Sources */,
+				83F8B4D12AB3369F003AE576 /* NoteService.swift in Sources */,
+				838223912AB230BB004B7833 /* TestData.swift in Sources */,
 				83D60C4B2A9B45EF00723215 /* AuthService.swift in Sources */,
 				83D60C3D2A9A5E3500723215 /* User.swift in Sources */,
 				83D60C1A2A9A4C7F00723215 /* TabsView.swift in Sources */,
@@ -375,6 +402,7 @@
 				83CD08942AA9C31A00C7AAE8 /* EditTaskView.swift in Sources */,
 				83B486B42AA4E7420017CE91 /* TaskViewPreviewViewModel.swift in Sources */,
 				83B486B02AA388F10017CE91 /* TaskService.swift in Sources */,
+				8382238D2AB22C30004B7833 /* NotesListView.swift in Sources */,
 				83E2540C2AA10CB600D400A3 /* Category.swift in Sources */,
 				83CAC8FB2AAF9EAE00A4807D /* IsDoneTaskViewPreview.swift in Sources */,
 				83CD08962AA9C37F00C7AAE8 /* EditTaskViewModel.swift in Sources */,

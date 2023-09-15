@@ -11,7 +11,7 @@ import FirebaseAuth
 
 struct IsDoneTaskListView: View {
 
-    
+    @AppStorage("accentColor") private var accentColor = "B35AEF"
     let allCategories: [Category]
     let currentUser: User?
     
