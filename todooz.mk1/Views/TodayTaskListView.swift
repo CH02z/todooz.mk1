@@ -44,13 +44,33 @@ struct TodayTaskListView: View {
                     TaskViewPreview(item: item, allCategories: allCategories)
                         .swipeActions {
                             
-                            Button("löschen") {
-                                Task {
-                                    try await viewModel.deleteTask(taskID: item.id)
-                                    try await self.filterTasks()
-                                }
+                            Button() {
+                                Task { try await viewModel.markTask(taskID: item.id, isMarkedNow: item.isMarked) }
+                            } label: {
+                                Image(systemName: "flag")
+                                    .foregroundColor(.white)
+                                    .font(.system(size: 15))
+                            }
+                            .tint(.orange)
+                            
+                            Button() {
+                                Task { try await viewModel.prioTask(taskID: item.id, isHighPrioNow: item.isHighPriority) }
+                            } label: {
+                                Image(systemName: "exclamationmark")
+                                    .font(.system(size: 15))
+                            }
+                            .tint(.gray)
+                            
+                            
+                            Button() {
+                                Task { try await viewModel.deleteTask(taskID: item.id) }
+                            } label: {
+                                Image(systemName: "trash")
+                                    .foregroundColor(.white)
+                                    .font(.system(size: 15))
                             }
                             .tint(.red)
+         
                         }
                     
                 }

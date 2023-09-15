@@ -144,6 +144,12 @@ struct AddTaskView: View {
                     }
                     
                     Section {
+                        //Marked Toggle
+                        Toggle("Markiert", isOn: $viewModel.isMarked)
+                            //.padding(.vertical, 3)
+                    }
+                    
+                    Section {
                         //Categeory Selection
                         Picker("Kategorie", selection: $viewModel.categorySelection) {
                             

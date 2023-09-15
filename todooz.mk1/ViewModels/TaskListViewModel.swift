@@ -23,8 +23,12 @@ class TaskListViewModel: ObservableObject {
         try await TaskService.shared.deleteTask(taskID: taskID)
     }
     
+    func markTask(taskID: String, isMarkedNow: Bool) async throws {
+        try await TaskService.shared.markTask(taskID: taskID, isMarkedNow: isMarkedNow)
+    }
     
-    
-    
+    func prioTask(taskID: String, isHighPrioNow: Bool) async throws {
+        try await TaskService.shared.togglePrioTask(taskID: taskID, isHighPrioNow: isHighPrioNow)
+    }
     
 }

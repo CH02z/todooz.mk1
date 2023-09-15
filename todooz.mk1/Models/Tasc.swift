@@ -18,4 +18,5 @@ struct Tasc: Codable, Identifiable {
     let dateCreated: String?
     var dateFinished: String?
     let isHighPriority: Bool
+    var isMarked: Bool
 }

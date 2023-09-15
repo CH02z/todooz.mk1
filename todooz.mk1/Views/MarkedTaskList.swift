@@ -35,51 +35,75 @@ struct MarkedTaskListView: View {
                     TaskViewPreview(item: item, allCategories: allCategories)
                         .swipeActions {
                             
-                            Button("löschen") {
+                            Button() {
+                                Task { try await viewModel.markTask(taskID: item.id, isMarkedNow: item.isMarked) }
+                            } label: {
+                                Image(systemName: "flag")
+                                    .foregroundColor(.white)
+                                    .font(.system(size: 15))
+                            }
+                            .tint(.orange)
+                            
+                            Button() {
+                                Task { try await viewModel.prioTask(taskID: item.id, isHighPrioNow: item.isHighPriority) }
+                            } label: {
+                                Image(systemName: "exclamationmark")
+                                    .font(.system(size: 15))
+                            }
+                            .tint(.gray)
+                            
+                            
+                            Button() {
                                 Task { try await viewModel.deleteTask(taskID: item.id) }
+                            } label: {
+                                Image(systemName: "trash")
+                                    .foregroundColor(.white)
+                                    .font(.system(size: 15))
                             }
                             .tint(.red)
+                            
                         }
                     
-                }
-                if tasks.count == 0 {
+                    if tasks.count == 0 {
                         Text("Keine Markierten Tasks vorhanden")
                             .frame(maxWidth: .infinity, alignment: .center)
                             .font(.subheadline)
                             .foregroundColor(.secondary)
+                    }
                 }
+                .refreshable {
+                    Task { @MainActor in
+                        self.filterTasks()
+                    }
+                }
+                
+                
+                
+                .navigationTitle("Markiert")
+                
+                .toolbar {
+                    
+                    ToolbarItem(placement: .navigationBarTrailing) {
+                        Button {
+                            
+                        } label: {
+                            Image(systemName: "square.and.arrow.up")
+                            //.font(.system(size: 20))
+                        }
+                        
+                    }            }
+                
+                
+                
             }
-            .refreshable {
+            .onAppear() {
                 Task { @MainActor in
                     self.filterTasks()
                 }
             }
-            
-            
-            
-            .navigationTitle("Markiert")
-            
-            .toolbar {
-                
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    Button {
-                        
-                    } label: {
-                        Image(systemName: "square.and.arrow.up")
-                        //.font(.system(size: 20))
-                    }
-                    
-                }            }
-         
-            
-            
         }
-        .onAppear() {
-            Task { @MainActor in
-                self.filterTasks()
-            }
-        }
-            }
+        
+    }
     
 }
 

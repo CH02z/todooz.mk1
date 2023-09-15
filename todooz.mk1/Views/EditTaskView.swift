@@ -20,7 +20,7 @@ struct EditTaskView: View {
     
     
     init(isPresented: Binding<Bool>, allCategories: [Category], editTask: Tasc) {
-        self._viewModel = StateObject(wrappedValue: EditTaskViewModel(taskID: editTask.id, title: editTask.title, category: editTask.category, dueDate: editTask.dueDate ?? "", description: editTask.description ?? "", isHighPriority: editTask.isHighPriority))
+        self._viewModel = StateObject(wrappedValue: EditTaskViewModel(taskID: editTask.id, title: editTask.title, category: editTask.category, dueDate: editTask.dueDate ?? "", description: editTask.description ?? "", isHighPriority: editTask.isHighPriority, isMarked: editTask.isMarked))
         self._isPresented = isPresented
         self.categories = allCategories.map({ category in
             return category.name
@@ -129,6 +129,12 @@ struct EditTaskView: View {
                     Section {
                         //High Priority Toggle
                         Toggle("Hohe Priorität", isOn: $viewModel.isHighPriority)
+                            //.padding(.vertical, 3)
+                    }
+                    
+                    Section {
+                        //Marked Toggle
+                        Toggle("Markiert", isOn: $viewModel.isMarked)
                             //.padding(.vertical, 3)
                     }
                     

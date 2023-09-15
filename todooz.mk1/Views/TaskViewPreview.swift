@@ -29,6 +29,13 @@ struct TaskViewPreview: View {
                     .padding(.horizontal, 5)
             }
             
+            if item.isMarked {
+                Image(systemName: "flag")
+                    .foregroundColor(Color.orange)
+                    .font(.system(size: 20))
+                    .padding(.horizontal, 5)
+            }
+            
             
             VStack(alignment: .leading) {
                 Text(item.title)
