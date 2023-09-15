@@ -14,6 +14,11 @@ struct HighPrioTaskListView: View {
     let currentUser: User?
     let allCategories: [Category]
     
+    @State var showDetailTaskSheet: Bool = false
+    
+    @State var detailTask: Tasc = TestData.tasks[0]
+    @State var editTask: Tasc = TestData.tasks[0]
+    
     
     @FirestoreQuery(collectionPath: "users") var tasks: [Tasc]
     @ObservedObject var viewModel = TaskListViewModel()
@@ -63,6 +68,25 @@ struct HighPrioTaskListView: View {
                             .tint(.red)
          
                         }
+                        .contextMenu {
+                            Button {
+                                print("Item: \(item)")
+                                self.detailTask = item
+                                print("detailTask: \(self.detailTask)")
+                                self.showDetailTaskSheet = true
+                            
+                                
+                            } label: {
+                                Label("Detailansicht", systemImage: "eye")
+                                    .foregroundColor(.red)
+                            }
+                            
+                            NavigationLink(destination: EditTaskView(allCategories: allCategories, editTask: item)) {
+                                    Text("bearbeiten")
+                                    Image(systemName: "pencil")
+                                }
+                        
+                        }
                     
                 }
                 if tasks.count == 0 {
@@ -77,6 +101,10 @@ struct HighPrioTaskListView: View {
                     self.filterTasks()
                 }
             }
+            
+            .sheet(isPresented: $showDetailTaskSheet, content: {
+                DetailTaskView(task: $detailTask, allCategories: allCategories, isPresented: $showDetailTaskSheet)
+            })
             
             
             

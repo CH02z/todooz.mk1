@@ -19,7 +19,6 @@ struct TasklistView: View {
     //Sheets
     @State var showAddItemSheet: Bool = false
     @State var showDetailTaskSheet: Bool = false
-    @State var showEditItemSheet: Bool = false
     
     @State var detailTask: Tasc = TestData.tasks[0]
     @State var editTask: Tasc = TestData.tasks[0]
@@ -107,12 +106,7 @@ struct TasklistView: View {
                                     Text("bearbeiten")
                                     Image(systemName: "pencil")
                                 }
-                            
-    
-                            
-                            
-                            
-                            
+                        
                         }
                     
                 }
@@ -142,10 +136,7 @@ struct TasklistView: View {
             .sheet(isPresented: $showDetailTaskSheet, content: {
                 DetailTaskView(task: $detailTask, allCategories: allCategories, isPresented: $showDetailTaskSheet)
             })
-            
-            //.sheet(item: $detailTask) { task in
-              //  DetailTaskView(task: task, allCategories: allCategories, isPresented: $showDetailTaskSheet)
-                //    }
+
             
             
             
