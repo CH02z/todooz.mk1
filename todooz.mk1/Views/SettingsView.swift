@@ -12,9 +12,13 @@ struct SettingsView: View {
     
     @AppStorage("isDarkMode") private var isDarkMode = true
     @AppStorage("accentColor") private var accentColor = "B35AEF"
+    @AppStorage("language") private var language = "Deutsch"
     
     
     let colors: [String] = ["F2503F", "63D163", "F8A535", "B35AEF", "3380FE"]
+    let languages: [String] = ["Deutsch", "English", "Französisch"]
+    
+    
     
     
     var body: some View {
@@ -90,21 +94,29 @@ struct SettingsView: View {
                     }
                 }
                 
-                NavigationLink(destination: Text("General Settings")) {
+              
                     HStack {
-                        Image(systemName: "gear")
+                        Image(systemName: "globe")
                             .foregroundColor(.white)
                             .frame(width: 30, height: 30)
-                            .background(.gray)
+                            .background(.blue)
                             .cornerRadius(5)
                             .font(.system(size: 19))
                             .fontWeight(.bold)
                             .padding(.vertical, 2.5)
                             .padding(.trailing, 5)
                         
-                        Text("Allgemein")
+                        Picker("Sprache", selection: $language) {
+                            
+                            ForEach(languages, id: \.self){
+
+                                Text($0)
+
+                                        }
+                                    }
+                        .pickerStyle(.menu)
                     }
-                }
+                
                 
                 HStack {
                     Image(systemName: "person.fill")

@@ -18,15 +18,15 @@ struct StandardCategoryPreviewView: View {
     @State var numberOfHighPrioTasks: String = ""
     @State var numberOfTodayTasks: String = ""
     @State var numberOfDoneTasks: String = ""
+    @State var numberOfMarkedTasks: String = ""
     
     @FirestoreQuery(collectionPath: "users") var highPrioTasks: [Tasc]
     @FirestoreQuery(collectionPath: "users") var todayTasks: [Tasc]
     @FirestoreQuery(collectionPath: "users") var doneTasks: [Tasc]
+    @FirestoreQuery(collectionPath: "users") var markedTasks: [Tasc]
     
     @State var filteredByDateTasks: [Tasc] = []
     
-        
-        
     private func setNumberOfHighPrioTasks(uid: String) async throws {
         $highPrioTasks.path = "users/\(uid)/tasks"
         $highPrioTasks.predicates = [
@@ -36,6 +36,7 @@ struct StandardCategoryPreviewView: View {
         try await Task.sleep(seconds: 0.2)
         self.numberOfHighPrioTasks = String(highPrioTasks.count)
     }
+    
     
     private func setNumberOfDoneTasks(uid: String) async throws {
         $doneTasks.path = "users/\(uid)/tasks"
@@ -62,12 +63,21 @@ struct StandardCategoryPreviewView: View {
         }
     
    
-    
     private func filterTodayTasks() async throws {
         try await Task.sleep(seconds: 0.1)
         self.filteredByDateTasks = self.todayTasks.filter { tasc in
             return isSameDay(date1: Date(), date2: getDateFromString(dateString: tasc.dueDate!))
         }
+    }
+    
+    private func setNumberOfMarkedTasks(uid: String) async throws {
+        $markedTasks.path = "users/\(uid)/tasks"
+        $markedTasks.predicates = [
+            .isEqualTo("isMarked", true),
+            .whereField("isDone", isEqualTo: false)
+        ]
+        try await Task.sleep(seconds: 0.2)
+        self.numberOfMarkedTasks = String(markedTasks.count)
     }
     
     var body: some View {
@@ -83,7 +93,7 @@ struct StandardCategoryPreviewView: View {
                                 Image(systemName: "calendar.circle")
                                     .foregroundColor(Color(hex: accentColor))
                                     .font(.system(size: 35))
-                                    .fontWeight(.semibold)
+                                    //.fontWeight(.semibold)
                                     .padding(.vertical, 3.5)
                                     .padding(.trailing, 5)
                                 
@@ -116,7 +126,7 @@ struct StandardCategoryPreviewView: View {
                                 Image(systemName: "exclamationmark.circle")
                                     .foregroundColor(Color(hex: accentColor))
                                     .font(.system(size: 35))
-                                    .fontWeight(.semibold)
+                                    //.fontWeight(.semibold)
                                     .padding(.vertical, 3.5)
                                     .padding(.trailing, 20)
                                 
@@ -148,6 +158,7 @@ struct StandardCategoryPreviewView: View {
                     Task { try await self.setNumberOfHighPrioTasks(uid: user.id) }
                     Task { try await self.setNumberOfTodayTasks(uid: user.id) }
                     Task { try await self.setNumberOfDoneTasks(uid: user.id) }
+                    Task { try await self.setNumberOfMarkedTasks(uid: user.id) }
                     
                 }
                 
@@ -157,7 +168,7 @@ struct StandardCategoryPreviewView: View {
                         Image(systemName: "checkmark.circle")
                             .foregroundColor(Color(hex: accentColor))
                             .font(.system(size: 35))
-                            .fontWeight(.semibold)
+                            //.fontWeight(.semibold)
                             .padding(.vertical, 3.5)
                             .padding(.trailing, 5)
                             .padding(.leading, 20)
@@ -179,6 +190,35 @@ struct StandardCategoryPreviewView: View {
                 .background(Color("ElementBackround"))
                 .cornerRadius(10)
                 .padding(.top, 30)
+                
+                NavigationLink(destination: MarkedTaskListView(currentUser: currentUser, allCategories: allCategories)) {
+                    // Done Task Preview:
+                    HStack {
+                        Image(systemName: "flag")
+                            .foregroundColor(Color(hex: accentColor))
+                            .font(.system(size: 35))
+                            //.fontWeight(.semibold)
+                            .padding(.vertical, 3.5)
+                            .padding(.trailing, 5)
+                            .padding(.leading, 20)
+                        //.overlay(Circle().stroke(Color.white, lineWidth: 1))
+                        
+                        Text("Markiert")
+                            .foregroundColor(Color("MainFontColor"))
+                            .fontWeight(.semibold)
+                            .lineLimit(2)
+                            .minimumScaleFactor(0.5)
+                        
+                        Text(numberOfMarkedTasks)
+                            .frame(maxWidth: .infinity, alignment: .trailing)
+                            .padding(.trailing, 20)
+                            .foregroundColor(Color("MainFontColor"))
+                    }
+                    .padding(.vertical, 4)
+                }
+                .background(Color("ElementBackround"))
+                .cornerRadius(10)
+                .padding(.top, 10)
                 
         
                 

@@ -10,6 +10,7 @@
 		83048E4E2A9BBC4F003F1C59 /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = 83048E4D2A9BBC4F003F1C59 /* GoogleSignIn */; };
 		83048E502A9BBC4F003F1C59 /* GoogleSignInSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 83048E4F2A9BBC4F003F1C59 /* GoogleSignInSwift */; };
 		8347D9CF2AAF976300ABB779 /* IsDoneTaskListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8347D9CE2AAF976300ABB779 /* IsDoneTaskListView.swift */; };
+		834E8BFE2AB44632003D34A4 /* MarkedTaskList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 834E8BFD2AB44632003D34A4 /* MarkedTaskList.swift */; };
 		837362642AA79AD9000548D9 /* TodayTaskListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 837362632AA79AD9000548D9 /* TodayTaskListView.swift */; };
 		8382238D2AB22C30004B7833 /* NotesListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8382238C2AB22C30004B7833 /* NotesListView.swift */; };
 		8382238F2AB2303C004B7833 /* QuickNote.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8382238E2AB2303C004B7833 /* QuickNote.swift */; };
@@ -73,6 +74,7 @@
 /* Begin PBXFileReference section */
 		83048E512A9BBCA1003F1C59 /* todooz-mk1-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "todooz-mk1-Info.plist"; sourceTree = SOURCE_ROOT; };
 		8347D9CE2AAF976300ABB779 /* IsDoneTaskListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IsDoneTaskListView.swift; sourceTree = "<group>"; };
+		834E8BFD2AB44632003D34A4 /* MarkedTaskList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkedTaskList.swift; sourceTree = "<group>"; };
 		837362632AA79AD9000548D9 /* TodayTaskListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TodayTaskListView.swift; sourceTree = "<group>"; };
 		8382238C2AB22C30004B7833 /* NotesListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesListView.swift; sourceTree = "<group>"; };
 		8382238E2AB2303C004B7833 /* QuickNote.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QuickNote.swift; sourceTree = "<group>"; };
@@ -214,6 +216,7 @@
 				8382238C2AB22C30004B7833 /* NotesListView.swift */,
 				838223922AB23569004B7833 /* NoteView.swift */,
 				838223982AB23EAA004B7833 /* AddNoteView.swift */,
+				834E8BFD2AB44632003D34A4 /* MarkedTaskList.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -391,6 +394,7 @@
 				83D60C4B2A9B45EF00723215 /* AuthService.swift in Sources */,
 				83D60C3D2A9A5E3500723215 /* User.swift in Sources */,
 				83D60C1A2A9A4C7F00723215 /* TabsView.swift in Sources */,
+				834E8BFE2AB44632003D34A4 /* MarkedTaskList.swift in Sources */,
 				83B486AE2AA321940017CE91 /* AddTaskViewModel.swift in Sources */,
 				83D60C3F2A9A5E5A00723215 /* Tasc.swift in Sources */,
 				83D60C352A9A57CF00723215 /* RegistrationViewModel.swift in Sources */,
