@@ -14,6 +14,8 @@ struct CategoryView: View {
     let currentUser: User?
     //@State var avatarImage: UIImage?
     
+    @AppStorage("accentColor") private var accentColor = "B35AEF"
+    
     @ObservedObject var viewModel = CategoryViewModel()
     @State var showAddCategorySheet: Bool = false
     @FirestoreQuery(collectionPath: "users") var categories: [Category]
@@ -64,6 +66,7 @@ struct CategoryView: View {
                             }
                         }
                         .padding(.top, 60)
+                        .padding()
                         
                     }
                     
@@ -120,8 +123,20 @@ struct CategoryView: View {
                 .toolbar {
                     
                     ToolbarItem(placement: .navigationBarLeading) {
-                        Text(getStringFromDate(date: Date(), dateFormat: "dd.MM.yyyy"))
-                            .foregroundColor(.secondary)
+                        HStack(spacing: 5) {
+                            Text(getStringFromDate(date: Date(), dateFormat: "dd."))
+                                //.foregroundColor(.secondary)
+                                .foregroundColor(Color(hex: accentColor))
+                            
+                            Text(getStringFromDate(date: Date(), dateFormat: "MMMM"))
+                                .foregroundColor(.secondary)
+                            
+                            Text(getStringFromDate(date: Date(), dateFormat: "YYYY"))
+                                .foregroundColor(.secondary)
+                            
+                        }
+                        
+                        
                     }
                     
                     ToolbarItem(placement: .navigationBarTrailing) {
