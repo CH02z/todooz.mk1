@@ -15,6 +15,11 @@ struct TodayTaskListView: View {
     let allCategories: [Category]
     
     @State var filteredByDateTasks: [Tasc] = []
+    
+    @State var showDetailTaskSheet: Bool = false
+    
+    @State var detailTask: Tasc = TestData.tasks[0]
+    @State var editTask: Tasc = TestData.tasks[0]
    
     
     @FirestoreQuery(collectionPath: "users") var tasks: [Tasc]
@@ -30,7 +35,7 @@ struct TodayTaskListView: View {
         ]
         try await Task.sleep(seconds: 0.1)
         self.filteredByDateTasks = self.tasks.filter { tasc in
-            return isSameDay(date1: Date(), date2: getDateFromString(dateString: tasc.dueDate!))
+            return isSameDay(date1: Date(), date2: getDateFromString(dateString: tasc.dueDate))
             
         }
         
@@ -44,13 +49,53 @@ struct TodayTaskListView: View {
                     TaskViewPreview(item: item, allCategories: allCategories)
                         .swipeActions {
                             
-                            Button("löschen") {
-                                Task {
-                                    try await viewModel.deleteTask(taskID: item.id)
-                                    try await self.filterTasks()
-                                }
+                            Button() {
+                                Task { try await viewModel.markTask(taskID: item.id, isMarkedNow: item.isMarked) }
+                            } label: {
+                                Image(systemName: "flag")
+                                    .foregroundColor(.white)
+                                    .font(.system(size: 15))
+                            }
+                            .tint(.orange)
+                            
+                            Button() {
+                                Task { try await viewModel.prioTask(taskID: item.id, isHighPrioNow: item.isHighPriority) }
+                            } label: {
+                                Image(systemName: "exclamationmark")
+                                    .font(.system(size: 15))
+                            }
+                            .tint(.gray)
+                            
+                            
+                            Button() {
+                                Task { try await viewModel.deleteTask(taskID: item.id) }
+                            } label: {
+                                Image(systemName: "trash")
+                                    .foregroundColor(.white)
+                                    .font(.system(size: 15))
                             }
                             .tint(.red)
+         
+                        }
+                    
+                        .contextMenu {
+                            Button {
+                                print("Item: \(item)")
+                                self.detailTask = item
+                                print("detailTask: \(self.detailTask)")
+                                self.showDetailTaskSheet = true
+                            
+                                
+                            } label: {
+                                Label("Detailansicht", systemImage: "eye")
+                                    .foregroundColor(.red)
+                            }
+                            
+                            NavigationLink(destination: EditTaskView(allCategories: allCategories, editTask: item)) {
+                                    Text("bearbeiten")
+                                    Image(systemName: "pencil")
+                                }
+                        
                         }
                     
                 }
@@ -68,10 +113,11 @@ struct TodayTaskListView: View {
                 Task { @MainActor in
                     try await self.filterTasks()
                 }
-                
-                
-                
             }
+            
+            .sheet(isPresented: $showDetailTaskSheet, content: {
+                DetailTaskView(task: $detailTask, allCategories: allCategories, isPresented: $showDetailTaskSheet)
+            })
             
             
             

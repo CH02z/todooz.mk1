@@ -22,6 +22,7 @@ class AddTaskViewModel: ObservableObject {
     @Published var dueDate: Date = Date()
     @Published var description: String = ""
     @Published var isHighPriority: Bool = false
+    @Published var isMarked: Bool = false
     
     @Published var categorySelection = ""
     
@@ -52,19 +53,19 @@ class AddTaskViewModel: ObservableObject {
             //Date without Time gets inserted
             let DateNoTime = self.dueDate.removeTimeStamp()
             let DateString = getStringFromDate(date: DateNoTime!, dateFormat: "dd.MM.yyyy")
-            try await TaskService.shared.createTask(title: self.title, category: self.categorySelection, dueDate: DateString, description: self.description, isHighPriority: self.isHighPriority)
+            try await TaskService.shared.createTask(title: self.title, category: self.categorySelection, dueDate: DateString, description: self.description, isHighPriority: self.isHighPriority, isMarked: self.isMarked)
         }
         
         if self.letPickDate && self.letPickDateAndTime {
             //Date with Time gets inserted
             //"d MMM YY, HH:mm:ss"
             let DateTimeString = getStringFromDate(date: self.dueDate, dateFormat: "dd.MM.yyyy, HH:mm")
-            try await TaskService.shared.createTask(title: self.title, category: self.categorySelection, dueDate: DateTimeString, description: self.description, isHighPriority: self.isHighPriority)
+            try await TaskService.shared.createTask(title: self.title, category: self.categorySelection, dueDate: DateTimeString, description: self.description, isHighPriority: self.isHighPriority, isMarked: self.isMarked)
         }
         
         if !self.letPickDate {
             //Task without any DueDate is Created
-            try await TaskService.shared.createTask(title: self.title, category: self.categorySelection, dueDate: "", description: self.description, isHighPriority: self.isHighPriority)
+            try await TaskService.shared.createTask(title: self.title, category: self.categorySelection, dueDate: "", description: self.description, isHighPriority: self.isHighPriority, isMarked: self.isMarked)
             
         }
     

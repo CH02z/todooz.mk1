@@ -16,7 +16,12 @@ struct TasklistView: View {
     let allCategories: [Category]
     let currentUser: User?
     
+    //Sheets
     @State var showAddItemSheet: Bool = false
+    @State var showDetailTaskSheet: Bool = false
+    
+    @State var detailTask: Tasc = TestData.tasks[0]
+    @State var editTask: Tasc = TestData.tasks[0]
     
     //Sorting
     let sortOptions: [String] = ["Titel", "Datum"]
@@ -55,14 +60,57 @@ struct TasklistView: View {
                 ForEach(tasks) { item in
                     TaskViewPreview(item: item, allCategories: allCategories)
                         .swipeActions {
+                            Button() {
+                                Task { try await viewModel.markTask(taskID: item.id, isMarkedNow: item.isMarked) }
+                            } label: {
+                                Image(systemName: "flag")
+                                    .foregroundColor(.white)
+                                    .font(.system(size: 15))
+                            }
+                            .tint(.orange)
                             
-                            Button("löschen") {
+                            Button() {
+                                Task { try await viewModel.prioTask(taskID: item.id, isHighPrioNow: item.isHighPriority) }
+                            } label: {
+                                Image(systemName: "exclamationmark")
+                                    .font(.system(size: 15))
+                            }
+                            .tint(.gray)
+                            
+                            
+                            Button() {
                                 Task { try await viewModel.deleteTask(taskID: item.id) }
+                            } label: {
+                                Image(systemName: "trash")
+                                    .foregroundColor(.white)
+                                    .font(.system(size: 15))
                             }
                             .tint(.red)
+                            
+                        }
+                    
+                        .contextMenu {
+                            Button {
+                                print("Item: \(item)")
+                                self.detailTask = item
+                                print("detailTask: \(self.detailTask)")
+                                self.showDetailTaskSheet = true
+                            
+                                
+                            } label: {
+                                Label("Detailansicht", systemImage: "eye")
+                                    .foregroundColor(.red)
+                            }
+                            
+                            NavigationLink(destination: EditTaskView(allCategories: allCategories, editTask: item)) {
+                                    Text("bearbeiten")
+                                    Image(systemName: "pencil")
+                                }
+                        
                         }
                     
                 }
+                
                 if tasks.count == 0 {
                     Text("In dieser Kategorie wurden noch keine Tasks hinzugefügt")
                         .frame(maxWidth: .infinity, alignment: .center)
@@ -85,10 +133,31 @@ struct TasklistView: View {
                 AddTaskView(isPresented: $showAddItemSheet, allCategories: allCategories, originalCat: category.name)
             })
             
+            .sheet(isPresented: $showDetailTaskSheet, content: {
+                DetailTaskView(task: $detailTask, allCategories: allCategories, isPresented: $showDetailTaskSheet)
+            })
+
             
             
             
             .toolbar {
+                
+                /*
+                 ToolbarItem(placement: .navigationBarTrailing) {
+                 Button {
+                 
+                 } label: {
+                 Image(systemName: "square.and.arrow.up")
+                 //.font(.system(size: 20))
+                 }
+                 
+                 }
+                 
+                 
+                 You can write a description on multiple lines here.
+                 */
+                
+                
                 ToolbarItem(placement: .navigationBarTrailing) {
                     
                     Menu {
@@ -115,12 +184,19 @@ struct TasklistView: View {
                     }
                 }
                 
+                
                 ToolbarItem(placement: .navigationBarTrailing) {
-                    Button {
+                    Button{
+                        
+                        //Haptic Feedback on Tap
+                        let impactHeavy = UIImpactFeedbackGenerator(style: .heavy)
+                        impactHeavy.impactOccurred()
+                        self.showAddItemSheet = true
                         
                     } label: {
-                        Image(systemName: "square.and.arrow.up")
-                        //.font(.system(size: 20))
+                        Image(systemName: "plus")
+                        //.font(.system(size: 25))
+                        
                     }
                     
                 }
@@ -128,22 +204,6 @@ struct TasklistView: View {
                 
             }
             
-            Button{
-                //Haptic Feedback on Tap
-                let impactHeavy = UIImpactFeedbackGenerator(style: .heavy)
-                impactHeavy.impactOccurred()
-                
-                self.showAddItemSheet = true
-            } label: {
-                Label("hinzufügen", systemImage: "plus")
-                    .bold()
-                    .font(.title2)
-                    .padding(8)
-                    .background(Color("ElementBackround"),
-                                in: Capsule())
-                    .padding(.leading)
-                    .symbolVariant(.circle.fill)
-            }
             
             
             

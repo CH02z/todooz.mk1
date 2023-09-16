@@ -10,6 +10,7 @@ import SwiftUI
 struct MainView: View {
     
     @ObservedObject var viewModel = MainViewModel()
+    @AppStorage("accentColor") private var accentColor = "B35AEF"
     
     var body: some View {
             
@@ -17,6 +18,7 @@ struct MainView: View {
                 LoginView()
             } else {
                 TabsView(currentUser: viewModel.currentUser)
+                    .accentColor(Color(hex: accentColor))
             }
             
         }

@@ -23,7 +23,7 @@ class TaskService {
     
     
     @MainActor
-    func createTask(title: String, category: String, dueDate: String?, description: String, isHighPriority: Bool) async throws {
+    func createTask(title: String, category: String, dueDate: String, description: String, isHighPriority: Bool, isMarked: Bool) async throws {
         guard let uid = self.userID else { return }
         let newTask = Tasc(id: UUID().uuidString,
                            title: title,
@@ -32,18 +32,19 @@ class TaskService {
                            isDone: false,
                            description: description,
                            dateCreated: getStringFromDate(date: Date(), dateFormat: "d MMM YY, HH:mm:ss"),
-                           isHighPriority: isHighPriority
+                           isHighPriority: isHighPriority,
+                           isMarked: isMarked
         )
         try await Firestore.firestore().collection("users").document(uid).collection("tasks").document(newTask.id).setData(newTask.asDictionary())
         print("Task \(newTask.title) inserted to firestore")
     }
     
     @MainActor
-    func editTask(taskID: String, title: String, category: String, dueDate: String, description: String, isHighPriority: Bool) async throws {
+    func editTask(taskID: String, title: String, category: String, dueDate: String, description: String, isHighPriority: Bool, isMarked: Bool) async throws {
         guard let uid = self.userID else { return }
 
         
-        try await Firestore.firestore().collection("users").document(uid).collection("tasks").document(taskID).setData([ "title": title, "category": category, "dueDate": dueDate, "description": description, "isHighPriority": isHighPriority], merge: true)
+        try await Firestore.firestore().collection("users").document(uid).collection("tasks").document(taskID).setData([ "title": title, "category": category, "dueDate": dueDate, "description": description, "isHighPriority": isHighPriority, "isMarked": isMarked], merge: true)
         print("Task \(title) updated in Firestore")
     }
     
@@ -62,6 +63,23 @@ class TaskService {
         try await Firestore.firestore().collection("users").document(uid).collection("tasks").document(taskID).delete()
         print("Task with ID: \(taskID) deleted from firestore")
     }
+    
+    @MainActor
+    func markTask(taskID: String, isMarkedNow: Bool) async throws {
+        guard let uid = self.userID else { return }
+        try await Firestore.firestore().collection("users").document(uid).collection("tasks").document(taskID).setData([ "isMarked": !isMarkedNow], merge: true)
+        print("Task with ID: \(taskID) toggled Mark")
+    }
+    
+    @MainActor
+    func togglePrioTask(taskID: String, isHighPrioNow: Bool) async throws {
+        guard let uid = self.userID else { return }
+        try await Firestore.firestore().collection("users").document(uid).collection("tasks").document(taskID).setData([ "isHighPriority": !isHighPrioNow], merge: true)
+        print("Task with ID: \(taskID) toggled Prio")
+    }
+    
+    
+    
     
     @MainActor
     func deleteAllTasksFromCategory(categoryName: String) async throws {

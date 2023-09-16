@@ -11,7 +11,7 @@ import SwiftUI
 
 
 
-
+//Extenstions-----------------------------------------------------------------------------------
 
 extension Encodable {
     func asDictionary() -> [String: Any] {
@@ -111,6 +111,60 @@ extension Color {
         }
 
         self.init(red: r, green: g, blue: b, opacity: a)
+    }
+}
+
+
+//Helper Functions---------------------------------------------------------
+
+
+func getCurrentDateString() -> String {
+    let date = Date()
+    let dateFormatter = DateFormatter()
+    dateFormatter.timeZone = TimeZone(abbreviation: "CEST")!
+    dateFormatter.dateFormat = "d MMM YY, HH:mm:ss"
+    return dateFormatter.string(from: date)
+}
+
+func getStringFromDate(date: Date, dateFormat: String) -> String {
+    let dateFormatter = DateFormatter()
+    dateFormatter.timeZone = TimeZone(abbreviation: "CEST")!
+    dateFormatter.dateFormat = dateFormat
+    return dateFormatter.string(from: date)
+}
+
+func getDateFromString(dateString: String) -> Date {
+    print("DateString in GetDatefunciton: \(dateString)")
+    if !dateString.isEmpty {
+        let dateFormatter = DateFormatter()
+        dateFormatter.timeZone = TimeZone(abbreviation: "CEST")
+        if dateString.count > 11 {
+            dateFormatter.dateFormat = "dd.MM.yyyy, HH:mm"
+            let dObj = dateFormatter.date(from: dateString)
+            return dObj ?? Date()
+            
+        } else {
+            dateFormatter.dateFormat = "dd.MM.yyyy"
+            return dateFormatter.date(from: dateString)!
+        }
+    } else {
+        print("empty input datestring, returning date()")
+        return Date()
+    }
+
+}
+
+func isSameDay(date1: Date, date2: Date) -> Bool {
+    
+    var calendar = Calendar.current
+    calendar.timeZone = TimeZone(abbreviation: "CEST")!
+
+    
+    if calendar.isDate(date1, inSameDayAs: date2) {
+        //print("date1 now object: \(date1), and date 2: \(date2)")
+        return true
+    } else {
+        return false
     }
 }
 

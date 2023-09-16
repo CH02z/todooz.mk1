@@ -48,10 +48,7 @@ class ProfileService {
     @MainActor
     func DownloadPhoto(imageRef: String) async -> UIImage? {
         
-        guard let uid = self.userID else { return nil }
         let storageRef = Storage.storage().reference()
-        //let imageData = image?.jpegData(compressionQuality: 0.8)
-        //guard imageData != nil else { return }
         let fileRef = storageRef.child(imageRef)
         
         // Max Size set to 8MB

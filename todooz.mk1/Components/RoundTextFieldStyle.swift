@@ -14,9 +14,26 @@ struct RoundTextFieldStyle: TextFieldStyle {
             .font(.subheadline)
             .autocapitalization(.none)
             .disableAutocorrection(true)
-            .padding(10)
+            .padding(20)
             .background(Color("ElementBackround"))
             .cornerRadius(10)
+            //.shadow(color: .gray, radius: 10)
+    }
+}
+
+
+struct NoteTextFieldStyle: TextFieldStyle {
+    var backroundColor: String
+    func _body(configuration: TextField<Self._Label>) -> some View {
+        configuration
+            .lineLimit(5...10)
+            .font(.body)
+            .foregroundColor(.black)
+            .autocapitalization(.none)
+            .disableAutocorrection(true)
+            .padding(20)
+            .background(Color(hex: backroundColor))
+            .cornerRadius(15)
             //.shadow(color: .gray, radius: 10)
     }
 }

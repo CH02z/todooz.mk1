@@ -9,8 +9,11 @@ import SwiftUI
 
 struct EditTaskView: View {
     
+    @Environment(\.presentationMode) var presentationMode
+    
+    @AppStorage("accentColor") private var accentColor = "B35AEF"
     @StateObject var viewModel: EditTaskViewModel
-    @Binding var isPresented: Bool
+    //@Binding var isPresented: Bool
     
     //used for Picker
     var categories: [String] = []
@@ -18,9 +21,8 @@ struct EditTaskView: View {
     
     
     
-    init(isPresented: Binding<Bool>, allCategories: [Category], editTask: Tasc) {
-        self._viewModel = StateObject(wrappedValue: EditTaskViewModel(taskID: editTask.id, title: editTask.title, category: editTask.category, dueDate: editTask.dueDate ?? "", description: editTask.description ?? "", isHighPriority: editTask.isHighPriority))
-        self._isPresented = isPresented
+    init(allCategories: [Category], editTask: Tasc) {
+        self._viewModel = StateObject(wrappedValue: EditTaskViewModel(taskID: editTask.id, title: editTask.title, category: editTask.category, dueDate: editTask.dueDate, description: editTask.description ?? "", isHighPriority: editTask.isHighPriority, isMarked: editTask.isMarked))
         self.categories = allCategories.map({ category in
             return category.name
         })
@@ -29,8 +31,8 @@ struct EditTaskView: View {
     //"Swisscom", "Privat", "Todooz", "Allgemein"
     
     var body: some View {
-        NavigationView {
-            
+        
+        NavigationStack {
             VStack {
                 Form {
                     
@@ -74,7 +76,7 @@ struct EditTaskView: View {
                             Toggle("", isOn: $viewModel.letPickDate)
                                 .labelsHidden()
                                 .frame(maxWidth: .infinity, alignment: .trailing)
-          
+                            
                         }
                         if viewModel.letPickDate && viewModel.dueDate <= Calendar.current.date(byAdding: .minute, value: -5, to: Date())! {
                             HStack {
@@ -117,7 +119,7 @@ struct EditTaskView: View {
                                 Toggle("", isOn: $viewModel.letPickDateAndTime)
                                     .labelsHidden()
                                     .frame(maxWidth: .infinity, alignment: .trailing)
-              
+                                
                             }
                         }
                     }
@@ -128,7 +130,13 @@ struct EditTaskView: View {
                     Section {
                         //High Priority Toggle
                         Toggle("Hohe Priorität", isOn: $viewModel.isHighPriority)
-                            //.padding(.vertical, 3)
+                        //.padding(.vertical, 3)
+                    }
+                    
+                    Section {
+                        //Marked Toggle
+                        Toggle("Markiert", isOn: $viewModel.isMarked)
+                        //.padding(.vertical, 3)
                     }
                     
                     Section {
@@ -136,34 +144,21 @@ struct EditTaskView: View {
                         Picker("Kategorie", selection: $viewModel.categorySelection) {
                             
                             ForEach(categories, id: \.self){
-
+                                
                                 Text($0)
-
-                                        }
-                                    }
+                                
+                            }
+                        }
                         .pickerStyle(.menu)
                         
                     }
                     
                 }
                 
+                
             }
             
-            
             .toolbar {
-                ToolbarItem(placement: .navigationBarLeading) {
-                    Button {
-                        isPresented = false
-                    } label: {
-                        Text("abbrechen")
-                    }
-                    
-                }
-                
-                ToolbarItem(placement: .principal) {
-                    Text("Task bearbeiten")
-                        .fontWeight(.semibold)
-                }
                 
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button {
@@ -171,26 +166,41 @@ struct EditTaskView: View {
                         let impactHeavy = UIImpactFeedbackGenerator(style: .heavy)
                         impactHeavy.impactOccurred()
                         Task { try await viewModel.save()}
-                        isPresented = false
+                        self.presentationMode.wrappedValue.dismiss()
+                        
                     } label: {
-                        Text("speichern")
+                        Text("Speichern")
+                            .accentColor(Color(hex: accentColor))
+                        //.font(.system(size: 20))
                     }
                     .disabled(!viewModel.formIsValid())
                     
                 }
                 
                 
+               
                 
             }
+            
         }
         
         
+        
+        
+        
+        
+        
     }
+    
+    
+    
+    
+    
 }
 
 struct EditTodoView_Previews: PreviewProvider {
     @State var isPresented: Bool = false
     static var previews: some View {
-        EditTaskView(isPresented: .constant(true), allCategories: [TestData.categories[0]], editTask: TestData.tasks[0])
+        EditTaskView(allCategories: [TestData.categories[0]], editTask: TestData.tasks[0])
     }
 }

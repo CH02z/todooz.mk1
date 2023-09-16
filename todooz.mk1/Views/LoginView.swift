@@ -9,6 +9,7 @@ import SwiftUI
 
 struct LoginView: View {
     
+    @AppStorage("accentColor") private var accentColor = "B35AEF"
     @ObservedObject var viewModel = LoginViewModel()
     
     @State private var email: String = ""
@@ -68,7 +69,7 @@ struct LoginView: View {
                     
                 }
                 .buttonStyle(.borderedProminent)
-                .accentColor(Color.blue)
+                .accentColor(Color(hex: accentColor))
                 .cornerRadius(8)
                 .padding(.top, 10)
                 .disabled(self.email.isEmpty || self.password.isEmpty)

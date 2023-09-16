@@ -1,4 +1,4 @@
-//
+//MarkedListView
 //  ToDoListView.swift
 //  todooz.mk1
 //
@@ -9,12 +9,13 @@ import SwiftUI
 import FirebaseFirestoreSwift
 import FirebaseAuth
 
-struct HighPrioTaskListView: View {
+struct MarkedTaskListView: View {
     
     let currentUser: User?
     let allCategories: [Category]
     
     @State var showDetailTaskSheet: Bool = false
+    @State var showEditItemSheet: Bool = false
     
     @State var detailTask: Tasc = TestData.tasks[0]
     @State var editTask: Tasc = TestData.tasks[0]
@@ -26,7 +27,7 @@ struct HighPrioTaskListView: View {
     private func filterTasks() {
         $tasks.path = "users/\(self.currentUser?.id ?? "")/tasks"
         $tasks.predicates = [
-            .isEqualTo("isHighPriority", true),
+            .isEqualTo("isMarked", true),
             .whereField("isDone", isEqualTo: false),
             .order(by: "dueDate", descending: true),
         ]
@@ -35,6 +36,7 @@ struct HighPrioTaskListView: View {
     var body: some View {
         NavigationStack {
             
+                
             List {
                 ForEach(tasks) { item in
                     TaskViewPreview(item: item, allCategories: allCategories)
@@ -68,6 +70,7 @@ struct HighPrioTaskListView: View {
                             .tint(.red)
          
                         }
+                    
                         .contextMenu {
                             Button {
                                 print("Item: \(item)")
@@ -90,7 +93,7 @@ struct HighPrioTaskListView: View {
                     
                 }
                 if tasks.count == 0 {
-                        Text("Keine Tasks mit hoher Priorität vorhanden")
+                        Text("Keine markierten Tasks vorhanden.")
                             .frame(maxWidth: .infinity, alignment: .center)
                             .font(.subheadline)
                             .foregroundColor(.secondary)
@@ -101,36 +104,40 @@ struct HighPrioTaskListView: View {
                     self.filterTasks()
                 }
             }
-            
             .sheet(isPresented: $showDetailTaskSheet, content: {
                 DetailTaskView(task: $detailTask, allCategories: allCategories, isPresented: $showDetailTaskSheet)
             })
-            
-            
-            
-            .navigationTitle("Hohe Priorität")
-            
-            .toolbar {
                 
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    Button {
-                        
-                    } label: {
-                        Image(systemName: "square.and.arrow.up")
-                        //.font(.system(size: 20))
-                    }
+                .navigationTitle("Markiert")
+                
+                .toolbar {
                     
-                }            }
-         
+                    ToolbarItem(placement: .navigationBarTrailing) {
+                        Button {
+                            
+                        } label: {
+                            Image(systemName: "square.and.arrow.up")
+                            //.font(.system(size: 20))
+                        }
+                        
+                    } 
+                    
+                    
+                   
+                    
+                }
+                
+                
+                
             
-            
-        }
+            }
         .onAppear() {
             Task { @MainActor in
                 self.filterTasks()
             }
         }
-            }
+        }
+   
     
 }
 
@@ -138,8 +145,9 @@ struct HighPrioTaskListView: View {
 
 
 
-struct HighPrioTaskListView_Previews: PreviewProvider {
+struct MarkedTaskListView_Previews: PreviewProvider {
     static var previews: some View {
-        HighPrioTaskListView(currentUser: TestData.users[0], allCategories: [TestData.categories[0]])
+        MarkedTaskListView(currentUser: TestData.users[0], allCategories: [TestData.categories[0]])
     }
 }
+

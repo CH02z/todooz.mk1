@@ -11,26 +11,19 @@ struct TabsView: View {
     
     let currentUser: User?
     
-    var body: some View {       
-        
-        CategoryView(currentUser: currentUser)
-        
-        
-        /*
+    var body: some View {
          
          TabView {
-             CategoryView()
+             CategoryView(currentUser: currentUser)
                  .tabItem {
-                     Label("Kategorie", systemImage: "list.bullet")
+                     Label("Tasks", systemImage: "list.bullet")
                  }
-             ProfileView(currentUser: currentUser)
+             NotesListView(currentUser: currentUser)
                  .tabItem {
-                     Label("Profile", systemImage: "person.fill")
+                     Label("Notizen", systemImage: "square.and.pencil")
                  }
          }
-         .accentColor(.red)
          
-         */
     }
 }
     
