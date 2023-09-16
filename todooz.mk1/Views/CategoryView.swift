@@ -40,6 +40,11 @@ struct CategoryView: View {
                     StandardCategoryPreviewView(currentUser: user, allCategories: categories)
                         .padding()
                     
+                    Text("Meine Kategorien")
+                        .padding(.leading)
+                        .font(.title3)
+                        .fontWeight(.bold)
+                    
                     if categories.count == 0 {
                         VStack {
                             Text("Erstelle zuerst eine Kategorie, um neue Tasks hinzuzufügen")
@@ -69,6 +74,8 @@ struct CategoryView: View {
                         .padding()
                         
                     }
+                    
+                    
                     
                     List {
                         

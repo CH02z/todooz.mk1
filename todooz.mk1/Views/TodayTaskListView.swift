@@ -47,7 +47,17 @@ struct TodayTaskListView: View {
             List {
                 ForEach(filteredByDateTasks) { item in
                     TaskViewPreview(item: item, allCategories: allCategories)
-                        .swipeActions {
+                        .swipeActions(edge: .leading) {
+                            
+                            Button() {
+                                Task { try await viewModel.prioTask(taskID: item.id, isHighPrioNow: item.isHighPriority) }
+                            } label: {
+                                Image(systemName: "exclamationmark")
+                                    .font(.system(size: 15))
+                                    .fontWeight(.bold)
+                            }
+                            .tint(.red)
+                            
                             
                             Button() {
                                 Task { try await viewModel.markTask(taskID: item.id, isMarkedNow: item.isMarked) }
@@ -58,15 +68,9 @@ struct TodayTaskListView: View {
                             }
                             .tint(.orange)
                             
-                            Button() {
-                                Task { try await viewModel.prioTask(taskID: item.id, isHighPrioNow: item.isHighPriority) }
-                            } label: {
-                                Image(systemName: "exclamationmark")
-                                    .font(.system(size: 15))
-                            }
-                            .tint(.gray)
                             
-                            
+                        }
+                        .swipeActions(edge: .trailing) {
                             Button() {
                                 Task { try await viewModel.deleteTask(taskID: item.id) }
                             } label: {
@@ -75,7 +79,7 @@ struct TodayTaskListView: View {
                                     .font(.system(size: 15))
                             }
                             .tint(.red)
-         
+                            
                         }
                     
                         .contextMenu {
