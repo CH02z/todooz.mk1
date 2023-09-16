@@ -20,11 +20,6 @@ class TaskViewPreviewViewModel: ObservableObject {
     }
     
     
-    func deleteTask(taskID: String) async throws {
-        try await TaskService.shared.deleteTask(taskID: taskID)
-    }
-    
-    
     @MainActor
     func toggleTask(finishedTaskID: String, currentState: Bool) async throws {
         self.isStrikedThrough.toggle()

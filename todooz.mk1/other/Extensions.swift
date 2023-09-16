@@ -34,6 +34,17 @@ extension Task where Success == Never, Failure == Never {
     }
 }
 
+//got to settings of Notification
+extension TabsView {
+     func goToSettings(){
+        // must execute in main thread
+        DispatchQueue.main.async {
+            UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!, options: [:],
+            completionHandler: nil)
+        }
+    }
+}
+
 
 extension Date {
     func removeTimeStamp() -> Date? {
@@ -134,7 +145,6 @@ func getStringFromDate(date: Date, dateFormat: String) -> String {
 }
 
 func getDateFromString(dateString: String) -> Date {
-    print("DateString in GetDatefunciton: \(dateString)")
     if !dateString.isEmpty {
         let dateFormatter = DateFormatter()
         dateFormatter.timeZone = TimeZone(abbreviation: "CEST")
@@ -167,5 +177,41 @@ func isSameDay(date1: Date, date2: Date) -> Bool {
         return false
     }
 }
+
+func getHourDifferenceOfDates(startDate: Date, endDate: Date) -> Int {
+    var calendar = Calendar.current
+    calendar.timeZone = TimeZone(abbreviation: "CEST")!
+    let diffComponents = calendar.dateComponents([.hour, .minute], from: Date(), to: Date())
+    let hours = diffComponents.hour
+    return hours ?? 0
+}
+
+
+func getSubtractedDate(unit: String, value: Int, inputDate: Date) -> Date {
+    var calendar = Calendar.current
+    calendar.timeZone = TimeZone(abbreviation: "CEST")!
+    
+    if unit == "Days" {
+        return calendar.date(byAdding: .day, value: -value, to: inputDate)!
+    }
+    
+    if unit == "Hours" {
+        return calendar.date(byAdding: .hour, value: -value, to: inputDate)!
+    }
+    
+    if unit == "Minutes" {
+        //print("return date subtrcted by \(value) minutes")
+        //print(calendar.date(byAdding: .minute, value: -value, to: inputDate)!)
+        return calendar.date(byAdding: .minute, value: -value, to: inputDate)!
+        
+    }
+    
+    return Date()
+    
+}
+
+
+
+
 
 

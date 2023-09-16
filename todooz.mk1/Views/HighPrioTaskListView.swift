@@ -63,7 +63,7 @@ struct HighPrioTaskListView: View {
                         }
                         .swipeActions(edge: .trailing) {
                             Button() {
-                                Task { try await viewModel.deleteTask(taskID: item.id) }
+                                Task { try await viewModel.deleteTask(taskID: item.id, notificationID: item.notificationID) }
                             } label: {
                                 Image(systemName: "trash")
                                     .foregroundColor(.white)

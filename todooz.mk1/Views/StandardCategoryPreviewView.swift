@@ -17,13 +17,9 @@ struct StandardCategoryPreviewView: View {
     
     @State var numberOfHighPrioTasks: String = ""
     @State var numberOfTodayTasks: String = ""
-    @State var numberOfDoneTasks: String = ""
-    @State var numberOfMarkedTasks: String = ""
     
     @FirestoreQuery(collectionPath: "users") var highPrioTasks: [Tasc]
     @FirestoreQuery(collectionPath: "users") var todayTasks: [Tasc]
-    @FirestoreQuery(collectionPath: "users") var doneTasks: [Tasc]
-    @FirestoreQuery(collectionPath: "users") var markedTasks: [Tasc]
     
     @State var filteredByDateTasks: [Tasc] = []
     
@@ -36,17 +32,6 @@ struct StandardCategoryPreviewView: View {
         try await Task.sleep(seconds: 0.2)
         self.numberOfHighPrioTasks = String(highPrioTasks.count)
     }
-    
-    
-    private func setNumberOfDoneTasks(uid: String) async throws {
-        $doneTasks.path = "users/\(uid)/tasks"
-        $doneTasks.predicates = [
-            .isEqualTo("isDone", true),
-            .order(by: "dueDate", descending: true)
-            ]
-            try await Task.sleep(seconds: 0.2)
-            self.numberOfDoneTasks = String(self.doneTasks.count)
-        }
     
     
         
@@ -68,16 +53,6 @@ struct StandardCategoryPreviewView: View {
         self.filteredByDateTasks = self.todayTasks.filter { tasc in
             return isSameDay(date1: Date(), date2: getDateFromString(dateString: tasc.dueDate))
         }
-    }
-    
-    private func setNumberOfMarkedTasks(uid: String) async throws {
-        $markedTasks.path = "users/\(uid)/tasks"
-        $markedTasks.predicates = [
-            .isEqualTo("isMarked", true),
-            .whereField("isDone", isEqualTo: false)
-        ]
-        try await Task.sleep(seconds: 0.2)
-        self.numberOfMarkedTasks = String(markedTasks.count)
     }
     
     var body: some View {
@@ -157,8 +132,6 @@ struct StandardCategoryPreviewView: View {
                 .onAppear() {
                     Task { try await self.setNumberOfHighPrioTasks(uid: user.id) }
                     Task { try await self.setNumberOfTodayTasks(uid: user.id) }
-                    Task { try await self.setNumberOfDoneTasks(uid: user.id) }
-                    Task { try await self.setNumberOfMarkedTasks(uid: user.id) }
                     
                 }
                             

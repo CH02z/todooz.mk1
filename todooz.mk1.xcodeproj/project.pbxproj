@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		83048E4E2A9BBC4F003F1C59 /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = 83048E4D2A9BBC4F003F1C59 /* GoogleSignIn */; };
 		83048E502A9BBC4F003F1C59 /* GoogleSignInSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 83048E4F2A9BBC4F003F1C59 /* GoogleSignInSwift */; };
+		8315D8372AB5AF9800F47139 /* Notifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8315D8362AB5AF9800F47139 /* Notifications.swift */; };
 		8347D9CF2AAF976300ABB779 /* IsDoneTaskListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8347D9CE2AAF976300ABB779 /* IsDoneTaskListView.swift */; };
 		837362642AA79AD9000548D9 /* TodayTaskListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 837362632AA79AD9000548D9 /* TodayTaskListView.swift */; };
 		8382238D2AB22C30004B7833 /* NotesListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8382238C2AB22C30004B7833 /* NotesListView.swift */; };
@@ -73,6 +74,7 @@
 
 /* Begin PBXFileReference section */
 		83048E512A9BBCA1003F1C59 /* todooz-mk1-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "todooz-mk1-Info.plist"; sourceTree = SOURCE_ROOT; };
+		8315D8362AB5AF9800F47139 /* Notifications.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notifications.swift; sourceTree = "<group>"; };
 		8347D9CE2AAF976300ABB779 /* IsDoneTaskListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IsDoneTaskListView.swift; sourceTree = "<group>"; };
 		837362632AA79AD9000548D9 /* TodayTaskListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TodayTaskListView.swift; sourceTree = "<group>"; };
 		8382238C2AB22C30004B7833 /* NotesListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesListView.swift; sourceTree = "<group>"; };
@@ -266,6 +268,7 @@
 			children = (
 				83D60C432A9A6FA700723215 /* Extensions.swift */,
 				838223902AB230BB004B7833 /* TestData.swift */,
+				8315D8362AB5AF9800F47139 /* Notifications.swift */,
 			);
 			path = other;
 			sourceTree = "<group>";
@@ -398,6 +401,7 @@
 				83D60C3F2A9A5E5A00723215 /* Tasc.swift in Sources */,
 				83D60C352A9A57CF00723215 /* RegistrationViewModel.swift in Sources */,
 				83CDAF8A2AA6695200AF09AA /* HighPrioTaskListView.swift in Sources */,
+				8315D8372AB5AF9800F47139 /* Notifications.swift in Sources */,
 				83D60C292A9A559600723215 /* LoginView.swift in Sources */,
 				83B486AA2AA275420017CE91 /* TaskViewPreview.swift in Sources */,
 				83E2540E2AA1186700D400A3 /* TasklistView.swift in Sources */,

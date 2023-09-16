@@ -69,6 +69,21 @@ struct AddTaskView: View {
                     }
                     
                     Section {
+                        //Categeory Selection
+                        Picker("Kategorie", selection: $viewModel.categorySelection) {
+                            
+                            ForEach(categories, id: \.self){
+                                
+                                Text($0)
+                                
+                            }
+                        }
+                        .pickerStyle(.menu)
+                        
+                    }
+                    
+                    //Due Date Sections
+                    Section {
                         HStack {
                             Image(systemName: "calendar")
                                 .foregroundColor(.white)
@@ -85,8 +100,15 @@ struct AddTaskView: View {
                             Toggle("", isOn: $viewModel.letPickDate)
                                 .labelsHidden()
                                 .frame(maxWidth: .infinity, alignment: .trailing)
-          
+                            
                         }
+                        .onChange(of: viewModel.letPickDate) { newValue in
+                            //If no Date is selected, user reminders is deactivated
+                            if newValue == false {
+                                viewModel.useReminder = false
+                            }
+                        }
+                        
                         if viewModel.letPickDate && viewModel.dueDate <= Calendar.current.date(byAdding: .minute, value: -5, to: Date())! {
                             HStack {
                                 Image(systemName: "xmark")
@@ -129,10 +151,94 @@ struct AddTaskView: View {
                                 Toggle("", isOn: $viewModel.letPickDateAndTime)
                                     .labelsHidden()
                                     .frame(maxWidth: .infinity, alignment: .trailing)
-              
+                                
                             }
                         }
                     }
+                    
+                    if viewModel.letPickDate {
+                        // Reminder Section
+                        Section {
+                            HStack {
+                                Image(systemName: "bell")
+                                    .foregroundColor(.white)
+                                    .frame(width: 30, height: 30)
+                                    .background(.purple)
+                                    .cornerRadius(5)
+                                    .font(.system(size: 15))
+                                    .fontWeight(.bold)
+                                    .padding(.vertical, 2.5)
+                                
+                                Text("Erinnern")
+                                
+                                //Datum toggle
+                                Toggle("", isOn: $viewModel.useReminder)
+                                    .labelsHidden()
+                                    .frame(maxWidth: .infinity, alignment: .trailing)
+                                
+                            }
+                            
+                            if viewModel.useReminder && viewModel.reminderDateisPastDate() {
+                                HStack {
+                                    Image(systemName: "xmark")
+                                        .foregroundColor(.red)
+                                        .font(.system(size: 15))
+                                        .fontWeight(.bold)
+                                        .padding(.vertical, 2.5)
+                                    Text("Reminder Zeit kann nicht in der Vergangenheit liegen.")
+                                        .font(.footnote)
+                                        .foregroundColor(.red)
+                                }
+                                
+                            }
+                            
+                            
+                            
+                            if viewModel.useReminder {
+                                Picker("\(viewModel.selectedUnit) vorher:", selection: $viewModel.selectedUnit) {
+                                    
+                                    ForEach(viewModel.reminderUnits, id: \.self){
+                                        
+                                        Text($0)
+                                        
+                                    }
+                                }
+                                .pickerStyle(.menu)
+                                
+                            }
+                            
+                            if viewModel.selectedUnit == "Hours" && viewModel.useReminder {
+                                Picker("", selection: $viewModel.reminderValue){
+                                    ForEach(1..<13, id: \.self) { i in
+                                        Text("\(i)").tag(i)
+                                    }
+                                }.pickerStyle(WheelPickerStyle())
+                                
+                            }
+                            
+                            if viewModel.selectedUnit == "Minutes" && viewModel.useReminder {
+                                Picker("", selection: $viewModel.reminderValue){
+                                    ForEach(1..<60, id: \.self) { i in
+                                        Text("\(i)").tag(i)
+                                    }
+                                }.pickerStyle(WheelPickerStyle())
+                                
+                            }
+                            
+                            if viewModel.selectedUnit == "Days" && viewModel.useReminder {
+                                Picker("", selection: $viewModel.reminderValue){
+                                    ForEach(1..<7, id: \.self) { i in
+                                        Text("\(i)").tag(i)
+                                    }
+                                }.pickerStyle(WheelPickerStyle())
+                                
+                            }
+                            
+                        }
+                        
+                    }
+                    
+                    
                     
                     
                     
@@ -140,28 +246,16 @@ struct AddTaskView: View {
                     Section {
                         //High Priority Toggle
                         Toggle("Hohe Priorität", isOn: $viewModel.isHighPriority)
-                            //.padding(.vertical, 3)
+                        //.padding(.vertical, 3)
                     }
                     
                     Section {
                         //Marked Toggle
                         Toggle("Markiert", isOn: $viewModel.isMarked)
-                            //.padding(.vertical, 3)
+                        //.padding(.vertical, 3)
                     }
                     
-                    Section {
-                        //Categeory Selection
-                        Picker("Kategorie", selection: $viewModel.categorySelection) {
-                            
-                            ForEach(categories, id: \.self){
-
-                                Text($0)
-
-                                        }
-                                    }
-                        .pickerStyle(.menu)
-                        
-                    }
+                    
                     
                 }
                 

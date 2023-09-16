@@ -19,8 +19,8 @@ struct IsDoneTaskViewPreview: View {
     let allCategories: [Category]
     
     
-    func deleteTask(taskID: String) async throws {
-        try await TaskService.shared.deleteTask(taskID: taskID)
+    func deleteTask(taskID: String, notficationID: String) async throws {
+        try await TaskService.shared.deleteTask(taskID: taskID, notificationID: notficationID)
     }
     
     

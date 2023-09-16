@@ -23,7 +23,7 @@ class TaskService {
     
     
     @MainActor
-    func createTask(title: String, category: String, dueDate: String, description: String, isHighPriority: Bool, isMarked: Bool) async throws {
+    func createTask(title: String, category: String, dueDate: String, description: String, isHighPriority: Bool, isMarked: Bool, notificationID: String, reminderUnit: String, reminderValue: Int) async throws {
         guard let uid = self.userID else { return }
         let newTask = Tasc(id: UUID().uuidString,
                            title: title,
@@ -33,18 +33,21 @@ class TaskService {
                            description: description,
                            dateCreated: getStringFromDate(date: Date(), dateFormat: "d MMM YY, HH:mm:ss"),
                            isHighPriority: isHighPriority,
-                           isMarked: isMarked
+                           isMarked: isMarked,
+                           notificationID: notificationID,
+                           reminderUnit: reminderUnit,
+                           reminderValue: reminderValue
         )
         try await Firestore.firestore().collection("users").document(uid).collection("tasks").document(newTask.id).setData(newTask.asDictionary())
         print("Task \(newTask.title) inserted to firestore")
     }
     
     @MainActor
-    func editTask(taskID: String, title: String, category: String, dueDate: String, description: String, isHighPriority: Bool, isMarked: Bool) async throws {
+    func editTask(taskID: String, title: String, category: String, dueDate: String, description: String, isHighPriority: Bool, isMarked: Bool, notificationID: String, reminderUnit: String, reminderValue: Int) async throws {
         guard let uid = self.userID else { return }
 
         
-        try await Firestore.firestore().collection("users").document(uid).collection("tasks").document(taskID).setData([ "title": title, "category": category, "dueDate": dueDate, "description": description, "isHighPriority": isHighPriority, "isMarked": isMarked], merge: true)
+        try await Firestore.firestore().collection("users").document(uid).collection("tasks").document(taskID).setData([ "title": title, "category": category, "dueDate": dueDate, "description": description, "isHighPriority": isHighPriority, "isMarked": isMarked, "notificationID": notificationID, "reminderUnit": reminderUnit, "reminderValue": reminderValue], merge: true)
         print("Task \(title) updated in Firestore")
     }
     
@@ -58,9 +61,10 @@ class TaskService {
     }
     
     @MainActor
-    func deleteTask(taskID: String) async throws {
+    func deleteTask(taskID: String, notificationID: String) async throws {
         guard let uid = self.userID else { return }
         try await Firestore.firestore().collection("users").document(uid).collection("tasks").document(taskID).delete()
+        NotificationHandler.shared.removeNotifications(ids: [notificationID])
         print("Task with ID: \(taskID) deleted from firestore")
     }
     
@@ -69,6 +73,15 @@ class TaskService {
         guard let uid = self.userID else { return }
         try await Firestore.firestore().collection("users").document(uid).collection("tasks").document(taskID).setData([ "isMarked": !isMarkedNow], merge: true)
         print("Task with ID: \(taskID) toggled Mark")
+    }
+    
+    
+    
+    @MainActor
+    func removeReminderFromTask(taskID: String) async throws {
+        guard let uid = self.userID else { return }
+        try await Firestore.firestore().collection("users").document(uid).collection("tasks").document(taskID).setData([ "notificationID": ""], merge: true)
+        print("Task with ID: \(taskID) removed notificationID from Firestore")
     }
     
     @MainActor
@@ -90,7 +103,7 @@ class TaskService {
                     let data = document.data()
                     let json = try JSONSerialization.data(withJSONObject: data)
                     let tasc = try JSONDecoder().decode(Tasc.self, from: json)
-                    try await deleteTask(taskID: tasc.id)
+                    try await deleteTask(taskID: tasc.id, notificationID: tasc.notificationID)
                 }
     }
     

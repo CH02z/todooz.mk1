@@ -43,7 +43,7 @@ struct IsDoneTaskListView: View {
                         .swipeActions {
                             
                             Button("löschen") {
-                                Task { try await viewModel.deleteTask(taskID: item.id) }
+                                Task { try await viewModel.deleteTask(taskID: item.id, notificationID: item.notificationID) }
                             }
                             .tint(.red)
                         }

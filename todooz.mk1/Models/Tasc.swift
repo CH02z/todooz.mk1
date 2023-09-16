@@ -19,4 +19,7 @@ struct Tasc: Codable, Identifiable {
     var dateFinished: String?
     let isHighPriority: Bool
     var isMarked: Bool
+    var notificationID: ID
+    var reminderUnit: String
+    var reminderValue: Int
 }

@@ -84,7 +84,7 @@ struct TasklistView: View {
                         }
                         .swipeActions(edge: .trailing) {
                             Button() {
-                                Task { try await viewModel.deleteTask(taskID: item.id) }
+                                Task { try await viewModel.deleteTask(taskID: item.id, notificationID: item.notificationID) }
                             } label: {
                                 Image(systemName: "trash")
                                     .foregroundColor(.white)
@@ -96,9 +96,7 @@ struct TasklistView: View {
                     
                         .contextMenu {
                             Button {
-                                print("Item: \(item)")
                                 self.detailTask = item
-                                print("detailTask: \(self.detailTask)")
                                 self.showDetailTaskSheet = true
                             
                                 

@@ -6,10 +6,13 @@
 //
 
 import SwiftUI
+import UserNotifications
 
 struct TabsView: View {
     
     let currentUser: User?
+    
+    @State private var showNotificationDeniedAlert : Bool = false
     
     var body: some View {
          
@@ -23,8 +26,25 @@ struct TabsView: View {
                      Label("Notizen", systemImage: "square.and.pencil")
                  }
          }
+         .onAppear() {
+             
+             NotificationHandler.shared.requestPermission(onDeny: {
+                 self.showNotificationDeniedAlert.toggle()
+             })
+         }
+         .alert(isPresented : $showNotificationDeniedAlert){
+
+              Alert(title: Text("Notification has been disabled for this app"),
+              message: Text("Please go to settings to enable it now"),
+              primaryButton: .default(Text("Go To Settings")) {
+                 self.goToSettings()
+              },
+              secondaryButton: .cancel())
+         }
          
     }
+    
+    
 }
     
     
