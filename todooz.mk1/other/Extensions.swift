@@ -178,6 +178,13 @@ func isSameDay(date1: Date, date2: Date) -> Bool {
     }
 }
 
+
+func dateIsInPast(inputDate: Date) -> Bool {
+    return inputDate < Date()
+}
+
+
+
 func getHourDifferenceOfDates(startDate: Date, endDate: Date) -> Int {
     var calendar = Calendar.current
     calendar.timeZone = TimeZone(abbreviation: "CEST")!

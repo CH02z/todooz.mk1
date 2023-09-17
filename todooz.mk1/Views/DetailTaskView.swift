@@ -13,7 +13,6 @@ struct DetailTaskView: View {
     let allCategories: [Category]
     
     @AppStorage("accentColor") private var accentColor = "B35AEF"
-    @State var showEditItemSheet: Bool = false
     @Binding var isPresented: Bool
     
     
@@ -44,6 +43,22 @@ struct DetailTaskView: View {
                     
                 }
                 
+                if task.notificationID != "" {
+                    Label("\(task.reminderValue) \(task.reminderUnit) vorher", systemImage: "bell")
+                            .foregroundColor(.secondary)
+                            .font(.subheadline)
+                }
+                
+               
+                
+                    
+                    
+                    
+                    
+                
+                
+                
+                
                 Text(task.description ?? "Keine Beschreibung")
                     .font(.body)
                     .padding()
@@ -54,9 +69,6 @@ struct DetailTaskView: View {
                 
             }
             .padding(.top, 50)
-            //.sheet(isPresented: $showEditItemSheet, content: {
-              //  EditTaskView(isPresented: $showEditItemSheet, allCategories: allCategories, editTask: task)
-               // })
             
             
             .toolbar {
@@ -73,11 +85,6 @@ struct DetailTaskView: View {
             }
             
             
-        }
-        .onChange(of: self.showEditItemSheet) { newValue in
-            if newValue == false {
-                isPresented = false
-            }
         }
         .onAppear() {
             print("Detail Task in View: \(task)")

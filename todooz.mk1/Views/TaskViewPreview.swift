@@ -36,6 +36,20 @@ struct TaskViewPreview: View {
                     .padding(.horizontal, 5)
             }
             
+            if item.dueDate != "" && dateIsInPast(inputDate: getDateFromString(dateString: item.dueDate)) {
+                Image(systemName: "clock.badge.exclamationmark")
+                    .foregroundColor(Color.red)
+                    .font(.system(size: 20))
+                    .padding(.horizontal, 5)
+            }
+            
+            if item.notificationID != "" {
+                Image(systemName: "bell")
+                    .foregroundColor(Color.purple)
+                    .font(.system(size: 20))
+                    .padding(.horizontal, 5)
+            }
+            
             
             VStack(alignment: .leading) {
                 Text(item.title)

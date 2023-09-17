@@ -9,7 +9,7 @@ import SwiftUI
 import FirebaseFirestoreSwift
 import FirebaseAuth
 
-struct TodayTaskListView: View {
+struct OverDueListView: View {
     
     let currentUser: User?
     let allCategories: [Category]
@@ -35,8 +35,7 @@ struct TodayTaskListView: View {
         ]
         try await Task.sleep(seconds: 0.1)
         self.filteredByDateTasks = self.tasks.filter { tasc in
-            return isSameDay(date1: Date(), date2: getDateFromString(dateString: tasc.dueDate))
-            
+            return dateIsInPast(inputDate: getDateFromString(dateString: tasc.dueDate))
         }
         
     }
@@ -104,7 +103,7 @@ struct TodayTaskListView: View {
                     
                 }
                 if self.filteredByDateTasks.count == 0 {
-                        Text("Für Heute alles erledigt:)")
+                        Text("Bis jetzt sind keine Tasks überfällig")
                             .frame(maxWidth: .infinity, alignment: .center)
                             .font(.subheadline)
                             .foregroundColor(.secondary)
@@ -125,7 +124,7 @@ struct TodayTaskListView: View {
             
             
             
-            .navigationTitle("Heute zu erledigen")
+            .navigationTitle("Überfällig")
             
             
             
@@ -160,8 +159,8 @@ struct TodayTaskListView: View {
 
 
 
-struct TodayTaskListViewPreview: PreviewProvider {
+struct OverDueListViewPreview: PreviewProvider {
     static var previews: some View {
-        TodayTaskListView(currentUser: TestData.users[0], allCategories: [TestData.categories[0]])
+        OverDueListView(currentUser: TestData.users[0], allCategories: [TestData.categories[0]])
     }
 }
