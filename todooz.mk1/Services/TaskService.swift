@@ -8,6 +8,7 @@
 import Foundation
 import FirebaseAuth
 import FirebaseFirestore
+import FirebaseFirestoreSwift
 
 
 class TaskService {
@@ -23,11 +24,13 @@ class TaskService {
     
     
     @MainActor
-    func createTask(title: String, category: String, dueDate: String, description: String, isHighPriority: Bool, isMarked: Bool, notificationID: String, reminderUnit: String, reminderValue: Int) async throws {
+    func createTask(title: String, category: String, subtasks: [SubTasc], dueDate: String, description: String, isHighPriority: Bool, isMarked: Bool, notificationID: String, reminderUnit: String, reminderValue: Int) async throws {
         guard let uid = self.userID else { return }
+        print(subtasks)
         let newTask = Tasc(id: UUID().uuidString,
                            title: title,
                            category: category,
+                           subtasks: subtasks,
                            dueDate: dueDate,
                            isDone: false,
                            description: description,
@@ -43,11 +46,13 @@ class TaskService {
     }
     
     @MainActor
-    func editTask(taskID: String, title: String, category: String, dueDate: String, description: String, isHighPriority: Bool, isMarked: Bool, notificationID: String, reminderUnit: String, reminderValue: Int) async throws {
+    func editTask(taskID: String, title: String, category: String, subtasks: [SubTasc], dueDate: String, description: String, isHighPriority: Bool, isMarked: Bool, notificationID: String, reminderUnit: String, reminderValue: Int) async throws {
         guard let uid = self.userID else { return }
-
         
-        try await Firestore.firestore().collection("users").document(uid).collection("tasks").document(taskID).setData([ "title": title, "category": category, "dueDate": dueDate, "description": description, "isHighPriority": isHighPriority, "isMarked": isMarked, "notificationID": notificationID, "reminderUnit": reminderUnit, "reminderValue": reminderValue], merge: true)
+        let encodedSubtasks = try subtasks.map { try Firestore.Encoder().encode($0) }
+        
+        try await Firestore.firestore().collection("users").document(uid).collection("tasks").document(taskID).setData([ "title": title, "category": category, "dueDate": dueDate, "description": description, "subtasks": encodedSubtasks, "isHighPriority": isHighPriority, "isMarked": isMarked, "notificationID": notificationID, "reminderUnit": reminderUnit, "reminderValue": reminderValue], merge: true)
+    
         print("Task \(title) updated in Firestore")
     }
     
@@ -57,6 +62,15 @@ class TaskService {
         
         try await Firestore.firestore().collection("users").document(uid).collection("tasks").document(finishedTaskID).setData([ "isDone": !currentState], merge: true)
         print("Task with id \(finishedTaskID) was toggled")
+        
+    }
+    
+    @MainActor
+    func updateSubTask(taskID: String, subtasks: [SubTasc]) async throws {
+        guard let uid = self.userID else { return }
+        let encodedSubtasks = try subtasks.map { try Firestore.Encoder().encode($0) }
+        try await Firestore.firestore().collection("users").document(uid).collection("tasks").document(taskID).setData([ "subtasks": encodedSubtasks], merge: true)
+        print("Task with id \(taskID) has updated subtaks Fields")
         
     }
     
@@ -71,7 +85,7 @@ class TaskService {
     @MainActor
     func markTask(taskID: String, isMarkedNow: Bool) async throws {
         guard let uid = self.userID else { return }
-        try await Firestore.firestore().collection("users").document(uid).collection("tasks").document(taskID).setData([ "isMarked": !isMarkedNow], merge: true)
+        try await Firestore.firestore().collection("users").document(uid).collection("tasks").document(taskID).setData(["isMarked": !isMarkedNow], merge: true)
         print("Task with ID: \(taskID) toggled Mark")
     }
     
@@ -80,8 +94,15 @@ class TaskService {
     @MainActor
     func removeReminderFromTask(taskID: String) async throws {
         guard let uid = self.userID else { return }
-        try await Firestore.firestore().collection("users").document(uid).collection("tasks").document(taskID).setData([ "notificationID": ""], merge: true)
+        try await Firestore.firestore().collection("users").document(uid).collection("tasks").document(taskID).setData(["notificationID": ""], merge: true)
         print("Task with ID: \(taskID) removed notificationID from Firestore")
+    }
+    
+    @MainActor
+    func removeSubtaskFromTask(taskID: String) async throws {
+        guard let uid = self.userID else { return }
+        try await Firestore.firestore().collection("users").document(uid).collection("tasks").document(taskID).setData(["subtasks": []], merge: true)
+        print("Task with ID: \(taskID) removed Subtaks from Firestore")
     }
     
     @MainActor

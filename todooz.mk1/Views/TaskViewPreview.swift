@@ -50,6 +50,13 @@ struct TaskViewPreview: View {
                     .padding(.horizontal, 5)
             }
             
+            if item.subtasks.count > 0 {
+                Image(systemName: "list.bullet")
+                    .foregroundColor(Color.green)
+                    .font(.system(size: 20))
+                    .padding(.horizontal, 5)
+            }
+            
             
             VStack(alignment: .leading) {
                 Text(item.title)

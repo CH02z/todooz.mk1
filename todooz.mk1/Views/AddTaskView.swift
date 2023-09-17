@@ -23,6 +23,7 @@ struct AddTaskView: View {
     
     
     
+    
     init(isPresented: Binding<Bool>, allCategories: [Category], originalCat: String) {
         self._viewModel = StateObject(wrappedValue: AddTaskViewModel(originalCat: originalCat))
         self._isPresented = isPresented
@@ -66,6 +67,76 @@ struct AddTaskView: View {
                     Section {
                         TextField("Notizen", text: $viewModel.description,  axis: .vertical)
                             .lineLimit(5...10)
+                    }
+                    
+                    Section {
+                        HStack {
+                            Image(systemName: "list.bullet")
+                                .foregroundColor(.white)
+                                .frame(width: 30, height: 30)
+                                .background(.green)
+                                .cornerRadius(5)
+                                .font(.system(size: 15))
+                                .fontWeight(.bold)
+                                .padding(.vertical, 2.5)
+                            
+                            Text("Subtasks")
+                            
+                            //Datum toggle
+                            Toggle("", isOn: $viewModel.useSubtasks)
+                                .labelsHidden()
+                                .frame(maxWidth: .infinity, alignment: .trailing)
+                            
+                        }
+                        if viewModel.useSubtasks {
+                            
+                            EditButton()
+                            HStack {
+                                
+                                TextField("hinzufügen", text: $viewModel.addedSubtaskTitle)
+                                    .submitLabel(.next)
+                                    .frame(maxWidth: .infinity, alignment: .trailing)
+                                Button{
+                                    
+                                    //Haptic Feedback on Tap
+                                    let impactHeavy = UIImpactFeedbackGenerator(style: .heavy)
+                                    impactHeavy.impactOccurred()
+                                    viewModel.subtasks.append(SubTasc(id: UUID().uuidString, title: viewModel.addedSubtaskTitle, isDone: false))
+                                    viewModel.addedSubtaskTitle = ""
+                                    
+                                } label: {
+                                    Image(systemName: "plus.circle")
+                                    .font(.system(size: 25))
+                                    
+                                }
+                                .disabled(viewModel.addedSubtaskTitle == "")
+                                
+                                
+                            }
+                            
+                            List {
+                                ForEach($viewModel.subtasks, id: \.self) { $sbtask in
+                                    HStack {
+                                        Text(sbtask.title)
+                                        Spacer()
+                                        Image(systemName: "circle")
+                                            .foregroundColor(Color(hex: accentColor))
+                                            .font(.system(size: 25))
+                                    }
+                                    
+                                }
+                                .onMove(perform: viewModel.moveSubtask)
+                                .onDelete { indexSet in
+                                    viewModel.subtasks.remove(atOffsets: indexSet)
+                                    
+                                }
+                            }
+                       
+                        }
+                        
+                        
+                        
+                        
                     }
                     
                     Section {

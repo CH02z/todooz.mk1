@@ -12,6 +12,8 @@ struct DetailTaskView: View {
     @Binding var task: Tasc
     let allCategories: [Category]
     
+    @State var subTasks: [SubTasc] = []
+    
     @AppStorage("accentColor") private var accentColor = "B35AEF"
     @Binding var isPresented: Bool
     
@@ -49,24 +51,47 @@ struct DetailTaskView: View {
                             .font(.subheadline)
                 }
                 
-               
-                
-                    
-                    
-                    
-                    
-                
-                
-                
-                
                 Text(task.description ?? "Keine Beschreibung")
                     .font(.body)
                     .padding()
+                
+                List {
+                    ForEach(self.subTasks, id: \.self) { sbtask in
+                        HStack {
+                            Text(sbtask.title)
+                                .strikethrough(sbtask.isDone)
+                            Spacer()
+                            Image(systemName: sbtask.isDone ? "checkmark.circle" : "circle")
+                                .foregroundColor(Color(hex: accentColor))
+                                .font(.system(size: 25))
+                        }.onTapGesture {
+                            //Haptic Feedback on Tap
+                            var upadedSubtask = sbtask
+                            upadedSubtask.isDone.toggle()
+                            self.subTasks = self.subTasks.filter { subtsk in
+                                //return all subtasks except the edited one
+                                return subtsk.id != upadedSubtask.id
+                            }
+                            //add toggled Subtask to new list of subtaks
+                            self.subTasks.append(upadedSubtask)
+                            
+                            
+                            let impactHeavy = UIImpactFeedbackGenerator(style: .heavy)
+                            impactHeavy.impactOccurred()
+                            Task { try await TaskService.shared.updateSubTask(taskID: task.id, subtasks: self.subTasks)}
+                        }
+                        
+                    }
+                }
+                
                 
                 Spacer()
                 
                 
                 
+            }
+            .onAppear() {
+                self.subTasks = task.subtasks
             }
             .padding(.top, 50)
             
@@ -86,10 +111,6 @@ struct DetailTaskView: View {
             
             
         }
-        .onAppear() {
-            print("Detail Task in View: \(task)")
-        }
-        
         
         
         

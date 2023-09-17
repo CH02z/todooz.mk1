@@ -22,7 +22,18 @@ struct EditTaskView: View {
     
     
     init(allCategories: [Category], editTask: Tasc) {
-        self._viewModel = StateObject(wrappedValue: EditTaskViewModel(taskID: editTask.id, title: editTask.title, category: editTask.category, dueDate: editTask.dueDate, description: editTask.description ?? "", isHighPriority: editTask.isHighPriority, isMarked: editTask.isMarked, notificationID: editTask.notificationID, reminderUnit: editTask.reminderUnit, reminderValue: editTask.reminderValue))
+        self._viewModel = StateObject(wrappedValue: EditTaskViewModel(
+            taskID: editTask.id,
+            title: editTask.title,
+            category: editTask.category,
+            dueDate: editTask.dueDate,
+            description: editTask.description ?? "",
+            insubtasks: editTask.subtasks,
+            isHighPriority: editTask.isHighPriority,
+            isMarked: editTask.isMarked,
+            notificationID: editTask.notificationID,
+            reminderUnit: editTask.reminderUnit,
+            reminderValue: editTask.reminderValue))
         self.categories = allCategories.map({ category in
             return category.name
         })
@@ -58,6 +69,78 @@ struct EditTaskView: View {
                         TextField("Notizen", text: $viewModel.description,  axis: .vertical)
                             .lineLimit(5...10)
                     }
+                    
+                    Section {
+                        HStack {
+                            Image(systemName: "list.bullet")
+                                .foregroundColor(.white)
+                                .frame(width: 30, height: 30)
+                                .background(.green)
+                                .cornerRadius(5)
+                                .font(.system(size: 15))
+                                .fontWeight(.bold)
+                                .padding(.vertical, 2.5)
+                            
+                            Text("Subtasks")
+                            
+                            //Datum toggle
+                            Toggle("", isOn: $viewModel.useSubtasks)
+                                .labelsHidden()
+                                .frame(maxWidth: .infinity, alignment: .trailing)
+                            
+                        }
+                        
+                        if viewModel.useSubtasks {
+                            
+                            EditButton()
+                            HStack {
+                                
+                                TextField("hinzufügen", text: $viewModel.addedSubtaskTitle)
+                                    .submitLabel(.next)
+                                    .frame(maxWidth: .infinity, alignment: .trailing)
+                                Button{
+                                    
+                                    //Haptic Feedback on Tap
+                                    let impactHeavy = UIImpactFeedbackGenerator(style: .heavy)
+                                    impactHeavy.impactOccurred()
+                                    viewModel.subtasks.append(SubTasc(id: UUID().uuidString, title: viewModel.addedSubtaskTitle, isDone: false))
+                                    viewModel.addedSubtaskTitle = ""
+                                } label: {
+                                    Image(systemName: "plus.circle")
+                                    .font(.system(size: 25))
+                                    
+                                }
+                                .disabled(viewModel.addedSubtaskTitle == "")
+                                
+                                
+                            }
+                            
+                            List {
+                                ForEach($viewModel.subtasks, id: \.self) { $sbtask in
+                                    HStack {
+                                        Text(sbtask.title)
+                                        Spacer()
+                                        Image(systemName: "circle")
+                                            .foregroundColor(Color(hex: accentColor))
+                                            .font(.system(size: 25))
+                                    }
+                                    
+                                }
+                                .onMove(perform: viewModel.moveSubtask)
+                                .onDelete { indexSet in
+                                    viewModel.subtasks.remove(atOffsets: indexSet)
+                                    
+                                }
+                            }
+                        }
+                        
+                        
+                        
+                        
+                    }
+                    
+                    
+                    
                     
                     Section {
                         //Categeory Selection
@@ -265,6 +348,11 @@ struct EditTaskView: View {
                         //.font(.system(size: 20))
                     }
                     .disabled(!viewModel.formIsValid())
+                    
+                }
+                
+                ToolbarItem(placement: .principal) {
+                    Text("Task bearbeiten")
                     
                 }
                 

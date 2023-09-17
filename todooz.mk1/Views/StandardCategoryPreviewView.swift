@@ -164,6 +164,16 @@ struct StandardCategoryPreviewView: View {
                                     
                             }
                             
+                            NavigationLink(destination: ReminderTaskListView(currentUser: currentUser, allCategories: allCategories)) {
+                                Image(systemName: "bell")
+                                    .foregroundColor(Color(hex: accentColor))
+                                    .frame(width: 40, height: 40)
+                                    .background(Color(.systemGray4))
+                                    .cornerRadius(30)
+                                    .font(.system(size: 20))
+                                    
+                            }
+                            
                             NavigationLink(destination: OverDueListView(currentUser: currentUser, allCategories: allCategories)) {
                                 Image(systemName: "clock.badge.exclamationmark")
                                     .foregroundColor(Color(hex: accentColor))
