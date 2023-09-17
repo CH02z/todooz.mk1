@@ -19,20 +19,6 @@ struct IsDoneTaskViewPreview: View {
     let allCategories: [Category]
     
     
-    func deleteTask(taskID: String) async throws {
-        try await TaskService.shared.deleteTask(taskID: taskID)
-    }
-    
-    
-    @MainActor
-    func toggleTask(finishedTaskID: String, currentState: Bool) async throws {
-        self.isStrikedThrough.toggle()
-        try await Task.sleep(seconds: 2.0)
-        try await TaskService.shared.toggleTask(finishedTaskID: finishedTaskID, currentState: currentState)
-        self.isStrikedThrough.toggle()
-    }
-    
-    
     var body: some View {
         
         
@@ -54,7 +40,7 @@ struct IsDoneTaskViewPreview: View {
                     //Haptic Feedback on Tap
                     let impactHeavy = UIImpactFeedbackGenerator(style: .heavy)
                     impactHeavy.impactOccurred()
-                    Task { try await viewModel.toggleTask(finishedTaskID: item.id, currentState: item.isDone) }
+                    Task { try await viewModel.toggleTask(finishedTaskID: item.id, currentState: item.isDone, notificationID: item.notificationID) }
                 }
             
             

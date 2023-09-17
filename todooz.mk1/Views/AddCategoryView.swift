@@ -122,22 +122,11 @@ struct AddCategoryView: View {
 
                                     }
                             }
-                            
-                            
-                            
-                            
-                            
-                            
-                            
+                  
                         }
                     }
                     
-                    
-                    
-                    
-                    
-                    
-                    
+                 
                 }
                 
             }

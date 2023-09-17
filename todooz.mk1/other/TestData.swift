@@ -16,11 +16,11 @@ class TestData {
     ]
     
     static let tasks: [Tasc] = [
-        Tasc(id: "dkjfkdj34324", title: "Server bestellen", category: "Swisscom", dueDate: getCurrentDateString(), isDone: false, dateCreated: getCurrentDateString(), isHighPriority: false, isMarked: false),
-        Tasc(id: "dfadf684923!", title: "CR1 neu starten", category: "Swisscom", dueDate: getCurrentDateString(), isDone: false, description: "TAfkdfjdlkfjdjfkdkfjdjfdlkjfkdjflkjdjfjdjfdjflk jdfjdjfjdsafjdslkjflkdjfjdkljflkdjf", dateCreated: getCurrentDateString(), isHighPriority: false, isMarked: false),
-        Tasc(id: "dfdjf382!", title: "Runner Session mit Cina", category: "Swisscom", dueDate: "", isDone: false, dateCreated: getCurrentDateString(), isHighPriority: false, isMarked: false),
-        Tasc(id: "dfdjfkl7238dffdf!", title: "Schritte sammeln", category: "Privat", dueDate: getCurrentDateString(), isDone: false, dateCreated: getCurrentDateString(), isHighPriority: false, isMarked: false),
-        Tasc(id: "df&&/fkl72382!", title: "E-Vignette bestellen", category: "Privat", dueDate: "", isDone: false, dateCreated: getCurrentDateString(), isHighPriority: false, isMarked: false)
+        Tasc(id: "dkjfkdj34324", title: "Server bestellen", category: "Swisscom", subtasks: [], dueDate: getCurrentDateString(), isDone: false, dateCreated: getCurrentDateString(), isHighPriority: false, isMarked: false, notificationID: "", reminderUnit: "", reminderValue: 0),
+        Tasc(id: "dfadf684923!", title: "CR1 neu starten", category: "Swisscom", subtasks: [], dueDate: getCurrentDateString(), isDone: false, description: "TAfkdfjdlkfjdjfkdkfjdjfdlkjfkdjflkjdjfjdjfdjflk jdfjdjfjdsafjdslkjflkdjfjdkljflkdjf", dateCreated: getCurrentDateString(), isHighPriority: false, isMarked: false, notificationID: "", reminderUnit: "", reminderValue: 0),
+        Tasc(id: "dfdjf382!", title: "Runner Session mit Cina", category: "Swisscom", subtasks: [], dueDate: "", isDone: false, dateCreated: getCurrentDateString(), isHighPriority: false, isMarked: false, notificationID: "", reminderUnit: "", reminderValue: 0),
+        Tasc(id: "dfdjfkl7238dffdf!", title: "Schritte sammeln", category: "Privat", subtasks: [], dueDate: getCurrentDateString(), isDone: false, dateCreated: getCurrentDateString(), isHighPriority: false, isMarked: false, notificationID: "", reminderUnit: "", reminderValue: 0),
+        Tasc(id: "df&&/fkl72382!", title: "E-Vignette bestellen", category: "Privat", subtasks: [], dueDate: "", isDone: false, dateCreated: getCurrentDateString(), isHighPriority: false, isMarked: false, notificationID: "", reminderUnit: "", reminderValue: 0)
     ]
     
     static let users: [User] = [

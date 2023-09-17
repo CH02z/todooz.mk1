@@ -9,6 +9,10 @@
 /* Begin PBXBuildFile section */
 		83048E4E2A9BBC4F003F1C59 /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = 83048E4D2A9BBC4F003F1C59 /* GoogleSignIn */; };
 		83048E502A9BBC4F003F1C59 /* GoogleSignInSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 83048E4F2A9BBC4F003F1C59 /* GoogleSignInSwift */; };
+		8315D8372AB5AF9800F47139 /* Notifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8315D8362AB5AF9800F47139 /* Notifications.swift */; };
+		8315D8392AB6124300F47139 /* OverDueTasklistView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8315D8382AB6124300F47139 /* OverDueTasklistView.swift */; };
+		8315D83B2AB6DF2A00F47139 /* ReminderTasksTaskList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8315D83A2AB6DF2A00F47139 /* ReminderTasksTaskList.swift */; };
+		8315D83D2AB75F6F00F47139 /* AppIconViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8315D83C2AB75F6F00F47139 /* AppIconViewModel.swift */; };
 		8347D9CF2AAF976300ABB779 /* IsDoneTaskListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8347D9CE2AAF976300ABB779 /* IsDoneTaskListView.swift */; };
 		837362642AA79AD9000548D9 /* TodayTaskListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 837362632AA79AD9000548D9 /* TodayTaskListView.swift */; };
 		8382238D2AB22C30004B7833 /* NotesListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8382238C2AB22C30004B7833 /* NotesListView.swift */; };
@@ -73,6 +77,10 @@
 
 /* Begin PBXFileReference section */
 		83048E512A9BBCA1003F1C59 /* todooz-mk1-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "todooz-mk1-Info.plist"; sourceTree = SOURCE_ROOT; };
+		8315D8362AB5AF9800F47139 /* Notifications.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notifications.swift; sourceTree = "<group>"; };
+		8315D8382AB6124300F47139 /* OverDueTasklistView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OverDueTasklistView.swift; sourceTree = "<group>"; };
+		8315D83A2AB6DF2A00F47139 /* ReminderTasksTaskList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReminderTasksTaskList.swift; sourceTree = "<group>"; };
+		8315D83C2AB75F6F00F47139 /* AppIconViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppIconViewModel.swift; sourceTree = "<group>"; };
 		8347D9CE2AAF976300ABB779 /* IsDoneTaskListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IsDoneTaskListView.swift; sourceTree = "<group>"; };
 		837362632AA79AD9000548D9 /* TodayTaskListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TodayTaskListView.swift; sourceTree = "<group>"; };
 		8382238C2AB22C30004B7833 /* NotesListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesListView.swift; sourceTree = "<group>"; };
@@ -206,7 +214,9 @@
 				83E2CD002AB4987E008C8F73 /* MarkedTaskListView.swift */,
 				8347D9CE2AAF976300ABB779 /* IsDoneTaskListView.swift */,
 				83CDAF892AA6695200AF09AA /* HighPrioTaskListView.swift */,
+				8315D83A2AB6DF2A00F47139 /* ReminderTasksTaskList.swift */,
 				837362632AA79AD9000548D9 /* TodayTaskListView.swift */,
+				8315D8382AB6124300F47139 /* OverDueTasklistView.swift */,
 				83E254112AA11B6A00D400A3 /* SettingsView.swift */,
 				83B486A92AA275420017CE91 /* TaskViewPreview.swift */,
 				83B486AB2AA31E210017CE91 /* AddTaskView.swift */,
@@ -236,6 +246,7 @@
 				83CD08952AA9C37F00C7AAE8 /* EditTaskViewModel.swift */,
 				83B486B92AA51AA50017CE91 /* AddCategoryViewModel.swift */,
 				838223962AB23E1F004B7833 /* AddNoteViewModel.swift */,
+				8315D83C2AB75F6F00F47139 /* AppIconViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -266,6 +277,7 @@
 			children = (
 				83D60C432A9A6FA700723215 /* Extensions.swift */,
 				838223902AB230BB004B7833 /* TestData.swift */,
+				8315D8362AB5AF9800F47139 /* Notifications.swift */,
 			);
 			path = other;
 			sourceTree = "<group>";
@@ -368,6 +380,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8315D8392AB6124300F47139 /* OverDueTasklistView.swift in Sources */,
 				83D60C332A9A568F00723215 /* BorderExtension.swift in Sources */,
 				83D60C2B2A9A55D600723215 /* AddEmailView.swift in Sources */,
 				83B486AC2AA31E210017CE91 /* AddTaskView.swift in Sources */,
@@ -384,6 +397,7 @@
 				838223972AB23E1F004B7833 /* AddNoteViewModel.swift in Sources */,
 				837362642AA79AD9000548D9 /* TodayTaskListView.swift in Sources */,
 				83E254102AA1188600D400A3 /* CategoryViewModel.swift in Sources */,
+				8315D83D2AB75F6F00F47139 /* AppIconViewModel.swift in Sources */,
 				8347D9CF2AAF976300ABB779 /* IsDoneTaskListView.swift in Sources */,
 				83D60C412A9A659A00723215 /* LoginViewModel.swift in Sources */,
 				838223932AB23569004B7833 /* NoteView.swift in Sources */,
@@ -398,12 +412,14 @@
 				83D60C3F2A9A5E5A00723215 /* Tasc.swift in Sources */,
 				83D60C352A9A57CF00723215 /* RegistrationViewModel.swift in Sources */,
 				83CDAF8A2AA6695200AF09AA /* HighPrioTaskListView.swift in Sources */,
+				8315D8372AB5AF9800F47139 /* Notifications.swift in Sources */,
 				83D60C292A9A559600723215 /* LoginView.swift in Sources */,
 				83B486AA2AA275420017CE91 /* TaskViewPreview.swift in Sources */,
 				83E2540E2AA1186700D400A3 /* TasklistView.swift in Sources */,
 				83E254122AA11B6A00D400A3 /* SettingsView.swift in Sources */,
 				83CD08942AA9C31A00C7AAE8 /* EditTaskView.swift in Sources */,
 				83B486B42AA4E7420017CE91 /* TaskViewPreviewViewModel.swift in Sources */,
+				8315D83B2AB6DF2A00F47139 /* ReminderTasksTaskList.swift in Sources */,
 				83B486B02AA388F10017CE91 /* TaskService.swift in Sources */,
 				8382238D2AB22C30004B7833 /* NotesListView.swift in Sources */,
 				83E2540C2AA10CB600D400A3 /* Category.swift in Sources */,
@@ -541,8 +557,10 @@
 		83D60C172A9A4C2E00723215 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_ALTERNATE_APPICON_NAMES = "AppIcon-orange AppIcon-blue AppIcon-green AppIcon-red";
+				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-purple";
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"todooz.mk1/Preview Content\"";
@@ -571,8 +589,10 @@
 		83D60C182A9A4C2E00723215 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_ALTERNATE_APPICON_NAMES = "AppIcon-orange AppIcon-blue AppIcon-green AppIcon-red";
+				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-purple";
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"todooz.mk1/Preview Content\"";

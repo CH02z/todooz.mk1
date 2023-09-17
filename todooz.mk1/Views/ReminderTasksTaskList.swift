@@ -9,51 +9,30 @@ import SwiftUI
 import FirebaseFirestoreSwift
 import FirebaseAuth
 
-struct TasklistView: View {
+struct ReminderTaskListView: View {
     
-    let category: Category
-    
-    let allCategories: [Category]
     let currentUser: User?
+    let allCategories: [Category]
     
-    //Sheets
-    @State var showAddItemSheet: Bool = false
     @State var showDetailTaskSheet: Bool = false
     
     @State var detailTask: Tasc = TestData.tasks[0]
     @State var editTask: Tasc = TestData.tasks[0]
-    
-    //Sorting
-    let sortOptions: [String] = ["Titel", "Datum"]
-    @State var sortingSelection: String = "Datum"
-    @State var sortingField: String = "dueDate"
-    
     
     
     @FirestoreQuery(collectionPath: "users") var tasks: [Tasc]
     @ObservedObject var viewModel = TaskListViewModel()
     
     private func filterTasks() {
-        let cat = self.category.name
         $tasks.path = "users/\(self.currentUser?.id ?? "")/tasks"
         $tasks.predicates = [
-            .isEqualTo("category", cat),
+            .isNotIn("notificationID", [""]),
             .whereField("isDone", isEqualTo: false),
-            .order(by: sortingField, descending: sortingField == "dueDate" ? true : false),
+            //.order(by: "dueDate", descending: true),
         ]
     }
     
-    
-    
-    
-    //Test Data
-    var testItems: [Tasc] = TestData.tasks
-    
-    
-    
-    
     var body: some View {
-        
         NavigationStack {
             
             List {
@@ -93,10 +72,11 @@ struct TasklistView: View {
                             .tint(.red)
                             
                         }
-                    
                         .contextMenu {
                             Button {
+                                print("Item: \(item)")
                                 self.detailTask = item
+                                print("detailTask: \(self.detailTask)")
                                 self.showDetailTaskSheet = true
                             
                                 
@@ -113,13 +93,11 @@ struct TasklistView: View {
                         }
                     
                 }
-                
                 if tasks.count == 0 {
-                    Text("In dieser Kategorie wurden noch keine Tasks hinzugefügt")
-                        .frame(maxWidth: .infinity, alignment: .center)
-                        .font(.subheadline)
-                        .foregroundColor(.secondary)
-                    
+                        Text("Keine Tasks mit gesetzter Erinnerung vorhanden")
+                            .frame(maxWidth: .infinity, alignment: .center)
+                            .font(.subheadline)
+                            .foregroundColor(.secondary)
                 }
             }
             .refreshable {
@@ -128,87 +106,26 @@ struct TasklistView: View {
                 }
             }
             
-            
-            .navigationTitle(category.name)
-            .navigationBarTitleDisplayMode(.large)
-            
-            .sheet(isPresented: $showAddItemSheet, content: {
-                AddTaskView(isPresented: $showAddItemSheet, allCategories: allCategories, originalCat: category.name)
-            })
-            
             .sheet(isPresented: $showDetailTaskSheet, content: {
                 DetailTaskView(task: $detailTask, allCategories: allCategories, isPresented: $showDetailTaskSheet)
             })
-
             
             
+            
+            .navigationTitle("Erinnerungen")
             
             .toolbar {
                 
-                /*
-                 ToolbarItem(placement: .navigationBarTrailing) {
-                 Button {
-                 
-                 } label: {
-                 Image(systemName: "square.and.arrow.up")
-                 //.font(.system(size: 20))
-                 }
-                 
-                 }
-                 
-                 
-                 You can write a description on multiple lines here.
-                 */
-                
-                
                 ToolbarItem(placement: .navigationBarTrailing) {
-                    
-                    Menu {
-                        Picker("sortieren", selection: $sortingSelection) {
-                            ForEach(sortOptions, id: \.self){
-                                Text($0)
-                            }
-                        }.onChange(of: self.sortingSelection) { newValue in
-                            print(newValue)
-                            switch newValue {
-                            case "Titel":
-                                self.sortingField = "title"
-                            case "Datum":
-                                self.sortingField = "dueDate"
-                            default:
-                                self.sortingField = "dueDate"
-                            }
-                            filterTasks()
-                        }
-                        
+                    Button {
                         
                     } label: {
-                        Text("Sortieren")
-                    }
-                }
-                
-                
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    Button{
-                        
-                        //Haptic Feedback on Tap
-                        let impactHeavy = UIImpactFeedbackGenerator(style: .heavy)
-                        impactHeavy.impactOccurred()
-                        self.showAddItemSheet = true
-                        
-                    } label: {
-                        Image(systemName: "plus")
-                        //.font(.system(size: 25))
-                        
+                        Image(systemName: "square.and.arrow.up")
+                        //.font(.system(size: 20))
                     }
                     
-                }
-                
-                
-            }
-            
-            
-            
+                }            }
+         
             
             
         }
@@ -217,7 +134,7 @@ struct TasklistView: View {
                 self.filterTasks()
             }
         }
-    }
+            }
     
 }
 
@@ -225,8 +142,8 @@ struct TasklistView: View {
 
 
 
-struct ToDoListView_Previews: PreviewProvider {
+struct ReminderTaskListView_Previews: PreviewProvider {
     static var previews: some View {
-        TasklistView(category: TestData.categories[0], allCategories: [], currentUser: TestData.users[0])
+        ReminderTaskListView(currentUser: TestData.users[0], allCategories: [TestData.categories[0]])
     }
 }

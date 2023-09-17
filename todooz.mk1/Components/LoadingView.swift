@@ -21,8 +21,10 @@ struct LoadingView: View {
             
             
         }
+        
         .onAppear() {
             self.isAnimating = true
+            //Task {try await AuthService.shared.signOut()}
         }
         .onDisappear() {
             self.isAnimating = false

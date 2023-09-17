@@ -36,6 +36,27 @@ struct TaskViewPreview: View {
                     .padding(.horizontal, 5)
             }
             
+            if item.dueDate != "" && dateIsInPast(inputDate: getDateFromString(dateString: item.dueDate)) {
+                Image(systemName: "clock.badge.exclamationmark")
+                    .foregroundColor(Color.red)
+                    .font(.system(size: 20))
+                    .padding(.horizontal, 5)
+            }
+            
+            if item.notificationID != "" {
+                Image(systemName: "bell")
+                    .foregroundColor(Color.purple)
+                    .font(.system(size: 20))
+                    .padding(.horizontal, 5)
+            }
+            
+            if item.subtasks.count > 0 {
+                Image(systemName: "list.bullet")
+                    .foregroundColor(Color.green)
+                    .font(.system(size: 20))
+                    .padding(.horizontal, 5)
+            }
+            
             
             VStack(alignment: .leading) {
                 Text(item.title)
@@ -63,7 +84,7 @@ struct TaskViewPreview: View {
                     //Haptic Feedback on Tap
                     let impactHeavy = UIImpactFeedbackGenerator(style: .heavy)
                     impactHeavy.impactOccurred()
-                    Task { try await viewModel.toggleTask(finishedTaskID: item.id, currentState: item.isDone) }
+                    Task { try await viewModel.toggleTask(finishedTaskID: item.id, currentState: item.isDone, notificationID: item.notificationID) }
                 }
             
             

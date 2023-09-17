@@ -17,13 +17,9 @@ struct StandardCategoryPreviewView: View {
     
     @State var numberOfHighPrioTasks: String = ""
     @State var numberOfTodayTasks: String = ""
-    @State var numberOfDoneTasks: String = ""
-    @State var numberOfMarkedTasks: String = ""
     
     @FirestoreQuery(collectionPath: "users") var highPrioTasks: [Tasc]
     @FirestoreQuery(collectionPath: "users") var todayTasks: [Tasc]
-    @FirestoreQuery(collectionPath: "users") var doneTasks: [Tasc]
-    @FirestoreQuery(collectionPath: "users") var markedTasks: [Tasc]
     
     @State var filteredByDateTasks: [Tasc] = []
     
@@ -36,17 +32,6 @@ struct StandardCategoryPreviewView: View {
         try await Task.sleep(seconds: 0.2)
         self.numberOfHighPrioTasks = String(highPrioTasks.count)
     }
-    
-    
-    private func setNumberOfDoneTasks(uid: String) async throws {
-        $doneTasks.path = "users/\(uid)/tasks"
-        $doneTasks.predicates = [
-            .isEqualTo("isDone", true),
-            .order(by: "dueDate", descending: true)
-            ]
-            try await Task.sleep(seconds: 0.2)
-            self.numberOfDoneTasks = String(self.doneTasks.count)
-        }
     
     
         
@@ -68,16 +53,6 @@ struct StandardCategoryPreviewView: View {
         self.filteredByDateTasks = self.todayTasks.filter { tasc in
             return isSameDay(date1: Date(), date2: getDateFromString(dateString: tasc.dueDate))
         }
-    }
-    
-    private func setNumberOfMarkedTasks(uid: String) async throws {
-        $markedTasks.path = "users/\(uid)/tasks"
-        $markedTasks.predicates = [
-            .isEqualTo("isMarked", true),
-            .whereField("isDone", isEqualTo: false)
-        ]
-        try await Task.sleep(seconds: 0.2)
-        self.numberOfMarkedTasks = String(markedTasks.count)
     }
     
     var body: some View {
@@ -157,65 +132,74 @@ struct StandardCategoryPreviewView: View {
                 .onAppear() {
                     Task { try await self.setNumberOfHighPrioTasks(uid: user.id) }
                     Task { try await self.setNumberOfTodayTasks(uid: user.id) }
-                    Task { try await self.setNumberOfDoneTasks(uid: user.id) }
-                    Task { try await self.setNumberOfMarkedTasks(uid: user.id) }
                     
                 }
+                            
                 
-                NavigationLink(destination: IsDoneTaskListView(allCategories: allCategories, currentUser: currentUser)) {
-                    // Done Task Preview:
-                    HStack {
-                        Image(systemName: "checkmark.circle")
-                            .foregroundColor(Color(hex: accentColor))
-                            .font(.system(size: 35))
-                            //.fontWeight(.semibold)
-                            .padding(.vertical, 3.5)
-                            .padding(.trailing, 5)
-                            .padding(.leading, 20)
-                        //.overlay(Circle().stroke(Color.white, lineWidth: 1))
+                HStack(spacing: 15) {
+                    
+                    ScrollView(.horizontal) {
                         
-                        Text("Erledigt")
-                            .foregroundColor(Color("MainFontColor"))
-                            .fontWeight(.semibold)
-                            .lineLimit(2)
-                            .minimumScaleFactor(0.5)
+                        HStack(spacing: 25) {
+                            NavigationLink(destination: IsDoneTaskListView(allCategories: allCategories, currentUser: currentUser)) {
+                                Image(systemName: "checkmark")
+                                    .foregroundColor(Color(hex: accentColor))
+                                    .frame(width: 40, height: 40)
+                                    .background(Color(.systemGray4))
+                                    .cornerRadius(30)
+                                    .font(.system(size: 25))
+                                    //.fontWeight(.bold)
+                            
+                            }
+                            .padding(.leading, 15)
+                            
                         
-                        Text(numberOfDoneTasks)
-                            .frame(maxWidth: .infinity, alignment: .trailing)
-                            .padding(.trailing, 20)
-                            .foregroundColor(Color("MainFontColor"))
+                            NavigationLink(destination: MarkedTaskListView(currentUser: currentUser, allCategories: allCategories)) {
+                                Image(systemName: "flag")
+                                    .foregroundColor(Color(hex: accentColor))
+                                    .frame(width: 40, height: 40)
+                                    .background(Color(.systemGray4))
+                                    .cornerRadius(30)
+                                    .font(.system(size: 20))
+                                    
+                            }
+                            
+                            NavigationLink(destination: ReminderTaskListView(currentUser: currentUser, allCategories: allCategories)) {
+                                Image(systemName: "bell")
+                                    .foregroundColor(Color(hex: accentColor))
+                                    .frame(width: 40, height: 40)
+                                    .background(Color(.systemGray4))
+                                    .cornerRadius(30)
+                                    .font(.system(size: 20))
+                                    
+                            }
+                            
+                            NavigationLink(destination: OverDueListView(currentUser: currentUser, allCategories: allCategories)) {
+                                Image(systemName: "clock.badge.exclamationmark")
+                                    .foregroundColor(Color(hex: accentColor))
+                                    .frame(width: 40, height: 40)
+                                    .background(Color(.systemGray4))
+                                    .cornerRadius(30)
+                                    .font(.system(size: 20))
+                                    
+                            }
+                            
+                        }
+                        
+                       
+                        
+                        
                     }
-                    .padding(.vertical, 4)
-                }
-                .background(Color("ElementBackround"))
-                .cornerRadius(10)
-                .padding(.top, 30)
+                    .padding(.vertical, 10)
                 
-                NavigationLink(destination: MarkedTaskListView(currentUser: currentUser, allCategories: allCategories)) {
-                    // Done Task Preview:
-                    HStack {
-                        Image(systemName: "flag")
-                            .foregroundColor(Color(hex: accentColor))
-                            .font(.system(size: 35))
-                            //.fontWeight(.semibold)
-                            .padding(.vertical, 3.5)
-                            .padding(.trailing, 5)
-                            .padding(.leading, 20)
-                        //.overlay(Circle().stroke(Color.white, lineWidth: 1))
-                        
-                        Text("Markiert")
-                            .foregroundColor(Color("MainFontColor"))
-                            .fontWeight(.semibold)
-                            .lineLimit(2)
-                            .minimumScaleFactor(0.5)
-                        
-                        Text(numberOfMarkedTasks)
-                            .frame(maxWidth: .infinity, alignment: .trailing)
-                            .padding(.trailing, 20)
-                            .foregroundColor(Color("MainFontColor"))
-                    }
-                    .padding(.vertical, 4)
+                    
+                    
+            
+                    
+                    
+                    
                 }
+                .frame(maxWidth: .infinity)
                 .background(Color("ElementBackround"))
                 .cornerRadius(10)
                 .padding(.top, 10)

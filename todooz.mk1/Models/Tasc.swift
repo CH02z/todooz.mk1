@@ -11,6 +11,7 @@ struct Tasc: Codable, Identifiable {
     let id: String
     let title: String
     let category: String
+    var subtasks: [SubTasc]
     var dueDate: String
     var isDone: Bool
     var description: String?
@@ -19,4 +20,14 @@ struct Tasc: Codable, Identifiable {
     var dateFinished: String?
     let isHighPriority: Bool
     var isMarked: Bool
+    var notificationID: ID
+    var reminderUnit: String
+    var reminderValue: Int
 }
+
+struct SubTasc: Codable, Identifiable, Hashable {
+    let id: String
+    var title: String
+    var isDone: Bool
+}
+

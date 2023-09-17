@@ -9,55 +9,42 @@ import SwiftUI
 import FirebaseFirestoreSwift
 import FirebaseAuth
 
-struct TasklistView: View {
+struct OverDueListView: View {
     
-    let category: Category
-    
-    let allCategories: [Category]
     let currentUser: User?
+    let allCategories: [Category]
     
-    //Sheets
-    @State var showAddItemSheet: Bool = false
+    @State var filteredByDateTasks: [Tasc] = []
+    
     @State var showDetailTaskSheet: Bool = false
     
     @State var detailTask: Tasc = TestData.tasks[0]
     @State var editTask: Tasc = TestData.tasks[0]
-    
-    //Sorting
-    let sortOptions: [String] = ["Titel", "Datum"]
-    @State var sortingSelection: String = "Datum"
-    @State var sortingField: String = "dueDate"
-    
-    
+   
     
     @FirestoreQuery(collectionPath: "users") var tasks: [Tasc]
     @ObservedObject var viewModel = TaskListViewModel()
     
-    private func filterTasks() {
-        let cat = self.category.name
+    
+    private func filterTasks() async throws {
         $tasks.path = "users/\(self.currentUser?.id ?? "")/tasks"
         $tasks.predicates = [
-            .isEqualTo("category", cat),
-            .whereField("isDone", isEqualTo: false),
-            .order(by: sortingField, descending: sortingField == "dueDate" ? true : false),
+            .isEqualTo("isDone", false),
+            .whereField("dueDate", isNotIn: [""]),
+            .order(by: "dueDate", descending: true),
         ]
-    }
-    
-    
-    
-    
-    //Test Data
-    var testItems: [Tasc] = TestData.tasks
-    
-    
-    
-    
-    var body: some View {
+        try await Task.sleep(seconds: 0.1)
+        self.filteredByDateTasks = self.tasks.filter { tasc in
+            return dateIsInPast(inputDate: getDateFromString(dateString: tasc.dueDate))
+        }
         
+    }
+
+    var body: some View {
         NavigationStack {
             
             List {
-                ForEach(tasks) { item in
+                ForEach(filteredByDateTasks) { item in
                     TaskViewPreview(item: item, allCategories: allCategories)
                         .swipeActions(edge: .leading) {
                             
@@ -96,7 +83,9 @@ struct TasklistView: View {
                     
                         .contextMenu {
                             Button {
+                                print("Item: \(item)")
                                 self.detailTask = item
+                                print("detailTask: \(self.detailTask)")
                                 self.showDetailTaskSheet = true
                             
                                 
@@ -113,120 +102,65 @@ struct TasklistView: View {
                         }
                     
                 }
-                
-                if tasks.count == 0 {
-                    Text("In dieser Kategorie wurden noch keine Tasks hinzugefügt")
-                        .frame(maxWidth: .infinity, alignment: .center)
-                        .font(.subheadline)
-                        .foregroundColor(.secondary)
-                    
+                if self.filteredByDateTasks.count == 0 {
+                        Text("Bis jetzt sind keine Tasks überfällig")
+                            .frame(maxWidth: .infinity, alignment: .center)
+                            .font(.subheadline)
+                            .foregroundColor(.secondary)
+                            
                 }
             }
+            
+            
             .refreshable {
                 Task { @MainActor in
-                    self.filterTasks()
+                    try await self.filterTasks()
                 }
             }
-            
-            
-            .navigationTitle(category.name)
-            .navigationBarTitleDisplayMode(.large)
-            
-            .sheet(isPresented: $showAddItemSheet, content: {
-                AddTaskView(isPresented: $showAddItemSheet, allCategories: allCategories, originalCat: category.name)
-            })
             
             .sheet(isPresented: $showDetailTaskSheet, content: {
                 DetailTaskView(task: $detailTask, allCategories: allCategories, isPresented: $showDetailTaskSheet)
             })
-
             
             
             
-            .toolbar {
-                
-                /*
-                 ToolbarItem(placement: .navigationBarTrailing) {
-                 Button {
-                 
-                 } label: {
-                 Image(systemName: "square.and.arrow.up")
-                 //.font(.system(size: 20))
-                 }
-                 
-                 }
-                 
-                 
-                 You can write a description on multiple lines here.
-                 */
-                
+            .navigationTitle("Überfällig")
+            
+            
+            
+            
+            .toolbar {               
                 
                 ToolbarItem(placement: .navigationBarTrailing) {
-                    
-                    Menu {
-                        Picker("sortieren", selection: $sortingSelection) {
-                            ForEach(sortOptions, id: \.self){
-                                Text($0)
-                            }
-                        }.onChange(of: self.sortingSelection) { newValue in
-                            print(newValue)
-                            switch newValue {
-                            case "Titel":
-                                self.sortingField = "title"
-                            case "Datum":
-                                self.sortingField = "dueDate"
-                            default:
-                                self.sortingField = "dueDate"
-                            }
-                            filterTasks()
-                        }
-                        
+                    Button {
                         
                     } label: {
-                        Text("Sortieren")
-                    }
-                }
-                
-                
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    Button{
-                        
-                        //Haptic Feedback on Tap
-                        let impactHeavy = UIImpactFeedbackGenerator(style: .heavy)
-                        impactHeavy.impactOccurred()
-                        self.showAddItemSheet = true
-                        
-                    } label: {
-                        Image(systemName: "plus")
-                        //.font(.system(size: 25))
-                        
+                        Image(systemName: "square.and.arrow.up")
+                            //.font(.system(size: 20))
                     }
                     
                 }
-                
-                
             }
-            
-            
             
             
             
         }
         .onAppear() {
             Task { @MainActor in
-                self.filterTasks()
+                try await self.filterTasks()
             }
+            
         }
     }
-    
+        
 }
+    
 
 
 
 
-
-struct ToDoListView_Previews: PreviewProvider {
+struct OverDueListViewPreview: PreviewProvider {
     static var previews: some View {
-        TasklistView(category: TestData.categories[0], allCategories: [], currentUser: TestData.users[0])
+        OverDueListView(currentUser: TestData.users[0], allCategories: [TestData.categories[0]])
     }
 }

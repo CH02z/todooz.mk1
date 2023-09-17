@@ -19,8 +19,8 @@ class TaskListViewModel: ObservableObject {
     }
     
     
-    func deleteTask(taskID: String) async throws {
-        try await TaskService.shared.deleteTask(taskID: taskID)
+    func deleteTask(taskID: String, notificationID: String) async throws {
+        try await TaskService.shared.deleteTask(taskID: taskID, notificationID: notificationID)
     }
     
     func markTask(taskID: String, isMarkedNow: Bool) async throws {

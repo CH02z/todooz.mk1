@@ -40,7 +40,17 @@ struct MarkedTaskListView: View {
             List {
                 ForEach(tasks) { item in
                     TaskViewPreview(item: item, allCategories: allCategories)
-                        .swipeActions {
+                        .swipeActions(edge: .leading) {
+                            
+                            Button() {
+                                Task { try await viewModel.prioTask(taskID: item.id, isHighPrioNow: item.isHighPriority) }
+                            } label: {
+                                Image(systemName: "exclamationmark")
+                                    .font(.system(size: 15))
+                                    .fontWeight(.bold)
+                            }
+                            .tint(.red)
+                            
                             
                             Button() {
                                 Task { try await viewModel.markTask(taskID: item.id, isMarkedNow: item.isMarked) }
@@ -51,26 +61,19 @@ struct MarkedTaskListView: View {
                             }
                             .tint(.orange)
                             
-                            Button() {
-                                Task { try await viewModel.prioTask(taskID: item.id, isHighPrioNow: item.isHighPriority) }
-                            } label: {
-                                Image(systemName: "exclamationmark")
-                                    .font(.system(size: 15))
-                            }
-                            .tint(.gray)
                             
-                            
+                        }
+                        .swipeActions(edge: .trailing) {
                             Button() {
-                                Task { try await viewModel.deleteTask(taskID: item.id) }
+                                Task { try await viewModel.deleteTask(taskID: item.id, notificationID: item.notificationID) }
                             } label: {
                                 Image(systemName: "trash")
                                     .foregroundColor(.white)
                                     .font(.system(size: 15))
                             }
                             .tint(.red)
-         
-                        }
-                    
+                            
+                        }                    
                         .contextMenu {
                             Button {
                                 print("Item: \(item)")

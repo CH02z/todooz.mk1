@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import UserNotifications
 
 struct SettingsView: View {
     
@@ -17,6 +18,8 @@ struct SettingsView: View {
     
     let colors: [String] = ["F2503F", "63D163", "F8A535", "B35AEF", "3380FE"]
     let languages: [String] = ["Deutsch", "English", "Französisch"]
+    
+    @StateObject var AppIconviewModel = ChangeAppIconViewModel()
     
     
     
@@ -50,27 +53,43 @@ struct SettingsView: View {
             
             Section(header: Text("Akzent Farbe")) {
                 
-                    //Accent color Picker Section
-                    Grid() {
-                        GridRow {
-                                ForEach(0...4, id: \.self) { index in
-                                    Circle()
-                                        .foregroundColor(Color(hex: colors[index]))
-                                        .frame(width: 40, height: 40)
-                                        .overlay(Circle().stroke(Color.gray, lineWidth: colors[index] == accentColor ? 4 : 0))
-                                        .padding(.horizontal, 8)
-                                        .padding(.bottom, 10)
-                                        .onTapGesture {
-                                            accentColor = colors[index]
-                                        }
+                //Accent color Picker Section
+                Grid() {
+                    GridRow {
+                        ForEach(0...4, id: \.self) { index in
+                            Circle()
+                                .foregroundColor(Color(hex: colors[index]))
+                                .frame(width: 40, height: 40)
+                                .overlay(Circle().stroke(Color.gray, lineWidth: colors[index] == accentColor ? 4 : 0))
+                                .padding(.horizontal, 8)
+                                .padding(.bottom, 10)
+                                .onTapGesture {
+                                    accentColor = colors[index]
+                                    switch accentColor {
+                                    case "F2503F":
+                                        AppIconviewModel.updateAppIcon(to: AppIcon.red)
+                                    case "63D163":
+                                        AppIconviewModel.updateAppIcon(to: AppIcon.green)
+                                    case "F8A535":
+                                        AppIconviewModel.updateAppIcon(to: AppIcon.orange)
+                                    case "B35AEF":
+                                        AppIconviewModel.updateAppIcon(to: AppIcon.purple)
+                                    case "3380FE":
+                                        AppIconviewModel.updateAppIcon(to: AppIcon.blue)
+                                    default:
+                                        AppIconviewModel.updateAppIcon(to: AppIcon.purple)
+                                    }
+                                    
+                                    
                                 }
-                            
-                            
                         }
                         
                         
                     }
-                    .padding(.top, 10)
+                    
+                    
+                }
+                .padding(.top, 10)
                 
                 
                 
@@ -78,7 +97,7 @@ struct SettingsView: View {
             
             
             Section {
-                NavigationLink(destination: Text("Notification Center")) {
+                NavigationLink(destination: notificationView()) {
                     HStack {
                         Image(systemName: "bell.badge.fill")
                             .foregroundColor(.white)
@@ -94,28 +113,28 @@ struct SettingsView: View {
                     }
                 }
                 
-              
-                    HStack {
-                        Image(systemName: "globe")
-                            .foregroundColor(.white)
-                            .frame(width: 30, height: 30)
-                            .background(.blue)
-                            .cornerRadius(5)
-                            .font(.system(size: 19))
-                            .fontWeight(.bold)
-                            .padding(.vertical, 2.5)
-                            .padding(.trailing, 5)
+                
+                HStack {
+                    Image(systemName: "globe")
+                        .foregroundColor(.white)
+                        .frame(width: 30, height: 30)
+                        .background(.blue)
+                        .cornerRadius(5)
+                        .font(.system(size: 19))
+                        .fontWeight(.bold)
+                        .padding(.vertical, 2.5)
+                        .padding(.trailing, 5)
+                    
+                    Picker("Sprache", selection: $language) {
                         
-                        Picker("Sprache", selection: $language) {
+                        ForEach(languages, id: \.self){
                             
-                            ForEach(languages, id: \.self){
-
-                                Text($0)
-
-                                        }
-                                    }
-                        .pickerStyle(.menu)
+                            Text($0)
+                            
+                        }
                     }
+                    .pickerStyle(.menu)
+                }
                 
                 
                 HStack {
@@ -147,6 +166,30 @@ struct SettingsView: View {
         
         //.navigationTitle("Settings")
     }
+}
+
+
+
+struct notificationView: View {
+    
+    @State private var showNotificationDeniedAlert : Bool = false
+    
+    var body: some View {
+        Text("Mitteilungszentrale")
+            .font(.title)
+        
+            .onAppear() {
+                DispatchQueue.main.async {
+                    UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!, options: [:],
+                                              completionHandler: nil)
+                }
+            }
+        
+    }
+    
+    
+    
+    
 }
 
 struct SettingsView_Previews: PreviewProvider {
