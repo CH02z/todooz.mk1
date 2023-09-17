@@ -57,10 +57,12 @@ class TaskService {
     }
     
     @MainActor
-    func toggleTask(finishedTaskID: String, currentState: Bool) async throws {
+    func toggleTask(finishedTaskID: String, currentState: Bool, notifcationID: String) async throws {
         guard let uid = self.userID else { return }
         
         try await Firestore.firestore().collection("users").document(uid).collection("tasks").document(finishedTaskID).setData([ "isDone": !currentState], merge: true)
+        NotificationHandler.shared.removeNotifications(ids: [notifcationID])
+        try await removeReminderFromTask(taskID: finishedTaskID)
         print("Task with id \(finishedTaskID) was toggled")
         
     }

@@ -84,7 +84,7 @@ struct TaskViewPreview: View {
                     //Haptic Feedback on Tap
                     let impactHeavy = UIImpactFeedbackGenerator(style: .heavy)
                     impactHeavy.impactOccurred()
-                    Task { try await viewModel.toggleTask(finishedTaskID: item.id, currentState: item.isDone) }
+                    Task { try await viewModel.toggleTask(finishedTaskID: item.id, currentState: item.isDone, notificationID: item.notificationID) }
                 }
             
             

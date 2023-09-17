@@ -12,6 +12,7 @@
 		8315D8372AB5AF9800F47139 /* Notifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8315D8362AB5AF9800F47139 /* Notifications.swift */; };
 		8315D8392AB6124300F47139 /* OverDueTasklistView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8315D8382AB6124300F47139 /* OverDueTasklistView.swift */; };
 		8315D83B2AB6DF2A00F47139 /* ReminderTasksTaskList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8315D83A2AB6DF2A00F47139 /* ReminderTasksTaskList.swift */; };
+		8315D83D2AB75F6F00F47139 /* AppIconViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8315D83C2AB75F6F00F47139 /* AppIconViewModel.swift */; };
 		8347D9CF2AAF976300ABB779 /* IsDoneTaskListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8347D9CE2AAF976300ABB779 /* IsDoneTaskListView.swift */; };
 		837362642AA79AD9000548D9 /* TodayTaskListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 837362632AA79AD9000548D9 /* TodayTaskListView.swift */; };
 		8382238D2AB22C30004B7833 /* NotesListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8382238C2AB22C30004B7833 /* NotesListView.swift */; };
@@ -79,6 +80,7 @@
 		8315D8362AB5AF9800F47139 /* Notifications.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notifications.swift; sourceTree = "<group>"; };
 		8315D8382AB6124300F47139 /* OverDueTasklistView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OverDueTasklistView.swift; sourceTree = "<group>"; };
 		8315D83A2AB6DF2A00F47139 /* ReminderTasksTaskList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReminderTasksTaskList.swift; sourceTree = "<group>"; };
+		8315D83C2AB75F6F00F47139 /* AppIconViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppIconViewModel.swift; sourceTree = "<group>"; };
 		8347D9CE2AAF976300ABB779 /* IsDoneTaskListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IsDoneTaskListView.swift; sourceTree = "<group>"; };
 		837362632AA79AD9000548D9 /* TodayTaskListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TodayTaskListView.swift; sourceTree = "<group>"; };
 		8382238C2AB22C30004B7833 /* NotesListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesListView.swift; sourceTree = "<group>"; };
@@ -244,6 +246,7 @@
 				83CD08952AA9C37F00C7AAE8 /* EditTaskViewModel.swift */,
 				83B486B92AA51AA50017CE91 /* AddCategoryViewModel.swift */,
 				838223962AB23E1F004B7833 /* AddNoteViewModel.swift */,
+				8315D83C2AB75F6F00F47139 /* AppIconViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -394,6 +397,7 @@
 				838223972AB23E1F004B7833 /* AddNoteViewModel.swift in Sources */,
 				837362642AA79AD9000548D9 /* TodayTaskListView.swift in Sources */,
 				83E254102AA1188600D400A3 /* CategoryViewModel.swift in Sources */,
+				8315D83D2AB75F6F00F47139 /* AppIconViewModel.swift in Sources */,
 				8347D9CF2AAF976300ABB779 /* IsDoneTaskListView.swift in Sources */,
 				83D60C412A9A659A00723215 /* LoginViewModel.swift in Sources */,
 				838223932AB23569004B7833 /* NoteView.swift in Sources */,
@@ -553,8 +557,10 @@
 		83D60C172A9A4C2E00723215 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_ALTERNATE_APPICON_NAMES = "AppIcon-orange AppIcon-blue AppIcon-green AppIcon-red";
+				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-purple";
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"todooz.mk1/Preview Content\"";
@@ -583,8 +589,10 @@
 		83D60C182A9A4C2E00723215 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_ALTERNATE_APPICON_NAMES = "AppIcon-orange AppIcon-blue AppIcon-green AppIcon-red";
+				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-purple";
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"todooz.mk1/Preview Content\"";
