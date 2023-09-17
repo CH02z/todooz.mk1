@@ -115,7 +115,7 @@ class AuthService {
             if try await !self.UsernameExistsInFirestore(uid: firebaseUser.uid) {
                 //Insert Google Account to Firestore
                 print("Google Account Inserted to Firestore")
-                await inserUserRecord(uid: firebaseUser.uid, firstName: "ChrisGID", lastName: "ZimmermannGID", email: firebaseUser.email ?? "")
+                await inserUserRecord(uid: firebaseUser.uid, firstName: firebaseUser.displayName ?? "", lastName: "", email: firebaseUser.email ?? "")
             } else {
                 //Load User Data
                 print("Google Account already exists in Firestore, loading user data")
