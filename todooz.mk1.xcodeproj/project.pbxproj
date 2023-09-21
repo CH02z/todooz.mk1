@@ -73,6 +73,8 @@
 		83E254122AA11B6A00D400A3 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83E254112AA11B6A00D400A3 /* SettingsView.swift */; };
 		83E2CD012AB4987E008C8F73 /* MarkedTaskListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83E2CD002AB4987E008C8F73 /* MarkedTaskListView.swift */; };
 		83F8B4D12AB3369F003AE576 /* NoteService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83F8B4D02AB3369F003AE576 /* NoteService.swift */; };
+		83FB67272AB8BB5A00AA5481 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 83FB67292AB8BB5A00AA5481 /* Localizable.strings */; };
+		83FB672C2AB8BE3000AA5481 /* LocalizationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83FB672B2AB8BE3000AA5481 /* LocalizationService.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -135,6 +137,9 @@
 		83E254112AA11B6A00D400A3 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		83E2CD002AB4987E008C8F73 /* MarkedTaskListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkedTaskListView.swift; sourceTree = "<group>"; };
 		83F8B4D02AB3369F003AE576 /* NoteService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoteService.swift; sourceTree = "<group>"; };
+		83FB67282AB8BB5A00AA5481 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		83FB672A2AB8BBEA00AA5481 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
+		83FB672B2AB8BE3000AA5481 /* LocalizationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizationService.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -278,6 +283,7 @@
 				83D60C432A9A6FA700723215 /* Extensions.swift */,
 				838223902AB230BB004B7833 /* TestData.swift */,
 				8315D8362AB5AF9800F47139 /* Notifications.swift */,
+				83FB67292AB8BB5A00AA5481 /* Localizable.strings */,
 			);
 			path = other;
 			sourceTree = "<group>";
@@ -290,6 +296,7 @@
 				83B486AF2AA388F10017CE91 /* TaskService.swift */,
 				83F8B4D02AB3369F003AE576 /* NoteService.swift */,
 				83B486B52AA5154D0017CE91 /* CategoryService.swift */,
+				83FB672B2AB8BE3000AA5481 /* LocalizationService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -342,11 +349,12 @@
 			};
 			buildConfigurationList = 83D60C032A9A4C2D00723215 /* Build configuration list for PBXProject "todooz.mk1" */;
 			compatibilityVersion = "Xcode 14.0";
-			developmentRegion = en;
+			developmentRegion = de;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
 				Base,
+				de,
 			);
 			mainGroup = 83D60BFF2A9A4C2D00723215;
 			packageReferences = (
@@ -368,6 +376,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				83D60C132A9A4C2E00723215 /* Preview Assets.xcassets in Resources */,
+				83FB67272AB8BB5A00AA5481 /* Localizable.strings in Resources */,
 				83D60C102A9A4C2E00723215 /* Assets.xcassets in Resources */,
 				83D60C272A9A52FE00723215 /* GoogleService-Info.plist in Resources */,
 			);
@@ -421,6 +430,7 @@
 				83B486B42AA4E7420017CE91 /* TaskViewPreviewViewModel.swift in Sources */,
 				8315D83B2AB6DF2A00F47139 /* ReminderTasksTaskList.swift in Sources */,
 				83B486B02AA388F10017CE91 /* TaskService.swift in Sources */,
+				83FB672C2AB8BE3000AA5481 /* LocalizationService.swift in Sources */,
 				8382238D2AB22C30004B7833 /* NotesListView.swift in Sources */,
 				83E2540C2AA10CB600D400A3 /* Category.swift in Sources */,
 				83CAC8FB2AAF9EAE00A4807D /* IsDoneTaskViewPreview.swift in Sources */,
@@ -439,11 +449,24 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXVariantGroup section */
+		83FB67292AB8BB5A00AA5481 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				83FB67282AB8BB5A00AA5481 /* en */,
+				83FB672A2AB8BBEA00AA5481 /* de */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
 /* Begin XCBuildConfiguration section */
 		83D60C142A9A4C2E00723215 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
@@ -504,6 +527,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";

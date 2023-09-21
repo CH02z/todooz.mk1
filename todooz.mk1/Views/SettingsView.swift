@@ -13,7 +13,8 @@ struct SettingsView: View {
     
     @AppStorage("isDarkMode") private var isDarkMode = true
     @AppStorage("accentColor") private var accentColor = "B35AEF"
-    @AppStorage("language") private var language = "Deutsch"
+    
+    @AppStorage("language") private var language = LocalizationService.shared.language
     
     
     let colors: [String] = ["F2503F", "63D163", "F8A535", "B35AEF", "3380FE"]
@@ -28,7 +29,7 @@ struct SettingsView: View {
         
         List {
             
-            Section(header: Text("Allgmein")) {
+            Section(header: Text("general".localized(language))) {
                 HStack {
                     Image(systemName: "lightbulb")
                         .foregroundColor(.white)
@@ -39,9 +40,9 @@ struct SettingsView: View {
                         .fontWeight(.bold)
                         .padding(.vertical, 2.5)
                     
-                    Text("Dunkelmodus")
+                    Text("darkmode".localized(language))
                     
-                    Toggle("Flugmodus", isOn: $isDarkMode)
+                    Toggle("theme", isOn: $isDarkMode)
                         .labelsHidden()
                         .frame(maxWidth: .infinity, alignment: .trailing)
                     
@@ -51,7 +52,7 @@ struct SettingsView: View {
                 
             }
             
-            Section(header: Text("Akzent Farbe")) {
+            Section(header: Text("accent-color".localized(language))) {
                 
                 //Accent color Picker Section
                 Grid() {
@@ -95,6 +96,35 @@ struct SettingsView: View {
                 
             }
             
+            HStack {
+                Image(systemName: "globe")
+                    .foregroundColor(.white)
+                    .frame(width: 30, height: 30)
+                    .background(.blue)
+                    .cornerRadius(5)
+                    .font(.system(size: 19))
+                    .fontWeight(.bold)
+                    .padding(.vertical, 2.5)
+                    .padding(.trailing, 5)
+                
+                Spacer()
+                
+                Menu("chose language") {
+                    Button {
+                        LocalizationService.shared.language = .german
+                    } label: {
+                        Text("Deutsch")
+                    }
+                    
+                    Button {
+                        LocalizationService.shared.language = .english
+                    } label: {
+                        Text("English")
+                    }
+                    
+                }
+                
+            }
             
             Section {
                 NavigationLink(destination: notificationView()) {
@@ -109,31 +139,8 @@ struct SettingsView: View {
                             .padding(.vertical, 2.5)
                             .padding(.trailing, 5)
                         
-                        Text("Mitteilungen")
+                        Text("notification".localized(language))
                     }
-                }
-                
-                
-                HStack {
-                    Image(systemName: "globe")
-                        .foregroundColor(.white)
-                        .frame(width: 30, height: 30)
-                        .background(.blue)
-                        .cornerRadius(5)
-                        .font(.system(size: 19))
-                        .fontWeight(.bold)
-                        .padding(.vertical, 2.5)
-                        .padding(.trailing, 5)
-                    
-                    Picker("Sprache", selection: $language) {
-                        
-                        ForEach(languages, id: \.self){
-                            
-                            Text($0)
-                            
-                        }
-                    }
-                    .pickerStyle(.menu)
                 }
                 
                 
@@ -148,7 +155,7 @@ struct SettingsView: View {
                         .padding(.vertical, 2.5)
                         .padding(.trailing, 5)
                     
-                    Text("abmelden")
+                    Text("logout".localized(language))
                         .foregroundColor(.red)
                 }
                 .onTapGesture {
@@ -157,15 +164,14 @@ struct SettingsView: View {
                 
                 
                 
-                
-                
+                    
+                  
             }
-            
-            
-        }
-        
-        //.navigationTitle("Settings")
+   
     }
+    
+    //.navigationTitle("Settings")
+}
 }
 
 

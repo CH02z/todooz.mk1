@@ -1,0 +1,19 @@
+//LoginView
+"enter-email" = "Email eingeben";
+"enter-pw" = "Passwort eingeben";
+"forgot-pw" = "Passwort vergessen?";
+"login" = "anmelden";
+"or" = "oder";
+"google" = "Weiter mit Google";
+"apple" = "Anmelden mit Apple";
+"no-account" = "Noch kein Account?";
+"register" = "Registrieren";
+
+//SettingsView
+"general" = "Allgemein";
+"darkmode" = "Dunkelmodus";
+"accent-color" = "Akzent Farbe";
+"chose-language" = "Sprache wählen";
+"notification" = "Mitteilungen";
+"notificationcenter" = "Mitteilungszentrale";
+"logout" = "abmelden";
